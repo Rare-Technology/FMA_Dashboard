@@ -28,18 +28,8 @@ sidebarFamUI <- function(id) {
       selectize = FALSE
     )),
     
-    div(class = 'date_slider',
-    sliderInput(ns("date_range"),
-                label = "Select date range",
-                min = min(rarefma::init_dates, na.rm = TRUE),
-                max = max(rarefma::init_dates + 1, na.rm = TRUE),
-                value = c(min(rarefma::init_dates, na.rm = TRUE),
-                          max(rarefma::init_dates + 1, na.rm = TRUE)
-                ),
-                ticks = FALSE,
-                timeFormat = "%F"
-    )
-    )
+
+    sidebarOptionsUI("sidebarOptionsUI")
   )
 }
 
@@ -156,36 +146,7 @@ sidebarFamServer <- function(id, state) {
         state$dates <- get_dates(data_filtered)
       })
       
-      observeEvent(state$dates,
-                   {
-                     updateSliderInput(
-                       session,
-                       "date_range",
-                       min = min(state$dates, na.rm = TRUE),
-                       max = max(state$dates + 1, na.rm = TRUE),
-                       value = c(min(state$dates, na.rm = TRUE),
-                                 max(state$dates + 1, na.rm = TRUE)
-                       ),
-                     )
-                   },
-                   ignoreInit = TRUE
-      )  
-      
-      
-      observeEvent(input$date_range, {
-        state$data_summary_filtered <- state$data_full %>% 
-          dplyr::filter(
-            country == state$country$selected,
-            subnational %in% state$subnational$selected,
-            local %in% state$local$selected,
-            maa %in% state$maa$selected,
-            family %in% state$family$selected,
-            species %in% state$species$selected,
-            dplyr::between(date_2, input$date_range[1], input$date_range[2])
-          ) %>% 
-          create_data_summary()
-        
-      })
+
       
       observeEvent(state$data_filtered,
                    {

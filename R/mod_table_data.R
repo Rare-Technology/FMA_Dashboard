@@ -25,8 +25,7 @@ tableDataServer <- function(id, state){
     id,
     function(input, output, server){
       observeEvent(state$data_summary_filtered , {
-        
-        table_data <- state$data_summary_filtered %>% 
+        table_data <- state$data_summary_filtered %>%
           dplyr::rename(
             Country = country,
             Subnational = subnational,
@@ -36,16 +35,7 @@ tableDataServer <- function(id, state){
             Species = species
           )
         
-        
-        # tbl <- DT::datatable(table_data, class = "display nowrap",
-        # options = list(
-        #   initComplete = DT::JS(
-        #     "function(settings, json) {",
-        #     "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
-        #     "}"),
-        #   scrollX = TRUE,
-        #   columnDefs = table_column_alignment(table_data)
-        # ))
+      
         
         tbl <- DT::datatable(
           data = table_data,

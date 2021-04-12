@@ -1,6 +1,6 @@
 get_dates <- function(.data){
   .data %>% 
-    dplyr::select(date_2) %>% 
+    dplyr::select(transaction_date) %>% 
     dplyr::distinct() %>% 
     dplyr::arrange() %>% 
     dplyr::pull()
@@ -16,8 +16,8 @@ create_data_summary <- function(.data){
       family, 
       species) %>%
     dplyr::summarise(#`Villages Reporting` = as.numeric(count_unique(community)),
-      `Start Date` = min(date_2, na.rm = TRUE),
-      `End Date` = max(date_2, na.rm = TRUE),
+      `Start Date` = min(transaction_date, na.rm = TRUE),
+      `End Date` = max(transaction_date, na.rm = TRUE),
       `No. Months`= as.numeric(rarefma::count_unique(yearmonth)),
       `No. Years` = as.numeric(rarefma::count_unique(year)),
       `Total Counts` = sum(count, 

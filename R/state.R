@@ -30,6 +30,8 @@ state <- reactiveValues(
   species = list(
     choices = rarefma::init_family_species_selections$species,
     selected = rarefma::init_family_species_selections$species
-  )
+  ),
+  current_tab = 'Data',
+  performance_indicators = 'Reporting Effort'
 
 )

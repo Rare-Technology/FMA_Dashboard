@@ -8,10 +8,14 @@ app_server <- function( input, output, session ) {
 
   # The state object is read in automatically from state.R
 
+  # Main application
+  mainServer("mainUI", state)
+  
   # Sidebar
   sidebarServer("sidebarUI")
   sidebarGeoServer("sidebarGeoUI", state)
   sidebarFamServer("sidebarFamUI", state)
+  sidebarOptionsServer("sidebarOptionsUI", state)
   
   
   # Main

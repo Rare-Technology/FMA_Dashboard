@@ -12,8 +12,8 @@ sidebarUI <- function(id){
   tagList(
     sidebarPanel(class="sidebar",
       tabsetPanel(
-        tabPanel("Select geography", sidebarGeoUI("sidebarGeoUI")),
-        tabPanel("Select family & species", sidebarFamUI("sidebarFamUI"))
+        tabPanel("Geography", sidebarGeoUI("sidebarGeoUI")),
+        tabPanel("Family & species", sidebarFamUI("sidebarFamUI"))
       )
   )
   )

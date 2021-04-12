@@ -8,20 +8,7 @@ app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
-    fluidPage(class='container',
-      sidebarLayout(
-        sidebarUI("sidebarUI"),
-        mainPanel(
-          tabsetPanel(
-            tabPanel("Data", tableDataUI("tableDataUI")),
-            tabPanel("Select", div("2. Select indicators")),
-            tabPanel("Visualize", div("3. Visualize data")),
-            tabPanel("Interpret", div("4. Interpret results")),
-            tabPanel("Plan", div("5. Management plan"))
-          )
-        )
-      )
-    )
+    mainUI("mainUI")
   )
 }
 
@@ -45,8 +32,8 @@ golem_add_external_resources <- function(){
       path = app_sys('app/www'),
       app_title = 'rarefma'
     )
-    # Add here other external resources
-    # for example, you can add shinyalert::useShinyalert() 
+
   )
+
 }
 
