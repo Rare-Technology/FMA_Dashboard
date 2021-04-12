@@ -7,7 +7,7 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-sidebarPerIndUI <- function(id) {
+sidebarIndicatorUI <- function(id) {
   ns <- NS(id)
   tagList(
     uiOutput(ns('performance_indicators'))
@@ -17,7 +17,7 @@ sidebarPerIndUI <- function(id) {
 #' sidebar performance indicators Server Function
 #'
 #' @noRd
-sidebarPerIndServer <- function(id, state) {
+sidebarIndicatorServer <- function(id, state) {
   ns <- NS(id)
   moduleServer(
     id,

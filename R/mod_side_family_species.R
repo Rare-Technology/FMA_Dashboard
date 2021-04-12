@@ -7,7 +7,7 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-sidebarFamUI <- function(id) {
+sidebarStockUI <- function(id) {
   ns <- NS(id)
   tagList(
     selectInput(
@@ -34,7 +34,7 @@ sidebarFamUI <- function(id) {
 #' side_assessment Server Function
 #'
 #' @noRd
-sidebarFamServer <- function(id, state) {
+sidebarStockServer <- function(id, state) {
   
   moduleServer(
     id,
