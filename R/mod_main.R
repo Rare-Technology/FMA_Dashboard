@@ -9,8 +9,7 @@
 #' @importFrom shiny NS tagList 
 mainUI <- function(id){
   ns <- NS(id)
-    fluidPage(class='container',
-              sidebarLayout(
+    fixedPage(sidebarLayout(
                 sidebarUI("sidebarUI"),
                 mainPanel(
                   tabsetPanel(id = ns("tabs"),

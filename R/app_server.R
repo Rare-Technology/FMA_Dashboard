@@ -21,7 +21,7 @@ app_server <- function( input, output, session ) {
   # Main panel
   dataServer("dataUI", state)
   selectServer("selectUI")
-  visualizeServer("visualizeUI")
+  visualizeServer("visualizeUI", state)
   interpretServer("interpretUI")
   managementServer("managementUI")
 

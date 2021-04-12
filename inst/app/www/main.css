@@ -1,4 +1,6 @@
-
+.container{
+  width: 1170px !important;
+}
 .navbar {
   margin-bottom: 0px;
   min-height: 75px;
