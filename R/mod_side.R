@@ -4,9 +4,9 @@
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
-#' @noRd 
+#' @noRd
 #'
-#' @importFrom shiny NS tagList 
+#' @importFrom shiny NS tagList
 sidebarUI <- function(id){
   ns <- NS(id)
   tagList(
@@ -19,18 +19,17 @@ sidebarUI <- function(id){
   )
   )
 }
-    
+
 #' side Server Function
 #'
-#' @noRd 
+#' @noRd
 sidebarServer <- function(id){
   moduleServer(
     id,
     function(input, output, session){
-      
+
     }
   )
 
- 
+
 }
-    
