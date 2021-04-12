@@ -1,0 +1,1 @@
+count_unique <- function(x) { length(unique(x)) }

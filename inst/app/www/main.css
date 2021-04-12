@@ -1,0 +1,136 @@
+
+.navbar {
+  margin-bottom: 0px;
+  min-height: 75px;
+}
+
+.navbar-brand {
+    padding: 6px  15px 6px 10px;
+}
+
+.navbar-brand > div > img {
+  width: 40px;
+
+}
+
+.navbar-default {
+  background-color: #004794;
+}
+
+.navbar-default > li > a {
+  font-size: 4vw;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #004794;
+  background-color: white;
+
+}
+
+.navbar-nav {
+  float: right;
+  margin-top: 13px;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: #fff;
+}
+
+.dropdown-menu {
+  right: 0;
+  left: auto;
+}
+
+.well{
+  background-color: white;
+}
+
+
+.well .nav-tabs>li.active>a, 
+.well .nav-tabs>li.active>a:focus, .well .nav-tabs>li.active>a:hover {
+    color: #fff;
+    cursor: default;
+    background-color: #004794;
+    border: 1px solid #004794;
+    border-bottom-color: transparent;
+}
+.nav-tabs>li>a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+    padding: 10px 10px;
+}
+
+a {
+    color: #004794;
+    text-decoration: none;
+}
+
+.shiny-input-container>div>select:not(.selectized) {
+    width: 100%;
+    height: 200px;
+}
+
+
+
+
+.tab-content{
+  margin-top: 20px;
+}
+
+.img-holder{
+  display:flex;
+}
+
+.main-page-img{
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+.main-page-img img{
+  width: 400px;
+}
+
+.main-p{
+  margin: 30px 0;
+  width: 700px;
+}
+.img-p{
+  margin-top: 20px;
+}
+
+
+
+/* Slider*/
+
+.date_slider{
+  margin: 10px;
+}
+
+.irs-bar {
+  border-top: 1px solid #004794 !important;
+  border-bottom: 1px solid #004794 !important;
+  background: #004794 !important;
+}
+
+.irs-bar-edge {
+  border: 1px solid #004794 !important;
+  border-right: 0 !important;
+  background: #004794 !important;
+}
+
+.irs-from,
+.irs-to,
+.irs-single {
+  background: #004794 !important;
+}
+
+/*table*/
+  table.dataTable thead th {
+    padding: 10px 10px;
+  }
