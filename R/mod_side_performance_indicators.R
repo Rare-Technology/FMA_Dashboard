@@ -10,7 +10,7 @@
 sidebarIndicatorUI <- function(id) {
   ns <- NS(id)
   tagList(
-    uiOutput(ns('performance_indicators'))
+    uiOutput(ns("performance_indicators"))
   )
 }
 
@@ -21,76 +21,92 @@ sidebarIndicatorServer <- function(id, state) {
   ns <- NS(id)
   moduleServer(
     id,
-    function(input, output, session){
+    function(input, output, session) {
 
       # Dates slider
-      
+
       output$performance_indicators <- renderUI({
         tab <- state$current_tab
-        ui <- tab
-        
+        ui <- list()
+
         # ---- Data tab
-        if(tab == "Data"){
-          ui <- div(class = 'date_slider',
-              sliderInput(ns("date_range"),
-                          label = "Select date range",
-                          min = min(rarefma::init_dates, na.rm = TRUE),
-                          max = max(rarefma::init_dates + 1, na.rm = TRUE),
-                          value = c(min(rarefma::init_dates, na.rm = TRUE),
-                                    max(rarefma::init_dates + 1, na.rm = TRUE)
-                          ),
-                          ticks = FALSE,
-                          timeFormat = "%F"
-              )
+        if (tab %in% c("Data", "Visualize")) {
+          ui[["date_slider"]] <- div(
+            class = "date_slider",
+            sliderInput(ns("date_range"),
+              label = "Select date range",
+              min = min(rarefma::init_dates, na.rm = TRUE),
+              max = max(rarefma::init_dates + 1, na.rm = TRUE),
+              value = c(
+                min(rarefma::init_dates, na.rm = TRUE),
+                max(rarefma::init_dates + 1, na.rm = TRUE)
+              ),
+              ticks = FALSE,
+              timeFormat = "%F"
+            )
           )
         }
-        
+
         # ---- Select, Visualize, Interpret tabs
-        if(tab %in% c("Select", "Visualize", "Interpret")){
-          ui <-       selectInput(
-            inputId = ns('performance_indicators'),
+        if (tab %in% c("Select", "Visualize", "Interpret")) {
+          ui[["performance_indicators"]] <- selectInput(
+            inputId = ns("performance_indicators"),
             label = "Select performance indicators",
-            choices = c('Fishing Gear',
-                        'Reporting Effort',
-                        'Species Composition',
-                        'Fished:Unfished Ratio',
-                        'Average Length',
-                        'Average Trophic Level',
-                        #'Spawning Potential Ratio',
-                        'Size Structure',
-                        'Size Proportions',
-                        'CPUE',
-                        'Total Landings'),
+            choices = c(
+              "Fishing Gear",
+              "Reporting Effort",
+              "Species Composition",
+              "Fished:Unfished Ratio",
+              "Average Length",
+              "Average Trophic Level",
+              #' Spawning Potential Ratio',
+              "Size Structure",
+              "Size Proportions",
+              "CPUE",
+              "Total Landings"
+            ),
             selected = state$performance_indicators
           )
         }
-        
+
+        if (tab %in% c("Visualize")) {
+          ui[["loess_span"]] <- sliderInput(
+            inputId = "loess_span",
+            label = "Change curve smoothing",
+            min = 0.1, max = 1,
+            value = 0.5,
+            step = 0.1,
+            ticks = FALSE
+          )
+        }
+
         ui
       })
 
       observeEvent(state$dates,
-                   {
-                     updateSliderInput(
-                       session,
-                       "date_range",
-                       min = min(state$dates, na.rm = TRUE),
-                       max = max(state$dates + 1, na.rm = TRUE),
-                       value = c(min(state$dates, na.rm = TRUE),
-                                 max(state$dates + 1, na.rm = TRUE)
-                       ),
-                     )
-                   },
-                   ignoreInit = TRUE
-      )  
-      
+        {
+          updateSliderInput(
+            session,
+            "date_range",
+            min = min(state$dates, na.rm = TRUE),
+            max = max(state$dates + 1, na.rm = TRUE),
+            value = c(
+              min(state$dates, na.rm = TRUE),
+              max(state$dates + 1, na.rm = TRUE)
+            ),
+          )
+        },
+        ignoreInit = TRUE
+      )
+
       observeEvent(input$performance_indicators, {
         print(input$performance_indicators)
         state$performance_indicators <- input$performance_indicators
       })
-      
-      
+
+
       observeEvent(input$date_range, {
-        state$data_summary_filtered <- state$data_full %>% 
+        state$data_summary_filtered <- state$data_full %>%
           dplyr::filter(
             country == state$country$selected,
             subnational %in% state$subnational$selected,
@@ -99,14 +115,9 @@ sidebarIndicatorServer <- function(id, state) {
             family %in% state$family$selected,
             species %in% state$species$selected,
             dplyr::between(transaction_date, input$date_range[1], input$date_range[2])
-          ) %>% 
+          ) %>%
           create_data_summary()
-        
       })
-      
     }
   )
-  
-  
 }
-

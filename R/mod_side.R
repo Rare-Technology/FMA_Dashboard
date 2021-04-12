@@ -14,7 +14,7 @@ sidebarUI <- function(id){
       tabsetPanel(
         tabPanel("Geography", sidebarGeoUI("sidebarGeoUI")),
         tabPanel("Family & species", sidebarStockUI("sidebarStockUI")),
-        tabPanel("Performance indicators", sidebarIndicatorUI("sideparIndicatorUI"))
+        tabPanel("Performance indicators", sidebarIndicatorUI("sidebarIndicatorUI"))
       )
   )
   )

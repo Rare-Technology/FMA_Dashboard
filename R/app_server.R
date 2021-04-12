@@ -18,7 +18,11 @@ app_server <- function( input, output, session ) {
   sidebarIndicatorServer("sidebarIndicatorUI", state)
   
   
-  # Main
-  tableDataServer("tableDataUI", state)
+  # Main panel
+  dataServer("dataUI", state)
+  selectServer("selectUI")
+  visualizeServer("visualizeUI")
+  interpretServer("interpretUI")
+  managementServer("managementUI")
 
 }

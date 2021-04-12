@@ -7,7 +7,7 @@
 #' @noRd 
 #'
 #' @importFrom shiny NS tagList 
-tableDataUI <- function(id){
+dataUI <- function(id){
   ns <- NS(id)
   tagList(
     div(class = "table-holder",
@@ -20,7 +20,7 @@ tableDataUI <- function(id){
 #' main_data Server Function
 #'
 #' @noRd 
-tableDataServer <- function(id, state){
+dataServer <- function(id, state){
   moduleServer(
     id,
     function(input, output, server){
