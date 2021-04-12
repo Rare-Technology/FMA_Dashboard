@@ -49,6 +49,14 @@
   background-color: white;
 }
 
+@media (min-width: 768px) { 
+  .well>.tabbable{
+  height: 600px;
+  overflow-y: scroll;
+}
+  
+}
+
 
 .well .nav-tabs>li.active>a, 
 .well .nav-tabs>li.active>a:focus, .well .nav-tabs>li.active>a:hover {
