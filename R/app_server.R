@@ -15,7 +15,7 @@ app_server <- function( input, output, session ) {
   sidebarServer("sidebarUI")
   sidebarGeoServer("sidebarGeoUI", state)
   sidebarFamServer("sidebarFamUI", state)
-  sidebarOptionsServer("sidebarOptionsUI", state)
+  sidebarPerIndServer("sidebarPerIndUI", state)
   
   
   # Main

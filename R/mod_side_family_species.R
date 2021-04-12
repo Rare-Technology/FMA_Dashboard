@@ -28,8 +28,6 @@ sidebarFamUI <- function(id) {
       selectize = FALSE
     )),
     
-
-    sidebarOptionsUI("sidebarOptionsUI")
   )
 }
 

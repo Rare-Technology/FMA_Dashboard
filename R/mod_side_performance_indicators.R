@@ -1,4 +1,4 @@
-#' sidebarOptions UI Function
+#'  performance indicators UI Function
 #'
 #' @description A shiny Module.
 #'
@@ -7,18 +7,17 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-sidebarOptionsUI <- function(id) {
+sidebarPerIndUI <- function(id) {
   ns <- NS(id)
   tagList(
-    h3("Options"),
-    uiOutput(ns('test'))
+    uiOutput(ns('performance_indicators'))
   )
 }
 
-#' sidebarOptions Server Function
+#' sidebar performance indicators Server Function
 #'
 #' @noRd
-sidebarOptionsServer <- function(id, state) {
+sidebarPerIndServer <- function(id, state) {
   ns <- NS(id)
   moduleServer(
     id,
@@ -26,7 +25,7 @@ sidebarOptionsServer <- function(id, state) {
 
       # Dates slider
       
-      output$test <- renderUI({
+      output$performance_indicators <- renderUI({
         tab <- state$current_tab
         ui <- tab
         

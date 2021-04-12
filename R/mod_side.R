@@ -13,7 +13,8 @@ sidebarUI <- function(id){
     sidebarPanel(class="sidebar",
       tabsetPanel(
         tabPanel("Geography", sidebarGeoUI("sidebarGeoUI")),
-        tabPanel("Family & species", sidebarFamUI("sidebarFamUI"))
+        tabPanel("Family & species", sidebarFamUI("sidebarFamUI")),
+        tabPanel("Performance indicators", sidebarPerIndUI("sideparPerIndUI"))
       )
   )
   )
