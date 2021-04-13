@@ -58,9 +58,9 @@ selectServer <- function(id, state) {
             rows = seq(1, nrow(rarefma::reference_points), by = 2)
           )
         ) %>% 
-        cols_width(
+        gt::cols_width(
           gt::contains("Performance") ~ px(125),
-          everything() ~ px(145)
+          gt::everything() ~ px(145)
         ) %>% 
         gt::tab_options(
           table.font.size = 13

@@ -24,5 +24,7 @@ app_server <- function( input, output, session ) {
   visualizeServer("visualizeUI", state)
   interpretServer("interpretUI")
   managementServer("managementUI")
+  
+  #outputOptions(output, "sidebarIndicatorUI-performance_indicators", suspendWhenHidden = FALSE)
 
 }

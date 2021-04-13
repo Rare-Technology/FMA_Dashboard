@@ -23,15 +23,21 @@ visualizeServer <- function(id, state) {
     id,
     function(input, output, session) {
       
-      
+      # TODO: careful about reactives
       output$plot <- renderPlot({
-        plot_fishing_gear(state$data_filtered)
+        pi <- state$performance_indicators
+        data <- state$data_filtered
+        
+       switch (pi,
+         "Fishing Gear" = plot_fishing_gear(data),
+         "Reporting Effort" = plot_reporting_effort(data, 0.5)
+       )
+        
       })
       
       output$plotUI <- renderUI({
 
         list(
-          h3("A plot"),
           plotOutput(ns("plot"))
         )
       })

@@ -8,3 +8,14 @@ integer_breaks <- function(n = 5, ...) {
   }
   return(fxn)
 }
+
+trend_indicator <- function(mod) {
+  ifelse (coef(mod)[2] > 0 & summary(mod)$coef[,"Pr(>|t|)"] < 0.05, "Increasing",
+          ifelse(coef(mod)[2] < 0 & summary(mod)$coef[,"Pr(>|t|)"] < 0.05, "Decreasing", "No change"))[[1]]
+  
+}
+
+trend_color <- function(mod) {
+  ifelse(coef(mod)[2] > 0 & summary(mod)$coef[,"Pr(>|t|)"] < 0.05, "darkgreen",
+         ifelse(coef(mod)[2] < 0 & summary(mod)$coef[,"Pr(>|t|)"] < 0.05, "darkred", "grey20"))[[1]]
+}

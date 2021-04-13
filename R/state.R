@@ -5,7 +5,6 @@ state <- reactiveValues(
   data_summary = rarefma::data_summary[[rarefma::init_data_source]],
   data_summary_filtered = rarefma::init_data_summary_filtered,
   data_geo_family_species = rarefma::data_geo_family_species[[rarefma::init_data_source]],
-  dates = rarefma::init_dates,
   selections_geo = rarefma::init_geo_selections,
   country = list(
     choices = rarefma::init_geo_selections$country$choices,
@@ -31,7 +30,9 @@ state <- reactiveValues(
     choices = rarefma::init_family_species_selections$species,
     selected = rarefma::init_family_species_selections$species
   ),
+  dates = rarefma::init_dates,
   current_tab = 'Data',
-  performance_indicators = 'Reporting Effort'
+  performance_indicators = 'Reporting Effort',
+  loess_span = 0.5
 
 )

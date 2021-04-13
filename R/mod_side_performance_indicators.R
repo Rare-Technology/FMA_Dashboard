@@ -19,10 +19,12 @@ sidebarIndicatorUI <- function(id) {
 #' @noRd
 sidebarIndicatorServer <- function(id, state) {
   ns <- NS(id)
+  
+
   moduleServer(
     id,
     function(input, output, session) {
-
+      
       # Dates slider
 
       output$performance_indicators <- renderUI({
@@ -85,22 +87,21 @@ sidebarIndicatorServer <- function(id, state) {
 
       observeEvent(state$dates,
         {
-          updateSliderInput(
-            session,
-            "date_range",
-            min = min(state$dates, na.rm = TRUE),
-            max = max(state$dates + 1, na.rm = TRUE),
-            value = c(
-              min(state$dates, na.rm = TRUE),
-              max(state$dates + 1, na.rm = TRUE)
-            ),
-          )
+          # updateSliderInput(
+          #   session,
+          #   "date_range",
+          #   min = min(state$dates, na.rm = TRUE),
+          #   max = max(state$dates + 1, na.rm = TRUE),
+          #   value = c(
+          #     min(state$dates, na.rm = TRUE),
+          #     max(state$dates + 1, na.rm = TRUE)
+          #   ),
+          # )
         },
         ignoreInit = TRUE
       )
 
       observeEvent(input$performance_indicators, {
-        print(input$performance_indicators)
         state$performance_indicators <- input$performance_indicators
       })
 
@@ -117,7 +118,16 @@ sidebarIndicatorServer <- function(id, state) {
             dplyr::between(transaction_date, input$date_range[1], input$date_range[2])
           ) %>%
           create_data_summary()
+        
+        state$dates <- input$date_range
       })
+      
+      observeEvent(input$loess_span, {
+        state$loess_span <- input$loess_span
+      })
+      
+      outputOptions(output, "performance_indicators", suspendWhenHidden = FALSE)
+      
     }
   )
 }

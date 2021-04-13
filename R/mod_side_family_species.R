@@ -39,14 +39,16 @@ sidebarStockServer <- function(id, state) {
   moduleServer(
     id,
     function(input, output, session){
-      observeEvent(state$maa,
+      observeEvent(c(state$maa, state$dates),
                    {
+                    print('in maa')
                      species_info <- get_family_species_selections(
-                       state$data_geo_family_species,
+                       state$data_full,
                        state$country$selected,
                        state$subnational$selected,
                        state$local$selected,
                        state$maa$selected,
+                       state$dates
                      )
                      
                      state$family <- list(
@@ -69,20 +71,21 @@ sidebarStockServer <- function(id, state) {
                    ignoreInit = TRUE
       )
       
-      r_family <- reactive(input$sel_family)
+      # r_family <- reactive(input$sel_family)
       # d_family <- debounce(r_family, millis = 300)
       
-      observeEvent(r_family(),
+      observeEvent(input$sel_family,
                    {
-                     if (!setequal(r_family(), state$family$selected)) {
-                       state$family$selected <- r_family()
+                     if (!setequal(input$sel_family, state$family$selected)) {
+                       state$family$selected <- input$sel_family
                        species_info <- get_family_species_selections(
-                         state$data_geo_family_species,
+                         state$data_full,
                          state$country$selected,
                          state$subnational$selected,
                          state$local$selected,
                          state$maa$selected,
-                         r_family()
+                         state$dates,
+                         input$sel_family
                        )
                        
                        if (!setequal(species_info$species, state$species$selected)) {
@@ -141,17 +144,12 @@ sidebarStockServer <- function(id, state) {
         
         state$data_filtered <- data_filtered
         
-        state$dates <- get_dates(data_filtered)
+        # state$dates <- get_dates(data_filtered)
       })
       
 
       
-      observeEvent(state$data_filtered,
-                   {
-                     print("in data filtered")
-                   },
-                   ignoreInit = TRUE
-      )
+
     }
   )
 

@@ -3,15 +3,18 @@ get_family_species_selections <- function(.data,
                                     subnational_selected,
                                    local_selected,
                                    maa_selected,
+                                   dates,
                                    family_selected = NULL
                                    ){
  
+
   .data <- .data %>% 
     dplyr::filter(
       country %in% country_selected,
       subnational %in% subnational_selected,
       local %in% local_selected,
-      maa %in% maa_selected
+      maa %in% maa_selected,
+      dplyr::between(transaction_date, dates[1], dates[2])
     ) %>% 
     dplyr::select(
       family,
@@ -19,7 +22,8 @@ get_family_species_selections <- function(.data,
     ) %>% 
     dplyr::distinct() 
     
-  
+  print(length(sort(unique(.data$family))))
+  print(length(sort(unique(.data$species))))    
   if(is.null(family_selected))
     return(list(family = sort(unique(.data$family)), 
                 species = sort(.data$species)))
