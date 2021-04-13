@@ -1,6 +1,6 @@
 plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, Popt = -Inf){
   
-  browser()
+
   .data <- .data %>%
     dplyr::filter(species %in% sel_species) %>%
     droplevels()

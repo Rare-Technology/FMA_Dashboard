@@ -59,7 +59,8 @@ visualizeServer <- function(id, state) {
            "Average trophic level",
            loess_span
          ),
-         "Size Structure" = plot_size_structure(data, sel_species)
+         "Size Structure" = plot_size_structure(data, sel_species),
+         "Size Proportions" = plot_size_proportions(data, sel_species)
          #"Average Trophic Level" = plot_trophic_level(data, loess_span)
        )
         
