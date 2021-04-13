@@ -115,6 +115,11 @@ a {
   margin: 10px;
 }
 
+
+.smooth_slider{
+    margin: 15px !important;
+}
+
 .irs-bar {
   border-top: 1px solid #004794 !important;
   border-bottom: 1px solid #004794 !important;

@@ -22,8 +22,6 @@ get_family_species_selections <- function(.data,
     ) %>% 
     dplyr::distinct() 
     
-  print(length(sort(unique(.data$family))))
-  print(length(sort(unique(.data$species))))    
   if(is.null(family_selected))
     return(list(family = sort(unique(.data$family)), 
                 species = sort(.data$species)))

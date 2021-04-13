@@ -17,7 +17,10 @@ plot_fishing_gear <- function(.data) {
     "Longline", "Net", "Scuba diving", "Spear gun"
   )
 
-  gear_colors <- pal_npg(palette = c("nrc"), alpha = 1)(9)
+  #ggsci::pal_npg(palette = c("nrc"), alpha = 1)(9)
+  gear_colors <- c("#E64B35FF", "#4DBBD5FF", "#00A087FF", "#3C5488FF",
+  "#F39B7FFF", "#8491B4FF", "#91D1C2FF", "#DC0000FF",
+  "#7E6148FF")
 
   .data %>%
     ggplot(aes(

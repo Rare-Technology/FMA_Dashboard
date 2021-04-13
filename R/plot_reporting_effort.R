@@ -52,9 +52,7 @@ plot_reporting_effort <- function(.data, loess_span = 0.5) {
     ),
     oob = scales::squish
   ) +
-    theme_rare(rotate_x = TRUE) + 
-    theme(plot.subtitle = element_text(size=15,
-                                       colour = indicator_color_buyer))
+    theme_rare(rotate_x = TRUE, subtitle_color = indicator_color_buyer)
 
   # Numbber of buyers reporting
   buyers_plot <-
@@ -88,9 +86,7 @@ plot_reporting_effort <- function(.data, loess_span = 0.5) {
     ),
     oob = scales::squish
   ) +
-    theme_rare(rotate_x = TRUE) + 
-  theme(plot.subtitle = element_text(size=15,
-                                     colour = indicator_color_buyer))
+    theme_rare(rotate_x = TRUE, subtitle_color = indicator_color_buyer)
 
   cowplot::plot_grid(fishers_plot, buyers_plot, ncol = 2)
 }
