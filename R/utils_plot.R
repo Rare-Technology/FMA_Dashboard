@@ -9,13 +9,24 @@ trend_color <- function(mod) {
          ifelse(coef(mod)[2] < 0 & summary(mod)$coef[,"Pr(>|t|)"] < 0.05, "darkred", "grey20"))[[1]]
 }
 
+color_froese <- function(indicator,reference) {
+  ifelse(indicator > max(reference), "darkgreen",
+         ifelse(indicator < min(reference), "red", "darkorange"))[[1]]
+}
+
+color_froese_Pmega <- function(indicator,reference) {
+  ifelse(indicator > max(reference), "red", 
+         ifelse (indicator < min(reference),"darkorange", "darkgreen"))[[1]]
+}
+
 theme_rare <- function(rotate_x = FALSE, subtitle_color = "black") {
 
   # https://github.com/hrbrmstr/hrbrthemes/blob/master/R/theme-ipsum.r
   theme <- hrbrthemes::theme_ipsum(
     axis_title_size = 14,
     axis_title_just = "cc",
-    plot_margin = margin(5, 5, 5, 5)
+    plot_margin = margin(5, 5, 5, 5),
+    axis_text_size = 13
     ) + 
     theme(
       legend.text = element_text(size=14),
@@ -29,3 +40,4 @@ theme_rare <- function(rotate_x = FALSE, subtitle_color = "black") {
   
   theme
 }
+

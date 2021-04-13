@@ -1,8 +1,8 @@
 #plot_trend_smooth(rarefma::init_data_filtered, species, f = count_unique)
 
-plot_trend_smooth <- function(.data, var, f, title = '', y_title = '', loess_span = 0.5, min = NA, max = NA){
+plot_trend_smooth <- function(.data, var, f, title = '', y_title = '', loess_span = 0.5, ymin = NA, ymax = NA){
 
-  
+
   .data <-.data %>%
     dplyr::group_by(country, yearmonth) %>% 
     dplyr::summarise (result = f({{ var }}, na.rm = TRUE))
@@ -35,8 +35,8 @@ plot_trend_smooth <- function(.data, var, f, title = '', y_title = '', loess_spa
       title = title,
       subtitle = indicator_trend
     ) +
-    scale_y_continuous(breaks = integer_breaks(),
-                       limits = c(min, max),
+    scale_y_continuous(#breaks = integer_breaks(),
+                       limits = c(ymin, ymax),
                        oob = scales::squish) +
     theme_rare(subtitle_color = indicator_color)
   

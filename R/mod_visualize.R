@@ -25,21 +25,23 @@ visualizeServer <- function(id, state) {
       
       # TODO: careful about reactives
       output$plot <- renderPlot({
-        pi <- state$performance_indicators
+        
+        performance_indicators <- state$performance_indicators
         data <- state$data_filtered
         loess_span <- state$loess_span
-        print(loess_span)
+        sel_species <- state$species$selected[1]
         
-       switch (pi,
+       switch (performance_indicators,
          "Fishing Gear" = plot_fishing_gear(data),
          "Reporting Effort" = plot_reporting_effort(data, loess_span),
          "Species Composition" = plot_trend_smooth(
            data, 
            species, 
-           count_unique, 
-          "Number of species in the catch",
+           count_unique,
+           "Number of species in the catch",
            "Total number of species recorded in the catch",
-           loess_span
+           loess_span,
+           ymin = 0
            ),
          "Average Length" = plot_trend_smooth(
            data, 
@@ -48,7 +50,7 @@ visualizeServer <- function(id, state) {
            "Average length",
            "Average Length (cm)",
            loess_span,
-           min = 0),
+           ymin = 0),
          "Average Trophic Level" = plot_trend_smooth(
            data,
            trophic_level,
@@ -56,7 +58,9 @@ visualizeServer <- function(id, state) {
            "Average trophic level",
            "Average trophic level",
            loess_span
-         )
+         ),
+         "Size Structure" = plot_size_structure(data, sel_species)
+         #"Average Trophic Level" = plot_trophic_level(data, loess_span)
        )
         
       }, height = PLOT_HEIGHT)
