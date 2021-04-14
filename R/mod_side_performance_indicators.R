@@ -31,18 +31,18 @@ sidebarIndicatorServer <- function(id, state) {
         tab <- state$current_tab
         ui <- list()
 
-        
-        
+
+
         # ---- Select, Visualize, Interpret tabs
         if (tab %in% c("Select", "Visualize", "Interpret")) {
-          ui[["performance_indicators"]] <- div(class =" pi_widget", selectInput(
+          ui[["performance_indicators"]] <- div(class = " pi_widget", selectInput(
             inputId = ns("performance_indicators"),
             label = "Select performance indicators",
             choices = c(
               "Fishing Gear",
               "Reporting Effort",
               "Species Composition",
-              "Fished:Unfished Ratio",
+              # "Fished:Unfished Ratio",
               "Average Length",
               "Average Trophic Level",
               #' Spawning Potential Ratio',
@@ -51,10 +51,10 @@ sidebarIndicatorServer <- function(id, state) {
               "CPUE",
               "Total Landings"
             ),
-            selected = state$performance_indicators
+            selected = state$current_indicator
           ))
         }
-        
+
         # ---- Data tab
         if (tab %in% c("Data", "Visualize")) {
           ui[["date_slider"]] <- div(
@@ -76,15 +76,17 @@ sidebarIndicatorServer <- function(id, state) {
 
 
         if (tab %in% c("Visualize")) {
-          ui[["loess_span"]] <- div(class = "smooth_slider pi_widget", 
-                                    sliderInput(
-            inputId = ns("loess_span"),
-            label = "Change curve smoothing",
-            min = 0.1, max = 1,
-            value = 0.5,
-            step = 0.1,
-            ticks = FALSE
-          ))
+          ui[["loess_span"]] <- div(
+            class = "smooth_slider pi_widget",
+            sliderInput(
+              inputId = ns("loess_span"),
+              label = "Change curve smoothing",
+              min = 0.1, max = 1,
+              value = 0.5,
+              step = 0.1,
+              ticks = FALSE
+            )
+          )
         }
 
         ui
@@ -107,7 +109,7 @@ sidebarIndicatorServer <- function(id, state) {
       )
 
       observeEvent(input$performance_indicators, {
-        state$performance_indicators <- input$performance_indicators
+        state$current_indicator <- input$performance_indicators
       })
 
 

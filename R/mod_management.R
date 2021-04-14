@@ -9,9 +9,7 @@
 #' @importFrom shiny NS tagList
 managementUI <- function(id) {
   ns <- NS(id)
-  tagList(
-    
-  )
+  tagList()
 }
 
 #'  Server Function
@@ -22,8 +20,8 @@ managementServer <- function(id, state) {
   moduleServer(
     id,
     function(input, output, session) {
-      
-      
+
+
     }
   )
 }

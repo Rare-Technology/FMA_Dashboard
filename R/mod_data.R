@@ -4,27 +4,27 @@
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
-#' @noRd 
+#' @noRd
 #'
-#' @importFrom shiny NS tagList 
-dataUI <- function(id){
+#' @importFrom shiny NS tagList
+dataUI <- function(id) {
   ns <- NS(id)
   tagList(
-    div(class = "table-holder",
-        DT::DTOutput(ns('main_data'))
-        )
-
+    div(
+      class = "table-holder",
+      DT::DTOutput(ns("main_data"))
+    )
   )
 }
-    
+
 #' main_data Server Function
 #'
-#' @noRd 
-dataServer <- function(id, state){
+#' @noRd
+dataServer <- function(id, state) {
   moduleServer(
     id,
-    function(input, output, server){
-      observeEvent(state$data_summary_filtered , {
+    function(input, output, server) {
+      observeEvent(state$data_summary_filtered, {
         table_data <- state$data_summary_filtered %>%
           dplyr::rename(
             Country = country,
@@ -34,9 +34,9 @@ dataServer <- function(id, state){
             Family = family,
             Species = species
           )
-        
-      
-        
+
+
+
         tbl <- DT::datatable(
           data = table_data,
           class = "display nowrap",
@@ -56,24 +56,20 @@ dataServer <- function(id, state){
             initComplete = DT::JS(
               "function(settings, json) {",
               "$(this.api().table().header()).css({'background-color': '#000', 'color': '#fff'});",
-              "}")
+              "}"
+            )
           )
         )
-        
-        
+
+
         output$main_data <- DT::renderDT(tbl)
       })
     }
   )
-  
-
-  
-
 }
-    
+
 ## To be copied in the UI
 # mod_main_data_ui("main_data_ui_1")
-    
+
 ## To be copied in the server
 # callModule(mod_main_data_server, "main_data_ui_1")
- 

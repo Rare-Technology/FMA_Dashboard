@@ -1,5 +1,4 @@
 plot_fishing_gear <- function(.data) {
-  
   .data <- .data %>%
     dplyr::filter(gear_type != "") %>%
     dplyr::group_by(country, yearmonth, gear_type) %>%
@@ -17,12 +16,14 @@ plot_fishing_gear <- function(.data) {
     "Longline", "Net", "Scuba diving", "Spear gun"
   )
 
-  #ggsci::pal_npg(palette = c("nrc"), alpha = 1)(9)
-  gear_colors <- c("#E64B35FF", "#4DBBD5FF", "#00A087FF", "#3C5488FF",
-  "#F39B7FFF", "#8491B4FF", "#91D1C2FF", "#DC0000FF",
-  "#7E6148FF")
+  # ggsci::pal_npg(palette = c("nrc"), alpha = 1)(9)
+  gear_colors <- c(
+    "#E64B35FF", "#4DBBD5FF", "#00A087FF", "#3C5488FF",
+    "#F39B7FFF", "#8491B4FF", "#91D1C2FF", "#DC0000FF",
+    "#7E6148FF"
+  )
 
-  .data %>%
+  p <- .data %>%
     ggplot(aes(
       x = yearmonth,
       y = gear_count,
@@ -44,4 +45,9 @@ plot_fishing_gear <- function(.data) {
       fill = "Gear type"
     ) +
     theme_rare()
+
+
+  trend <- ifelse("Destructive" %in% .data$gear_type, "Destructive", "No destructive")
+
+  list(plot = p, trend = trend)
 }

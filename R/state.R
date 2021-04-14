@@ -1,5 +1,4 @@
-get_state <- function(){
-  
+initialize_state <- function() {
   reactiveValues(
     data_source = fma_init_data_source,
     data_full = fma_data_raw[[fma_init_data_source]]$data,
@@ -33,9 +32,9 @@ get_state <- function(){
       selected = fma_init_family_species_selections$species
     ),
     dates = fma_init_dates,
-    current_tab = 'Data',
-    performance_indicators = 'Reporting Effort',
+    current_tab = "Data",
+    current_indicator = "Species Composition",
+    current_trend = NA,
     loess_span = 0.5
-    
   )
 }

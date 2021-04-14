@@ -4,40 +4,38 @@
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
 #'
-#' @noRd 
+#' @noRd
 #'
-#' @importFrom shiny NS tagList 
-mainUI <- function(id){
+#' @importFrom shiny NS tagList
+mainUI <- function(id) {
   ns <- NS(id)
-    fixedPage(sidebarLayout(
-                sidebarUI("sidebarUI"),
-                mainPanel(
-                  tabsetPanel(id = ns("tabs"),
-                    tabPanel("Data", dataUI("dataUI")),
-                    tabPanel("Select", selectUI("selectUI")),
-                    tabPanel("Visualize", visualizeUI("visualizeUI")),
-                    tabPanel("Interpret", interpretUI("interpretUI")),
-                    tabPanel("Plan", managementUI("managementUI"))
-                  )
-                )
-              )
-    
-  )
+  fixedPage(sidebarLayout(
+    sidebarUI("sidebarUI"),
+    mainPanel(
+      tabsetPanel(
+        id = ns("tabs"),
+        tabPanel("Data", dataUI("dataUI")),
+        tabPanel("Select", selectUI("selectUI")),
+        tabPanel("Visualize", visualizeUI("visualizeUI")),
+        tabPanel("Interpret", interpretUI("interpretUI")),
+        tabPanel("Plan", managementUI("managementUI"))
+      )
+    )
+  ))
 }
 
 #' main Server Function
 #'
-#' @noRd 
-mainServer <- function(id, state){
+#' @noRd
+mainServer <- function(id, state) {
   moduleServer(
     id,
-    function(input, output, session){
+    function(input, output, session) {
 
       observeEvent(input$tabs, {
         state$current_tab <- input$tabs
       })
+      #outputOptions(output, "Visualize", suspendWhenHidden = FALSE)
     }
   )
-  
-  
 }

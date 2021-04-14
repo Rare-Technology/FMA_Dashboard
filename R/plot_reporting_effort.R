@@ -44,14 +44,14 @@ plot_reporting_effort <- function(.data, loess_span = 0.5) {
       x = "",
       y = "Total number of fishers reporting per day"
     ) +
-  scale_y_continuous(
-    breaks = integer_breaks(),
-    limits = c(
-      0,
-      max(.data$fisher_count)
-    ),
-    oob = scales::squish
-  ) +
+    scale_y_continuous(
+      breaks = integer_breaks(),
+      limits = c(
+        0,
+        max(.data$fisher_count)
+      ),
+      oob = scales::squish
+    ) +
     theme_rare(rotate_x = TRUE, subtitle_color = indicator_color_buyer)
 
   # Numbber of buyers reporting
@@ -78,15 +78,17 @@ plot_reporting_effort <- function(.data, loess_span = 0.5) {
       x = "",
       y = "Total number of buyers reporting per day"
     ) +
-  scale_y_continuous(
-    breaks = integer_breaks(),
-    limits = c(
-      0,
-      max(.data$buyer_count)
-    ),
-    oob = scales::squish
-  ) +
+    scale_y_continuous(
+      breaks = integer_breaks(),
+      limits = c(
+        0,
+        max(.data$buyer_count)
+      ),
+      oob = scales::squish
+    ) +
     theme_rare(rotate_x = TRUE, subtitle_color = indicator_color_buyer)
 
-  cowplot::plot_grid(fishers_plot, buyers_plot, ncol = 2)
+  p <- cowplot::plot_grid(fishers_plot, buyers_plot, ncol = 2)
+
+  list(plot = p, trend = unique(indicator_trend_fisher, indicator_trend_buyer))
 }
