@@ -1,4 +1,5 @@
 plot_size_proportions <- function(.data, sel_species) {
+
   .data <- .data %>%
     dplyr::filter(species %in% sel_species) %>%
     droplevels()
@@ -61,7 +62,7 @@ plot_size_proportions <- function(.data, sel_species) {
   }
 
   # plot
-  p <- fma_df %>%
+  p <- try(fma_df %>%
     ggplot(aes(yearmonth)) +
     geom_line(aes(y = percentMature),
       col = "red"
@@ -88,7 +89,7 @@ plot_size_proportions <- function(.data, sel_species) {
       label = c("Pmat", "Popt", "Pmega"),
       col = c(2, "darkgreen", 4)
     ) +
-    theme_rare()
+    theme_rare(), silent = TRUE)
 
   list(plot = p, trend = "TREND")
 }
