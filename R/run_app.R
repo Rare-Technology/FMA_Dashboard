@@ -8,7 +8,6 @@
 run_app <- function(
   ...
 ) {
-  print('Rare FMA from run_app')
   with_golem_options(
     app = shinyApp(
       ui = app_ui, 

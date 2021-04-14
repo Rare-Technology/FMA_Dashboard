@@ -5,7 +5,6 @@
 #' @import shiny
 #' @noRd
 app_server <- function( input, output, session ) {
-  
 
   state <- get_state()
   
