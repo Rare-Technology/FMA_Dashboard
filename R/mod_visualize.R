@@ -60,8 +60,16 @@ visualizeServer <- function(id, state) {
            loess_span
          ),
          "Size Structure" = plot_size_structure(data, sel_species),
-         "Size Proportions" = plot_size_proportions(data, sel_species)
-         #"Average Trophic Level" = plot_trophic_level(data, loess_span)
+         "Size Proportions" = plot_size_proportions(data, sel_species),
+         "CPUE" = plot_cpue(data, loess_span, ymin = 0),
+         "Total Landings" = plot_trend_smooth(
+           data,
+           weight_kg,
+           sum,
+           "Average trophic level",
+           "Total landings (kg/month)",
+           loess_span
+         ),
        )
         
       }, height = PLOT_HEIGHT)
