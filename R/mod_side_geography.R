@@ -13,8 +13,8 @@ sidebarGeoUI <- function(id) {
     selectInput(
       ns("sel_datasource"),
       "Data source",
-      choices = rarefma::data_sources,
-      selected = rarefma::init_data_source,
+      choices = data_sources,
+      selected = init_data_source,
     ),
     selectInput(
       ns("sel_country"),
