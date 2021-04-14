@@ -22,7 +22,7 @@ color_froese_Pmega <- function(indicator,reference) {
 theme_rare <- function(rotate_x = FALSE, subtitle_color = "black") {
 
   # https://github.com/hrbrmstr/hrbrthemes/blob/master/R/theme-ipsum.r
-  theme <- hrbrthemes::theme_ipsum_rc(
+  theme <- hrbrthemes::theme_ipsum(
     axis_title_size = 14,
     axis_title_just = "cc",
     plot_margin = margin(5, 5, 5, 5),
