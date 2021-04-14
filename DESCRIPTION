@@ -16,7 +16,8 @@ Imports:
     cowplot,
     scales,
     shinycssloaders,
-    rlang
+    rlang,
+    hrbrthemes
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1

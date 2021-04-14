@@ -1,7 +1,12 @@
 # Launch the ShinyApp (Do not remove this comment)
 # To deploy, run: rsconnect::deployApp()
 # Or use the blue button on top of this file
-
+dir.create('~/.fonts')
+file.copy("www/Arial Narrow.ttf", "~/.fonts")
+file.copy("www/Arrial Narrow Bold Italic.ttf", "~/.fonts")
+file.copy("www/Arial Narrow Bold.ttf", "~/.fonts")
+file.copy("www/Arial Narrow Italic.ttf", "~/.fonts")
+system('fc-cache -f ~/.fonts')
 pkgload::load_all(export_all = FALSE, helpers = FALSE, attach_testthat = FALSE)
 options( "golem.app.prod" = TRUE)
 rarefma::run_app()
