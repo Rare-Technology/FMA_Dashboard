@@ -2,6 +2,7 @@
 # To deploy, run: rsconnect::deployApp()
 # Or use the blue button on top of this file
 dir.create('~/.fonts')
+print(dir(recursive = TRUE))
 file.copy("www/Arial Narrow.ttf", "~/.fonts")
 file.copy("www/Arrial Narrow Bold Italic.ttf", "~/.fonts")
 file.copy("www/Arial Narrow Bold.ttf", "~/.fonts")
