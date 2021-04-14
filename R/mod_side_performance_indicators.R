@@ -61,11 +61,11 @@ sidebarIndicatorServer <- function(id, state) {
             class = "date_slider pi_widget",
             sliderInput(ns("date_range"),
               label = "Select date range",
-              min = min(rarefma::init_dates, na.rm = TRUE),
-              max = max(rarefma::init_dates + 1, na.rm = TRUE),
+              min = min(init_dates, na.rm = TRUE),
+              max = max(init_dates + 1, na.rm = TRUE),
               value = c(
-                min(rarefma::init_dates, na.rm = TRUE),
-                max(rarefma::init_dates + 1, na.rm = TRUE)
+                min(init_dates, na.rm = TRUE),
+                max(init_dates + 1, na.rm = TRUE)
               ),
               ticks = FALSE,
               timeFormat = "%F"

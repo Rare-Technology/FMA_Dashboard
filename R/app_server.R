@@ -5,9 +5,10 @@
 #' @import shiny
 #' @noRd
 app_server <- function( input, output, session ) {
+  
 
-  # The state object is read in automatically from state.R
-
+  state <- get_state()
+  
   # Main application
   mainServer("mainUI", state)
   

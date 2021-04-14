@@ -37,7 +37,7 @@ selectServer <- function(id, state) {
       # 
       #   )
     
-      ref_points <- rarefma::reference_points %>% 
+      ref_points <- fma_reference_points %>% 
         gt::gt() %>% 
         gt::tab_header(
           title = "Performance Indicators",
@@ -55,7 +55,7 @@ selectServer <- function(id, state) {
             gt::cell_fill(color = "#f7e7c3")
             ),
           locations = gt::cells_body(
-            rows = seq(1, nrow(rarefma::reference_points), by = 2)
+            rows = seq(1, nrow(fma_reference_points), by = 2)
           )
         ) %>% 
         gt::cols_width(

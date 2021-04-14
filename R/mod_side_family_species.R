@@ -13,8 +13,8 @@ sidebarStockUI <- function(id) {
     selectInput(
       ns("sel_family"),
       "Select family",
-      choices = rarefma::init_family_species_selections$family,
-      selected = rarefma::init_family_species_selections$family,
+      choices = fma_init_family_species_selections$family,
+      selected = fma_init_family_species_selections$family,
       multiple = TRUE,
       selectize = FALSE
     ),
@@ -22,8 +22,8 @@ sidebarStockUI <- function(id) {
     selectInput(
       ns("sel_species"),
       "Select species",
-      choices = rarefma::init_family_species_selections$species,
-      selected = rarefma::init_family_species_selections$species,
+      choices = fma_init_family_species_selections$species,
+      selected = fma_init_family_species_selections$species,
       multiple = TRUE,
       selectize = FALSE
     )),

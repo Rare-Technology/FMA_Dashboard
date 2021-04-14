@@ -18,8 +18,8 @@ create_data_summary <- function(.data){
     dplyr::summarise(#`Villages Reporting` = as.numeric(count_unique(community)),
       `Start Date` = min(transaction_date, na.rm = TRUE),
       `End Date` = max(transaction_date, na.rm = TRUE),
-      `No. Months`= as.numeric(rarefma::count_unique(yearmonth)),
-      `No. Years` = as.numeric(rarefma::count_unique(year)),
+      `No. Months`= as.numeric(count_unique(yearmonth)),
+      `No. Years` = as.numeric(count_unique(year)),
       `Total Counts` = sum(count, 
                            na.rm = TRUE),
       `Total Weight (kg)` = round(
