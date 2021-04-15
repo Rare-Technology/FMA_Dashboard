@@ -106,19 +106,19 @@ plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, P
       hjust = 1.5,
       vjust = 2,
       size = 5,
-      colour = color_froese(froeseTemp$percentMature, Pmat),
+      colour = color_froese_Pmat(froeseTemp$percentMature),
       label = paste("Pmat: ", signif(froeseTemp$percentMature, 3), "%")
     ) +
     geom_text(
       x = Inf, y = Inf, hjust = 1.5, vjust = 4,
       size = 5,
-      colour = color_froese(froeseTemp$percentOpt, Popt),
+      colour = color_froese_Popt(froeseTemp$percentOpt),
       label = paste("Popt: ", signif(froeseTemp$percentOpt, 2), "%")
     ) +
     geom_text(
       x = Inf, y = Inf, hjust = 1.5, vjust = 6,
       size = 5,
-      colour = color_froese_Pmega(froeseTemp$percentMega, Pmega),
+      colour = color_froese_Pmega(froeseTemp$percentMega),
       label = paste("Pmega: ", signif(froeseTemp$percentMega, 2), "%")
     ) +
     theme_rare()

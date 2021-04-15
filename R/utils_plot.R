@@ -16,11 +16,12 @@ color_froese <- function(indicator, reference) {
   )[[1]]
 }
 
-color_froese_Pmega <- function(indicator, reference) {
-  ifelse(indicator > max(reference), "red",
-    ifelse(indicator < min(reference), "darkorange", "darkgreen")
-  )[[1]]
-}
+
+color_froese_Pmat <- function(indicator) { ifelse(indicator > 90, "darkgreen", ifelse(indicator < 50, "red", "darkorange"))[[1]] }
+
+color_froese_Popt <- function(indicator) { ifelse(indicator > 80, "darkgreen", ifelse(indicator < 50, "red", "darkorange"))[[1]] }
+
+color_froese_Pmega <- function(indicator) { ifelse(indicator > 40, "red", ifelse (indicator < 20 ,"darkorange", "darkgreen"))[[1]] }
 
 theme_rare <- function(rotate_x = FALSE, subtitle_color = "black") {
 

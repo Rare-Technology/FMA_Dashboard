@@ -10,6 +10,7 @@ plot_trend_smooth <- function(.data, var, f,
 
   # str_var <- rlang::as_name(quote(var))
   # form <- as.formula(glue::glue("{str_var} ~ yearmonth"))
+
   mod <- glm(result ~ yearmonth,
     family = gaussian,
     data = .data

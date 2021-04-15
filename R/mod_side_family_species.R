@@ -48,7 +48,7 @@ sidebarStockServer <- function(id, state) {
             state$subnational$selected,
             state$local$selected,
             state$maa$selected,
-            state$dates
+            state$current_date_range
           )
 
           state$family <- list(
@@ -84,7 +84,7 @@ sidebarStockServer <- function(id, state) {
               state$subnational$selected,
               state$local$selected,
               state$maa$selected,
-              state$dates,
+              state$current_date_range,
               input$sel_family
             )
 
@@ -137,8 +137,14 @@ sidebarStockServer <- function(id, state) {
           )
 
         state$data_filtered <- data_filtered
+        current_dates <- get_dates(data_filtered)
 
-        # state$dates <- get_dates(data_filtered)
+        state$current_date_range <- list(
+          min = min(current_dates, na.rm = TRUE),
+          max = max(current_dates, na.rm = TRUE),
+          valmin = min(current_dates, na.rm = TRUE),
+          valmax = max(current_dates, na.rm = TRUE)
+        ) 
       })
     }
   )

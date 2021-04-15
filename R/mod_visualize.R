@@ -10,9 +10,7 @@
 visualizeUI <- function(id) {
   ns <- NS(id)
   tagList(
-    div(class = "XYZ",
         uiOutput(ns("plot_holder")) %>% withSpinner(color = SPINNER_COLOR)
-        )
     
   )
 }
