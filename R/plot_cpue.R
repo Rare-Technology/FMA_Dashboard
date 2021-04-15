@@ -35,13 +35,13 @@ plot_cpue <- function(.data, loess_span, ymin = NA, ymax = NA) {
       alpha = 0.1
     ) +
     labs(
-      title = "CPUE (Catch in kg/trip)",
+      title = "CPUE (catch in kg/trip)",
       subtitle = indicator_trend,
       x = "",
       y = "CPUE (kg/trip)"
     ) +
     scale_y_continuous(limits = c(ymin, ymax), oob = scales::squish) +
-    theme_rare()
+    theme_rare(subtitle_color = indicator_color)
 
   list(plot = p, trend = indicator_trend)
 }

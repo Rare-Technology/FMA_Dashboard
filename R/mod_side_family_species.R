@@ -39,7 +39,7 @@ sidebarStockServer <- function(id, state) {
   moduleServer(
     id,
     function(input, output, session) {
-      observeEvent(c(state$maa, state$dates),
+      observeEvent(state$maa,
         {
           print("in maa")
           species_info <- get_family_species_selections(

@@ -61,11 +61,11 @@ sidebarIndicatorServer <- function(id, state) {
             class = "date_slider pi_widget",
             sliderInput(ns("date_range"),
               label = "Select date range",
-              min = min(init_dates, na.rm = TRUE),
-              max = max(init_dates + 1, na.rm = TRUE),
+              min = min(fma_init_dates, na.rm = TRUE),
+              max = max(fma_init_dates + 1, na.rm = TRUE),
               value = c(
-                min(init_dates, na.rm = TRUE),
-                max(init_dates + 1, na.rm = TRUE)
+                min(fma_init_dates, na.rm = TRUE),
+                max(fma_init_dates + 1, na.rm = TRUE)
               ),
               ticks = FALSE,
               timeFormat = "%F"
@@ -94,16 +94,7 @@ sidebarIndicatorServer <- function(id, state) {
 
       observeEvent(state$dates,
         {
-          # updateSliderInput(
-          #   session,
-          #   "date_range",
-          #   min = min(state$dates, na.rm = TRUE),
-          #   max = max(state$dates + 1, na.rm = TRUE),
-          #   value = c(
-          #     min(state$dates, na.rm = TRUE),
-          #     max(state$dates + 1, na.rm = TRUE)
-          #   ),
-          # )
+
         },
         ignoreInit = TRUE
       )
@@ -114,7 +105,8 @@ sidebarIndicatorServer <- function(id, state) {
 
 
       observeEvent(input$date_range, {
-        state$data_summary_filtered <- state$data_full %>%
+        
+        data_filtered <- state$data_full %>%
           dplyr::filter(
             country == state$country$selected,
             subnational %in% state$subnational$selected,
@@ -123,7 +115,11 @@ sidebarIndicatorServer <- function(id, state) {
             family %in% state$family$selected,
             species %in% state$species$selected,
             dplyr::between(transaction_date, input$date_range[1], input$date_range[2])
-          ) %>%
+          )
+        
+        state$data_filtered <- data_filtered
+        
+        state$data_summary_filtered <- data_filtered %>%
           create_data_summary()
 
         state$dates <- input$date_range
