@@ -76,6 +76,7 @@ sidebarStockServer <- function(id, state) {
 
       observeEvent(input$sel_family,
         {
+          
           if (!setequal(input$sel_family, state$family$selected)) {
             state$family$selected <- input$sel_family
             species_info <- get_family_species_selections(
@@ -84,10 +85,10 @@ sidebarStockServer <- function(id, state) {
               state$subnational$selected,
               state$local$selected,
               state$maa$selected,
-              state$current_date_range,
+              #state$current_date_range,
               input$sel_family
             )
-
+    
             if (!setequal(species_info$species, state$species$selected)) {
               state$species$selected <- species_info$species
               state$species$choices <- species_info$species
@@ -139,6 +140,7 @@ sidebarStockServer <- function(id, state) {
         state$data_filtered <- data_filtered
         current_dates <- get_dates(data_filtered)
 
+   
         state$current_date_range <- list(
           min = min(current_dates, na.rm = TRUE),
           max = max(current_dates, na.rm = TRUE),

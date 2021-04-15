@@ -2,6 +2,7 @@ plot_size_proportions <- function(.data, sel_species) {
 
   .data <- .data %>%
     dplyr::filter(species %in% sel_species) %>%
+    dplyr::filter(!is.na(count)) %>% 
     droplevels()
 
   ### Calculate Froese indicators per MA and species per month
@@ -60,6 +61,7 @@ plot_size_proportions <- function(.data, sel_species) {
 
     fma_df <- rbind(fma_df, fma_metrics_df)
   }
+
 
   # plot
   p <- try(fma_df %>%

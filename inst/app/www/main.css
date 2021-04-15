@@ -144,10 +144,3 @@ a {
     padding: 10px 10px;
   }
   
-@media (min-width: 768px) { 
-  .well>.tabbable{
-  height: 600px;
-  overflow-y: scroll;
-}
-
-}

@@ -36,7 +36,7 @@ sidebarIndicatorServer <- function(id, state) {
         ui <- list()
 
   
-
+     
         # ---- Select, Visualize, Interpret tabs
         if (current_tab %in% c("Select", "Visualize", "Interpret")) {
           ui[["performance_indicators"]] <- div(class = " pi_widget", selectInput(

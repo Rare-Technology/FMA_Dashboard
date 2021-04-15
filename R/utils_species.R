@@ -3,15 +3,15 @@ get_family_species_selections <- function(.data,
                                           subnational_selected,
                                           local_selected,
                                           maa_selected,
-                                          dates,
+                                          #dates,
                                           family_selected = NULL) {
   .data <- .data %>%
     dplyr::filter(
       country %in% country_selected,
       subnational %in% subnational_selected,
       local %in% local_selected,
-      maa %in% maa_selected,
-      dplyr::between(transaction_date, dates[1], dates[2])
+      maa %in% maa_selected#,
+      #dplyr::between(transaction_date, dates$valmin, dates$valmax)
     ) %>%
     dplyr::select(
       family,
