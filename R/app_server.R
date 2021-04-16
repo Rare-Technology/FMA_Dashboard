@@ -15,6 +15,7 @@ app_server <- function(input, output, session) {
   sidebarGeoServer("sidebarGeoUI", state)
   sidebarStockServer("sidebarStockUI", state)
   sidebarIndicatorServer("sidebarIndicatorUI", state)
+  sidebarHelpServer("sidebarHelpUI")
 
 
   # Main panel

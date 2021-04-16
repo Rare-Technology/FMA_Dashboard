@@ -15,7 +15,9 @@ sidebarUI <- function(id) {
       tabsetPanel(
         tabPanel("Geography", sidebarGeoUI("sidebarGeoUI")),
         tabPanel("Stock", sidebarStockUI("sidebarStockUI")),
-        tabPanel("Indicator", sidebarIndicatorUI("sidebarIndicatorUI"))
+        tabPanel("Indicator", sidebarIndicatorUI("sidebarIndicatorUI")),
+        tabPanel("Help", sidebarHelpUI("sidebarHelpUi"))
+ 
       )
     )
   )
@@ -28,7 +30,7 @@ sidebarServer <- function(id) {
   moduleServer(
     id,
     function(input, output, session) {
-
+    
     }
   )
 }

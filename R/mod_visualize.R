@@ -68,8 +68,8 @@ visualizeServer <- function(id, state) {
                            data,
                            weight_kg,
                            sum,
-                           "Average trophic level",
                            "Total landings (kg/month)",
+                           "Total Catch (kg/month)",
                            loess_span
                          ),
         )

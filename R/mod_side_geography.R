@@ -45,6 +45,11 @@ sidebarGeoUI <- function(id) {
       selected = fma_init_geo_selections$maa$selected,
       multiple = TRUE,
       selectize = TRUE
+    ),
+    div(class = 'timeouttxt',
+        h3(class = 'timeouttitle', "Please note"),
+        p(glue::glue("This app may time-out if left idle too long, which will cause the",
+                     " screen to grey-out. To use the app again, refresh the page."))
     )
   )
 }
