@@ -143,3 +143,19 @@ a {
   table.dataTable thead th {
     padding: 10px 10px;
   }
+  
+  .shiny-input-container>div>.form-control>option {
+    padding: 5px;
+  }
+  
+  
+  .shiny-input-container>div>.form-control>option:checked, .shiny-input-container>div>.form-control>option:focus, .shiny-input-container>div>.form-control>option:active, .shiny-input-container>div>.form-control>option:hover, .shiny-input-container>div>.form-control>option:checked:hover {
+    background: #cecece !important;
+    background-color: #cecece !important;
+  }
+  
+  .shiny-input-container>div>.form-control>option:not(:checked) {
+    background-color: #fff;
+  }
+
+
