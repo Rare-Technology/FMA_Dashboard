@@ -12,7 +12,7 @@ sidebarStockUI <- function(id) {
   tagList(
     selectInput(
       ns("sel_family"),
-      "Select family",
+      tooltip_label("tip-family", "Select family"),
       choices = fma_init_family_species_selections$family,
       selected = fma_init_family_species_selections$family,
       multiple = TRUE,
@@ -22,13 +22,15 @@ sidebarStockUI <- function(id) {
       class = "fam-spec-select",
       selectInput(
         ns("sel_species"),
-        "Select species",
+        tooltip_label("tip-species", "Select species"),
         choices = fma_init_family_species_selections$species,
         selected = fma_init_family_species_selections$species,
         multiple = TRUE,
         selectize = FALSE
       )
     ),
+    tippy_class_alt("tip-family", "Select a fisheries family or all families by clicking Ctrl+A or Comm+A"),
+    tippy_class_alt("tip-species", "Select a fisheries species or all species by clicking Ctrl+A or Comm+A")
   )
 }
 

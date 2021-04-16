@@ -39,9 +39,11 @@ sidebarIndicatorServer <- function(id, state) {
      
         # ---- Select, Visualize, Interpret tabs
         if (current_tab %in% c("Select", "Visualize", "Interpret")) {
-          ui[["performance_indicators"]] <- div(class = " pi_widget", selectInput(
+          ui[["performance_indicators"]] <- 
+          div(class = " pi_widget", 
+          selectInput(
             inputId = ns("performance_indicators"),
-            label = "Select performance indicators",
+            label = "Select performance indicator",
             choices = c(
               "Fishing Gear",
               "Reporting Effort",
@@ -56,7 +58,10 @@ sidebarIndicatorServer <- function(id, state) {
               "Total Landings"
             ),
             selected = current_indicator
-          ))
+          )
+          )
+         
+          
         }
 
         # ---- Data tab
@@ -81,7 +86,7 @@ sidebarIndicatorServer <- function(id, state) {
             class = "smooth_slider pi_widget",
             sliderInput(
               inputId = ns("loess_span"),
-              label = "Change curve smoothing",
+              label = tooltip_label("tip-smooth", "Change curve smoothing"),
               min = 0.1, max = 1,
               value = 0.5,
               step = 0.1,
@@ -95,7 +100,7 @@ sidebarIndicatorServer <- function(id, state) {
             class = "smooth_slider pi_widget",
             sliderInput(
               inputId = ns("min_records"),
-              label = "Select min records per species",
+              label = tooltip_label("tip-min-species", "Select min records per species"),
               min = current_min_records$min,  
               max = current_min_records$max,
               value = current_min_records$value, 
@@ -106,6 +111,11 @@ sidebarIndicatorServer <- function(id, state) {
         
       
 
+        ui[['tippy']] <- list(
+          tippy_class_alt("tip-smooth", "Controls the amount of smoothing of the loess curve. Smaller numbers produce wigglier lines, larger numbers produce smoother lines"),
+          tippy_class_alt("tip-min-species", "We recommend selecting at least 100 records per species per month for robust analysis")
+        )
+        
         ui
       })
 
