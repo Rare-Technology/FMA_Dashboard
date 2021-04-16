@@ -1,4 +1,7 @@
-
+.container{
+  width: 1170px !important;
+  padding: 0 !important;
+}
 .navbar {
   margin-bottom: 0px;
   min-height: 75px;
@@ -58,7 +61,7 @@
 }
 
 
-.well .nav-tabs>li.active>a, 
+.well .nav-tabs>li.active>a,
 .well .nav-tabs>li.active>a:focus, .well .nav-tabs>li.active>a:hover {
     color: #fff;
     cursor: default;
@@ -113,12 +116,26 @@ a {
   margin-top: 20px;
 }
 
+.timeouttxt{
+  margin: 7px;
+  color: grey;
+}
+
+.timeouttitle{
+  font-size: 15px !important;
+  font-weight: 700;
+}
 
 
 /* Slider*/
 
 .date_slider{
   margin: 10px;
+}
+
+
+.smooth_slider{
+    margin: 15px !important;
 }
 
 .irs-bar {
@@ -143,3 +160,25 @@ a {
   table.dataTable thead th {
     padding: 10px 10px;
   }
+
+
+.guidelink{
+  font-size: 13px;
+  margin-left: 10px;
+  margin-top: 30px;
+}
+
+.guidelink>a{
+  color: #333333;
+
+}
+
+.guidelink>a>span{
+  display: flex;
+  align-items: baseline;
+
+}
+
+.guidelink>a>span>i{
+  margin-right: 5px;
+}

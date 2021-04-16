@@ -1,28 +1,30 @@
 #' The application server-side
-#' 
-#' @param input,output,session Internal parameters for {shiny}. 
+#'
+#' @param input,output,session Internal parameters for {shiny}.
 #'     DO NOT REMOVE.
 #' @import shiny
 #' @noRd
-app_server <- function( input, output, session ) {
-
-  # The state object is read in automatically from state.R
+app_server <- function(input, output, session) {
+  state <- initialize_state()
 
   # Main application
   mainServer("mainUI", state)
-  
+
   # Sidebar
   sidebarServer("sidebarUI")
   sidebarGeoServer("sidebarGeoUI", state)
   sidebarStockServer("sidebarStockUI", state)
   sidebarIndicatorServer("sidebarIndicatorUI", state)
-  
-  
+  sidebarHelpServer("sidebarHelpUI")
+
+
   # Main panel
   dataServer("dataUI", state)
   selectServer("selectUI")
-  visualizeServer("visualizeUI")
-  interpretServer("interpretUI")
+  visualizeServer("visualizeUI", state)
+  interpretServer("interpretUI", state)
   managementServer("managementUI")
 
+
+  #outputOptions(output, "visualizeUI-plot", suspendWhenHidden = FALSE)
 }

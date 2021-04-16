@@ -13,38 +13,43 @@ sidebarGeoUI <- function(id) {
     selectInput(
       ns("sel_datasource"),
       "Data source",
-      choices = rarefma::data_sources,
-      selected = rarefma::init_data_source,
+      choices = fma_data_sources,
+      selected = fma_init_data_source,
     ),
     selectInput(
       ns("sel_country"),
       "Country",
-      choices = rarefma::init_geo_selections$country$choices,
-      selected = rarefma::init_geo_selections$country$selected
+      choices = fma_init_geo_selections$country$choices,
+      selected = fma_init_geo_selections$country$selected
     ),
     selectInput(
       ns("sel_subnational"),
       "Subnational government",
-      choices = rarefma::init_geo_selections$subnational$choices,
-      selected = rarefma::init_geo_selections$subnational$selected,
+      choices = fma_init_geo_selections$subnational$choices,
+      selected = fma_init_geo_selections$subnational$selected,
       multiple = TRUE,
       selectize = TRUE
     ),
     selectInput(
       ns("sel_local"),
       "Local government",
-      choices = rarefma::init_geo_selections$local$choices,
-      selected = rarefma::init_geo_selections$local$selected,
+      choices = fma_init_geo_selections$local$choices,
+      selected = fma_init_geo_selections$local$selected,
       multiple = TRUE,
       selectize = TRUE
     ),
     selectInput(
       ns("sel_maa"),
       "Managed access area",
-      choices = rarefma::init_geo_selections$maa$choices,
-      selected = rarefma::init_geo_selections$maa$selected,
+      choices = fma_init_geo_selections$maa$choices,
+      selected = fma_init_geo_selections$maa$selected,
       multiple = TRUE,
       selectize = TRUE
+    ),
+    div(class = 'timeouttxt',
+        h3(class = 'timeouttitle', "Please note"),
+        p(glue::glue("This app may time-out if left idle too long, which will cause the",
+                     " screen to grey-out. To use the app again, refresh the page."))
     )
   )
 }
@@ -59,9 +64,9 @@ sidebarGeoServer <- function(id, state) {
       observeEvent(input$sel_datasource,
         {
           state$data_source <- input$sel_datasource
-          state$data_full <- rarefma::data_raw[[input$sel_datasource]]$data
-          state$data_geo_family_species <- rarefma::data_geo_family_species[[input$sel_datasource]]
-          state$data_summary <- rarefma::data_summary[[input$sel_datasource]]
+          state$data_full <- fma_data_raw[[input$sel_datasource]]$data
+          state$data_geo_family_species <- fma_data_geo_family_species[[input$sel_datasource]]
+          state$data_summary <- fma_data_summary[[input$sel_datasource]]
         },
         ignoreInit = TRUE
       )

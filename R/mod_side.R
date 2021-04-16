@@ -7,29 +7,30 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-sidebarUI <- function(id){
+sidebarUI <- function(id) {
   ns <- NS(id)
   tagList(
-    sidebarPanel(class="sidebar",
+    sidebarPanel(
+      class = "sidebar",
       tabsetPanel(
-        tabPanel(span("Geography"), sidebarGeoUI("sidebarGeoUI")),
-        tabPanel(span("Stock", title="Select fisheries family and species"), sidebarStockUI("sidebarStockUI")),
-        tabPanel(span("Indicator", title="Fisheries performance indicator"), sidebarIndicatorUI("sideparIndicatorUI"))
+        tabPanel("Geography", sidebarGeoUI("sidebarGeoUI")),
+        tabPanel("Stock", sidebarStockUI("sidebarStockUI")),
+        tabPanel("Indicator", sidebarIndicatorUI("sidebarIndicatorUI")),
+        tabPanel("Help", sidebarHelpUI("sidebarHelpUi"))
+
       )
-  )
+    )
   )
 }
 
 #' side Server Function
 #'
 #' @noRd
-sidebarServer <- function(id){
+sidebarServer <- function(id) {
   moduleServer(
     id,
-    function(input, output, session){
+    function(input, output, session) {
 
     }
   )
-
-
 }

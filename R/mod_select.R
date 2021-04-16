@@ -34,45 +34,25 @@ selectServer <- function(id, state) {
       #                       scrollY = "500px")) %>%
       #       DT::formatStyle(columns = 1,
       #                   fontWeight = 'bold')
-      # 
+      #
       #   )
-    
-      ref_points <- rarefma::reference_points %>% 
-        gt::gt() %>% 
-        gt::tab_header(
-          title = "Performance Indicators",
-          subtitle = "(pick one in the selector on the left)"
-        ) %>% 
-        gt::tab_style(
-          style = list(
-            # cell_fill(color = "lightcyan"),
-            "font-variant: small-caps;"
-          ),
-          locations = gt::cells_body(columns = gt::vars(`Performance Indicator`))
-        ) %>% 
-        gt::tab_style(
-          style = list(
-            gt::cell_fill(color = "#f7e7c3")
-            ),
-          locations = gt::cells_body(
-            rows = seq(1, nrow(rarefma::reference_points), by = 2)
-          )
-        ) %>% 
-        cols_width(
-          gt::contains("Performance") ~ px(125),
-          everything() ~ px(145)
-        ) %>% 
-        gt::tab_options(
-          table.font.size = 13
-        )
 
-      
+
+
+
+
       output$reference_points <-
         gt::render_gt(
-          expr = ref_points,
-          height = gt::px(800),
+          {
+            create_gt_table(
+              fma_reference_points,
+              "Performance Indicators",
+              "(pick one in the selector on the left)",
+              "Performance Indicator"
+            )
+          },
+          height = gt::px(STATIC_TABLE_HEIGHT)
         )
-      
     }
   )
 }
