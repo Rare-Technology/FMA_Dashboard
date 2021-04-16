@@ -53,7 +53,7 @@
 }
 
 
-.well .nav-tabs>li.active>a, 
+.well .nav-tabs>li.active>a,
 .well .nav-tabs>li.active>a:focus, .well .nav-tabs>li.active>a:hover {
     color: #fff;
     cursor: default;
@@ -108,6 +108,15 @@ a {
   margin-top: 20px;
 }
 
+.timeouttxt{
+  margin: 7px;
+  color: grey;
+}
+
+.timeouttitle{
+  font-size: 15px !important;
+  font-weight: 700;
+}
 
 
 /* Slider*/
@@ -143,19 +152,25 @@ a {
   table.dataTable thead th {
     padding: 10px 10px;
   }
-  
-  .shiny-input-container>div>.form-control>option {
-    padding: 5px;
-  }
-  
-  
-  .shiny-input-container>div>.form-control>option:checked, .shiny-input-container>div>.form-control>option:focus, .shiny-input-container>div>.form-control>option:active, .shiny-input-container>div>.form-control>option:hover, .shiny-input-container>div>.form-control>option:checked:hover {
-    background: #cecece !important;
-    background-color: #cecece !important;
-  }
-  
-  .shiny-input-container>div>.form-control>option:not(:checked) {
-    background-color: #fff;
-  }
 
 
+.guidelink{
+  font-size: 13px;
+  margin-left: 10px;
+  margin-top: 30px;
+}
+
+.guidelink>a{
+  color: #333333;
+
+}
+
+.guidelink>a>span{
+  display: flex;
+  align-items: baseline;
+
+}
+
+.guidelink>a>span>i{
+  margin-right: 5px;
+}
