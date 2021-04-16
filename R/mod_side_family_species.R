@@ -48,7 +48,7 @@ sidebarStockServer <- function(id, state) {
             state$subnational$selected,
             state$local$selected,
             state$maa$selected,
-            state$current_date_range
+            #state$current_date_range
           )
 
           state$family <- list(
