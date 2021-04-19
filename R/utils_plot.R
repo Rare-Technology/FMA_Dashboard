@@ -1,7 +1,7 @@
 trend_indicator <- function(mod) {
   
   coefval <- coef(mod)[2]
-  p <- summary(mod)$coef[, "Pr(>|t|)"][[2]]
+  p <- summary(mod)$coef[, "Pr(>|t|)"][2]
   res <- "No change"
   if(is.na(coefval) | is.na(p)) return(res)
   
@@ -14,7 +14,7 @@ trend_indicator <- function(mod) {
 
 trend_color <- function(mod) {
   coefval <- coef(mod)[2]
-  p <- summary(mod)$coef[, "Pr(>|t|)"][[2]]
+  p <- summary(mod)$coef[, "Pr(>|t|)"][2]
   col <- "grey20"
   if(is.na(coefval) | is.na(p)) return(col)
   
