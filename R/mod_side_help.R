@@ -16,7 +16,7 @@ sidebarHelpUI <- function(id) {
             icon("download"), 
             p("Fisheries Management Assessment Users Guide")
           ), 
-          href = "/www/FMA_guidance.pdf"
+          href = "www/FMA_guidance.pdf"
           )
         )
   )

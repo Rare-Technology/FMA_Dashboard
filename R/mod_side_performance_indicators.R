@@ -95,19 +95,20 @@ sidebarIndicatorServer <- function(id, state) {
           )
         }
         
-        if (current_tab %in% c("Visualize") && current_indicator %in% c("Size Structure", "Size Proportions")) {
-          ui[["min_records"]] <- div(
-            class = "smooth_slider pi_widget",
-            sliderInput(
-              inputId = ns("min_records"),
-              label = tooltip_label("tip-min-species", "Select min records per species"),
-              min = current_min_records$min,  
-              max = current_min_records$max,
-              value = current_min_records$value, 
-              step = 10,
-              ticks = FALSE)
-          )
-        }
+        # Commented out per git 21
+        # if (current_tab %in% c("Visualize") && current_indicator %in% c("Size Structure", "Size Proportions")) {
+        #   ui[["min_records"]] <- div(
+        #     class = "min_records pi_widget",
+        #     sliderInput(
+        #       inputId = ns("min_records"),
+        #       label = tooltip_label("tip-min-species", "Select min records per species"),
+        #       min = current_min_records$min,  
+        #       max = current_min_records$max,
+        #       value = current_min_records$value, 
+        #       step = 10,
+        #       ticks = FALSE)
+        #   )
+        # }
         
       
 
@@ -153,11 +154,12 @@ sidebarIndicatorServer <- function(id, state) {
         state$loess_span <- input$loess_span
       })
       
-      observeEvent(input$min_records, {
-        
-        
-        state$current_min_records$value <- input$min_records
-      })
+      # Commented out per git 21
+      # observeEvent(input$min_records, {
+      #   
+      #   
+      #   state$current_min_records$value <- input$min_records
+      # })
 
       outputOptions(output, "performance_indicators", suspendWhenHidden = FALSE)
     }
