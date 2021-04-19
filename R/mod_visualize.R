@@ -74,17 +74,22 @@ visualizeServer <- function(id, state) {
                          ),
         )
         
-        state$current_trend <- result$trend
-
-        p <- NULL
         msg <- ""
+        p <- result$p
         
-        err <- "try-error" %in% class(result$p)
-        if(!err) p <- result$plot
-        if(err) msg <- "There was an error with the plot"
-          
+        if(is.null(p)){
+          p <- NULL
+          msg <- "There was not enough data to create a plot"
+        } 
+        
+        if("try-error" %in% class(p)){
+          p <- NULL
+          msg <- "There was an error creating the plot"
+        }
+        
+        
         output$plot <- renderPlot(
-          result$plot, 
+          p, 
           height = PLOT_HEIGHT, 
           width = PLOT_WIDTH
         )

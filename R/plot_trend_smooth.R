@@ -7,10 +7,8 @@ plot_trend_smooth <- function(.data, var, f,
     dplyr::group_by(country, yearmonth) %>%
     dplyr::summarise(result = f({{ var }}, na.rm = TRUE))
 
-
-  # str_var <- rlang::as_name(quote(var))
-  # form <- as.formula(glue::glue("{str_var} ~ yearmonth"))
-
+  if(nrow(.data) <= MIN_DATA_ROWS) return(list(p = NO_PLOT_ATTEMP, trend = NO_TREND_ATTEMP))
+  
   mod <- glm(result ~ yearmonth,
     family = gaussian,
     data = .data
@@ -20,7 +18,7 @@ plot_trend_smooth <- function(.data, var, f,
   indicator_color <- trend_color(mod)
 
   # Number of species recorded
-  p <- .data %>%
+  p <- try(.data %>%
     ggplot(aes(yearmonth, result)) +
     geom_point(
       col = indicator_color,
@@ -45,7 +43,8 @@ plot_trend_smooth <- function(.data, var, f,
       limits = c(ymin, ymax),
       oob = scales::squish
     ) +
-    theme_rare(subtitle_color = indicator_color)
+    theme_rare(subtitle_color = indicator_color),
+    silent = TRUE)
 
   list(plot = p, trend = indicator_trend)
 }

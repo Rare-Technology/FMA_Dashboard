@@ -8,7 +8,8 @@ plot_fishing_gear <- function(.data) {
       gear_type = factor(gear_type, levels = unique(gear_type))
     )
 
-
+  if(nrow(.data) <= MIN_DATA_ROWS) return(list(p = NO_PLOT_ATTEMP, trend = NO_TREND_ATTEMP))
+  
   maxcount <- .data$gear_count
 
   gear_types <- c(
@@ -23,7 +24,7 @@ plot_fishing_gear <- function(.data) {
     "#7E6148FF"
   )
 
-  p <- .data %>%
+  p <- try(.data %>%
     ggplot(aes(
       x = yearmonth,
       y = gear_count,
@@ -44,7 +45,7 @@ plot_fishing_gear <- function(.data) {
       title = "Type of fishing gear reported",
       fill = "Gear type"
     ) +
-    theme_rare()
+    theme_rare(), silent = TRUE)
 
 
   trend <- ifelse("Destructive" %in% .data$gear_type, "Destructive", "No destructive")

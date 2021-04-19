@@ -2,10 +2,14 @@ plot_size_proportions <- function(.data, sel_species) {
 
   .data <- .data %>%
     dplyr::filter(species %in% sel_species) %>%
-    dplyr::filter(!is.na(count)) %>% 
-    dplyr::filter(count > 100)
+    dplyr::group_by(yearmonth) %>% 
+    dplyr::filter(sum(count, na.rm = TRUE) > 100) %>% 
+    dplyr::ungroup() %>% 
     droplevels()
 
+  if(nrow(.data) <= MIN_DATA_ROWS) return(list(p = NO_PLOT_ATTEMP, trend = NO_TREND_ATTEMP))
+    
+    
   ### Calculate Froese indicators per MA and species per month
   fma_df <- data.frame(
     country = NA,
@@ -78,7 +82,7 @@ plot_size_proportions <- function(.data, sel_species) {
     ) +
     labs(
       title = "Size proportions",
-      subtitle = paste("Species: ", fma_metrics_df$species),
+      subtitle = paste("Species: ", sel_species),
       x = "",
       y = "Proportion (%)"
     ) +
@@ -93,6 +97,7 @@ plot_size_proportions <- function(.data, sel_species) {
       col = c(2, "darkgreen", 4)
     ) +
     theme_rare(), silent = TRUE)
+  
 
-  list(plot = p, trend = "TREND")
+  list(plot = p, trend =  NO_TREND_ATTEMP)
 }
