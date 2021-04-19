@@ -28,10 +28,10 @@ interpretServer <- function(id, state) {
         trend <- state$current_trend
         msg <- NULL
         tbl <- NULL
+
+        if(is.null(trend)) msg <- "A trend could not be estimated"
         
-        if(is.na(trend)) msg <- "A trend could not be estimated"
-        
-        if(!is.na(trend)){
+        if(!is.null(trend)){
           tbl <-  fma_harvest_controls %>%
             dplyr::select(-`Assessment Result TRP/LRP`, -`Management Response`) %>%
             dplyr::filter(
