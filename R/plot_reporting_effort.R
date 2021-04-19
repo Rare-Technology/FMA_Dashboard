@@ -92,7 +92,7 @@ plot_reporting_effort <- function(.data, loess_span = 0.5) {
   if("try-error" %in% c(class(fishers_plot), class(buyers_plot))) 
     return(plot = fishers_plot, trend = NO_TREND_ATTEMP)
   
-  p <- cowplot::plot_grid(fishers_plot, buyers_plot, ncol = 2)
+  p <- suppressWarnings(cowplot::plot_grid(fishers_plot, buyers_plot, ncol = 2))
 
   list(plot = p, trend = unique(indicator_trend_fisher, indicator_trend_buyer))
 }
