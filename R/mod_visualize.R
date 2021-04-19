@@ -74,6 +74,8 @@ visualizeServer <- function(id, state) {
                          ),
         )
         
+        state$current_trend <- result$trend
+        
         msg <- ""
         p <- result$p
         
