@@ -1,13 +1,27 @@
 trend_indicator <- function(mod) {
-  ifelse(coef(mod)[2] > 0 & summary(mod)$coef[, "Pr(>|t|)"] < 0.05, "Increasing",
-    ifelse(coef(mod)[2] < 0 & summary(mod)$coef[, "Pr(>|t|)"] < 0.05, "Decreasing", "No change")
-  )[[1]]
+  
+  coefval <- coef(mod)[2]
+  p <- summary(mod)$coef[, "Pr(>|t|)"][[2]]
+  res <- "No change"
+  if(is.na(coefval) | is.na(p)) return(res)
+  
+  if(coefval > 0 & p < 0.05) res <- "Increasing"
+  if(coefval < 0 & p < 0.05) res <- "Decreasing"
+  
+  res
+
 }
 
 trend_color <- function(mod) {
-  ifelse(coef(mod)[2] > 0 & summary(mod)$coef[, "Pr(>|t|)"] < 0.05, "darkgreen",
-    ifelse(coef(mod)[2] < 0 & summary(mod)$coef[, "Pr(>|t|)"] < 0.05, "darkred", "grey20")
-  )[[1]]
+  coefval <- coef(mod)[2]
+  p <- summary(mod)$coef[, "Pr(>|t|)"][[2]]
+  col <- "grey20"
+  if(is.na(coefval) | is.na(p)) return(col)
+  
+  if(coefval > 0 & p < 0.05) col <- "darkgreen"
+  if(coefval < 0 & p < 0.05) col <- "darkred"
+  
+  col
 }
 
 color_froese <- function(indicator, reference) {
