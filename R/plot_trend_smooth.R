@@ -3,6 +3,8 @@
 plot_trend_smooth <- function(.data, var, f,
                               title = "", y_title = "",
                               loess_span = 0.5, ymin = NA, ymax = NA) {
+  
+
   .data <- .data %>%
     dplyr::group_by(country, yearmonth) %>%
     dplyr::summarise(result = f({{ var }}, na.rm = TRUE))

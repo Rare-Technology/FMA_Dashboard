@@ -89,7 +89,7 @@ visualizeServer <- function(id, state) {
         
         
         output$plot <- renderPlot(
-          p, 
+          suppressWarnings(print(p)), # suppress stat_smooth/geom_smooth warnings
           height = PLOT_HEIGHT, 
           width = PLOT_WIDTH
         )
