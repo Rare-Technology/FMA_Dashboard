@@ -14,11 +14,11 @@ mainUI <- function(id) {
     mainPanel(
       tabsetPanel(
         id = ns("tabs"),
-        tabPanel("Data", dataUI("dataUI")),
-        tabPanel("Select", selectUI("selectUI")),
-        tabPanel("Visualize", visualizeUI("visualizeUI")),
-        tabPanel("Interpret", interpretUI("interpretUI")),
-        tabPanel("Plan", managementUI("managementUI"))
+        tabPanel("1. Assess data", dataUI("dataUI")),
+        tabPanel("2. Select indicators", selectUI("selectUI")),
+        tabPanel("3. Visualize data", visualizeUI("visualizeUI")),
+        tabPanel("4. Interpret results", interpretUI("interpretUI")),
+        tabPanel("5. Management plan", managementUI("managementUI"))
       )
     )
   ))
