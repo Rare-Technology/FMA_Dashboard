@@ -38,7 +38,7 @@ sidebarIndicatorServer <- function(id, state) {
   
      
         # ---- Select, Visualize, Interpret tabs
-        if (current_tab %in% c("Select", "Visualize", "Interpret")) {
+        if (current_tab %in% c("2. Select indicators", "3. Visualize data", "4. Interpret results")) {
           ui[["performance_indicators"]] <- 
           div(class = " pi_widget", 
           selectInput(
@@ -65,7 +65,7 @@ sidebarIndicatorServer <- function(id, state) {
         }
 
         # ---- Data tab
-        if (current_tab %in% c("Data", "Visualize")) {
+        if (current_tab %in% c("1. Assess data", "3. Visualize data")) {
           ui[["date_slider"]] <- div(
             class = "date_slider pi_widget",
             sliderInput(ns("date_range"),
@@ -81,7 +81,7 @@ sidebarIndicatorServer <- function(id, state) {
 
 
 
-        if (current_tab %in% c("Visualize") && !current_indicator %in% c("Fishing Gear", "Size Structure", "Size Proportions")) {
+        if (current_tab %in% c("3. Visualize data") && !current_indicator %in% c("Fishing Gear", "Size Structure", "Size Proportions")) {
           ui[["loess_span"]] <- div(
             class = "smooth_slider pi_widget",
             sliderInput(
