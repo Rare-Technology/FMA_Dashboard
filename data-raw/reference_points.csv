@@ -1,0 +1,15 @@
+Performance Indicator,Description,High Risk (Limit Reference Point),Low Risk (Target Reference Point),Purpose
+Fishing Gear,Reported fishing gear type used in the fishery,Destructive fishing practices being used,No Destructive fishing practices being used,Evaluates if destructive fishing gear are used
+Reporting Effort,Number of registered fishers and buyers reporting catch,Decreasing reporting effort,Increasing or stable reporting effort,Adequate reporting effort by fishers and buyers may be used to determine changes in fishing season and fishing effort
+Species Composition,Number of target species that appear in the catch,Decreasing,Increasing or Stable,"Changes in species composition may be used to evaluate fisheries performance, change in environmental  and market conditions"
+Species Vulnerability,Vulnerability of target species to to fishing (0 - 100). Higher values indicate higher vulnerability ,High,Low,Assess relative vulnerability of target species to fishing
+Fished:Unfished Ratio,Ratio between fished and unfished biomass for the enire fish assemblages.,<25%,>50%,Provides an estimate of ecosystem status and capacity to support fishing
+Average Length,Average length of individuals in the catch,Decreasing,Increasing or Stable,Assess changes in the status of a fishery to smaller or larger individuals
+Average Trophic Level,"Average trophic level of species in the catch. Higher values towards 5 indicate carnivores, lower values towards 2 indicate herbivores",Decreasing,Increasing or Stable,Assess changes in the status of a fishery to lower  or higher trophic groups
+Length-based (Pmat),Proportion of mature individuals in the catch,<50%,>90%,Evaluates the status of the stock regarding mature individuals
+Length-based (Popt),Proportion of optimal size individuals in the catch to maximize production and profit,<50%,>80%,Evaluates the status of the stock regarding optimal catch to evaluate production and profit
+Length-based (Pmega),Proportion of the catch that are megaspawners (large and older individuals that produce lots of eggs),<20%,>40%,Evaluates the reproductive capacity of fish populations
+Spawning Potential Ratio (Fish),Proportion of the unfished reproductive potential left in a fish population under fishing pressure,<40%,>= 40%,Estimates current egg production relative to maximum possible production at unfished levels.
+Spawning Potential Ratio (Invert),Proportion of the unfished reproductive potential left in an invertebrate population under fishing pressure,<20%,>= 40%,Estimates current egg production relative to maximum possible production at unfished levels.
+CPUE,"Catch Per Unit of Effort (CPUE) is the total catch per fishing effort (e.g., number of trips, fishing hours, gear type) ",Decreasing,Increasing or Stable,It can be used to Infer population trends of exploited stock. Standarized time series of CPUE can be used as index of abundance.
+Total Landings,Total catch recorded for a given area,Decreasing,Increasing or Stable,It can provide an estimate of total abundance when sampling is stratified.

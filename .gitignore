@@ -2,7 +2,6 @@
 .DS_Store
 *.code-workspace
 node_modules
-data-raw/
 rsconnect/
 config.yml
 .Rproj.user

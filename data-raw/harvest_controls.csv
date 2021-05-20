@@ -1,0 +1,330 @@
+Performance Indicator,Assessment Result,Assessment Result TRP/LRP,Possible Interpretation,Risk Level,Management Response,Harvest Control Rule Suggested 
+Average Length,Decreasing,Limit < Indicator < Target,Emigration of large individuals from fishing area,Medium,Orange,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year limit fishing licenses"
+Average Length,Increasing,Target <= Indicator,Fishing pressure appropriate for maintaining or improving size structure of population,Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Average Length,Increasing,Target <= Indicator,Gear shift towards more selective gear (fewer small individuals in catch),Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Average Length,Decreasing,Limit < Indicator < Target,Strong juvenile recruitment (more small individuals entering the catch),Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Average Length,Decreasing,Limit < Indicator < Target,Fishers targeting nursery grounds,Medium,Orange,1. Establish reserve around nursery grounds
+Average Length,Decreasing,Limit < Indicator < Target,Gear shift towards less selective gear (more small individuals in catch),Medium,Orange,"1. Implement gear restriction (e.g., ban certain fishing gears [mesh nets, traps], restrict use of certain fishing gears [compressors, traps], modify fishing gears [decrease number of hooks in long-lines], increase mesh size)."
+Average Length,Decreasing,Indicator <= Limit,High fishing pressure negatively affecting size structure and spawning stock biomass; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Average Length,Increasing,Target <= Indicator,Market selectivity for larger individuals,Medium,Orange,"1. Implement maximum size limit and/or 
+
+2. Increase outreach about the importance of large fish to the health of the fisheries"
+Average Length,Decreasing,Limit < Indicator < Target,Market selectivity for smaller individuals,Medium,Orange,"1. Implement minimum size limit and/or 
+
+2. Increase outreach about the importance of  juvenile fish to the health of the fisheries"
+Average Length,Increasing,Target <= Indicator,Weak juvenile recruitment (fewer small individuals entering the catch),Medium,Orange,"1. Implement minimum size limit and/or 
+
+2. Ensure adequate survelience of the reserves"
+Average Length,No change,Limit < Indicator < Target,Environmental catastrophe affecting size structure and spawning stock biomass,Medium,Orange,"1. Limit fishing licenses and/or 
+
+2. Ensure adequate survelience of the reserves"
+Average Length,Decreasing,Limit < Indicator < Target,High fishing pressure affecting size structure and spawning stock biomass,Medium,Orange,"1. Limit fishing licenses and/or 
+
+2. Ensure adequate survelience of the reserves"
+Average Length,Decreasing,Indicator <= Limit,Extreme environmental catastrophe affecting size structure and spawning stock biomass; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Average Length,Increasing,Target <= Indicator,Immigration of large individuals to fishing area,Low,Green,1. Make no changes to fisheries management controls
+Average Trophic Level,Decreasing,Decreasing,Fishing pressure changing to species of lower trophic level. Planktivores of lower trophic levels may be targeted in different seasons.,Medium,Orange,"1. Determine what new species are being targeted. If changes are driven by planktivores (fusiliers)  make no changes to fisheries managemant controls. If changes are not driven by planktivores, implement harvesting ban on lower trophic species or seasonal closure."
+Average Trophic Level,Increasing,Increasing,Fishing pressure changing to species of higher trophic level,Low,Green,"1. Determine what new species are being targeted. If these species are not vulnerable, make no changes to fisheries management controls. If species are vulnerable, implement seasonal closure."
+Average Trophic Level,Increasing,Increasing,Fishing pressure changing to species of higher trophic level,Medium,Orange,"1. Determine what new species are being targeted. If these species are vulnerable (e.g., sharks, large groupers), implement a harvesting ban or seasonal closure."
+Average Trophic Level,No change,No change,Fishing pressure remains the same across targeted species,Low,Green,1. Make no changes to fisheries management controls
+Reporting Effort,No change,No changes in the fishing season,Number of fishers and/or buyers reporting catch has not significantly changed.,Medium,Orange,"1. Make no changes to fisheries management controls or
+
+2. Increase the number of fishers and/or buyers reporting catch."
+Reporting Effort,No change,No changes in the fishing season,Ecosystem may be healthy enough to maintain historical fishing season,Medium,Orange,"1. Make no changes to fisheries management controls.
+
+"
+Reporting Effort,Increasing,No changes in the fishing season,Ecosystem may be healthy enough to support stronger fishing season,Low,Green,"1. Make no changes to fisheries management controls.
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses.
+"
+Reporting Effort,Increasing,No changes in the fishing season,Number of fishers and/or buyers reporting catch significantly increased. This will affect CPUE and total landings trends.,Low,Green,"1. Make no changes to fisheries management controls.
+
+"
+Reporting Effort,Decreasing,"Increased variability in fishing season, or decreased fishing season",Number of fishers and/or buyers reporting catch significantly declined.,High,Red,1. Increase the number of fishers and/or buyers reporting catch
+Coral Reef Thresholds,Unfished biomass Indicator >= Target and Fished/Unfished biomass ratio >= Target,Unfished biomass Indicator >= Target and Fished/Unfished biomass ratio >= Target,Fishing pressure appropriate for maintaining or improving the health of the ecosystem,Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Coral Reef Thresholds,Unfished biomass Indicator >= Target and Fished/Unfished biomass ratio >= Target,Unfished biomass Indicator >= Target and Fished/Unfished biomass ratio >= Target,Unfished area has a low biomass and does not represent a healthy undisturbed area (Reserve is new and has not yet led to substantial improvements in ecosystem health),Medium,Orange,"1. Ensure adequate survelience of reserve and 
+
+2. Increase outreach on the importance of compliance with reserves"
+Coral Reef Thresholds,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,Unfished area has a low density and does not represent a healthy virgin area (Reserve is new and has not yet led to substantial improvements in ecosystem health),Medium,Orange,"1. Ensure adequate survelience of reserve and 
+
+2. Increase outreach on the importance of compliance with reserves"
+Coral Reef Thresholds,Unfished biomass Indicator >= Target and Fished/Unfished biomass ratio >= Target,Unfished biomass Indicator >= Target and Fished/Unfished biomass ratio >= Target,Unfished area does not have comparable habitat to fished area (unfished area habitat not as healthy as fished area),Medium,Orange,1. Expand or relocate reserve
+Coral Reef Thresholds,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,Unfished area does not have comparable habitat to fished area (unfished area habitat not as healthy as fished area),Medium,Orange,1. Expand or relocate reserve
+Coral Reef Thresholds,Unfished biomass Indicator >= Target and Fished/Unfished biomass ratio >= Target,Unfished biomass Indicator >= Target and Fished/Unfished biomass ratio >= Target,Unfished area has a low biomass and does not represent a healthy virgin area (Reserve is small with large amounts of species movement between fished and unfished areas),Medium,Orange,1. Expand reserves or add addditional smaller reserves
+Coral Reef Thresholds,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,Unfished area has a low density and does not represent a healthy virgin area (Reserve is small with large amounts of species movement between fished and unfished areas),Medium,Orange,1. Expand reserves or add addditional smaller reserves
+Coral Reef Thresholds,Limit >= Unfished biomass Indicator or Limit >= Fished/Unfished biomass ratio,Limit >= Unfished biomass Indicator or Limit >= Fished/Unfished biomass ratio,High fishing pressure has caused an ecosystem state change; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Coral Reef Thresholds,Unfished biomass Indicator >= Target and Fished/Unfished biomass ratio >= Target,Unfished biomass Indicator >= Target and Fished/Unfished biomass ratio >= Target,Unfished area has a low biomass and does not represent a healthy undisturbed area (significant illegal fishing is occurring within the Reserve),Medium,Orange,"1. Improve enforcement of reserve. 
+
+2. Increase participatory surveillance on reserve. 
+
+3. Increase outreach to improve compliance."
+Coral Reef Thresholds,Unfished biomass Indicator >= Target and Fished/Unfished biomass ratio >= Target,Unfished biomass Indicator >= Target and Fished/Unfished biomass ratio >= Target,Unfished area has a low biomass and does not represent a healthy undisturbed area (significant illegal fishing is occurring within the Reserve),Medium,Orange,"1. Improve enforcement of reserve. 
+
+2. Increase participatory surveillance on reserve. 
+
+3. Increase outreach to improve compliance."
+Coral Reef Thresholds,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,Unfished area has a low density and does not represent a healthy virgin area (significant illegal fishing is occurring within the Reserve),Medium,Orange,"1. Improve enforcement of reserve. 
+
+2. Increase participatory surveillance on reserve. 
+
+3. Increase outreach to improve compliance."
+Coral Reef Thresholds,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,Unfished area has a low density and does not represent a healthy virgin area (significant illegal fishing is occurring within the Reserve),Medium,Orange,"1. Improve enforcement of reserve. 
+
+2. Increase participatory surveillance on reserve. 
+
+3. Increase outreach to improve compliance."
+Coral Reef Thresholds,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,High fishing pressure is putting ecosystem at risk ,Medium,Orange,1. Limit fishing licenses
+Coral Reef Thresholds,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,Limit <= Unfished biomass Indicator <= Target and  Limit <= Fished/Unfished biomass ratio <= Target,Environmental catastophe putting ecosystem at risk ,Medium,Orange,"1. Limit fishing licenses and/or 
+
+2. Ensure adequate survelience of the reserves"
+Coral Reef Thresholds,Limit >= Unfished biomass Indicator or Limit >= Fished/Unfished biomass ratio,Limit >= Unfished biomass Indicator or Limit >= Fished/Unfished biomass ratio,Extreme environmental catastrophe has caused an ecosystem state change; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+CPUE,Increasing,Indicator >= Target,Fishing pressure appropriate for maintaining or improving spawning stock biomass,Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+CPUE,No change,Target > Indicator > Limit,Change to less efficient gear type,Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+CPUE,Increasing,Indicator >= Target,Change to more efficient gear type,Medium,Orange,"1. Implement gear restriction (e.g., ban certain fishing gears [mesh nets, traps], restrict use of certain fishing gears [compressors, traps], modify fishing gears [decrease number of hooks in long-lines], increase mesh size)."
+CPUE,Decreasing,Target > Indicator > Limit,High fishing pressure negatively affecting spawning stock biomass due use of fishing gears that target large fish,Medium,Orange,"1. Implement gear restriction (e.g., ban certain fishing gears [mesh nets, traps], restrict use of certain fishing gears [compressors, traps], modify fishing gears [decrease number of hooks in long-lines], increase mesh size)."
+CPUE,Decreasing,Limit >= Indicator,High fishing pressure negatively affecting spawning stock biomass; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+CPUE,Decreasing,Target > Indicator > Limit,High fishing pressure negatively affecting spawning stock biomass due to outside fishers fishing in the managed access area,Medium,Orange,"1. Improve enforcement of managed access area. 
+
+2. Increase participatory surveillance. "
+CPUE,Decreasing,Target > Indicator > Limit,High fishing pressure negatively affecting spawning stock biomass due to fishing in the reserve,Medium,Orange,"1. Improve enforcement of reserve. 
+
+2. Increase participatory surveillance on reserve. 
+
+3. Increase outreach to improve compliance."
+CPUE,Decreasing,Target > Indicator > Limit,High fishing pressure negatively affecting spawning stock biomass due to high fishing effort,Medium,Orange,1. Limit fishing licenses
+CPUE,Decreasing,Target > Indicator > Limit,High fishing pressure negatively affecting spawning stock biomass during spawning season,Medium,Orange,1. Limit fishing licenses
+CPUE,No change,Target > Indicator > Limit,Environmental catastrophe affecting size structure and spawning stock biomass,Medium,Orange,"1. Limit fishing licenses and/or 
+
+2. Ensure adequate survelience of the reserves"
+CPUE,Increasing,Indicator >= Target,Fishers moved to less depleated fishing grounds,Medium,Orange,"1. Limit fishing licenses and/or 
+
+2. Ensure adequate survelience of the reserves"
+CPUE,Increasing,Indicator >= Target,Fishing of spawning aggregations / hyperstability,High,Red,1. Ban fishing of spawning aggregations.
+CPUE,Decreasing,Indicator >= Target,Reported catch decreasing,Medium,Orange,"1. Increase mumber of registered fishers and buyers reporting.
+
+2. Maintain a consistant reporting effort."
+CPUE,Increasing,Target > Indicator > Limit,Reported catch increasing,Medium,Orange,"1. Make no changes to fisheries management controls. 
+
+2. Reporting effort is  increasing over time due to more buyers reporting. "
+CPUE,No change,Indicator >= Target,Reported catch decreasing,Medium,Orange,"1. Increase mumber of registered fishers and buyers reporting.
+
+2. Maintain a consistant reporting effort."
+Fished:Unfished Ratio,Indicator >= Target,Indicator >= Target,Fishing pressure appropriate for maintaining or improving the health of the ecosystem,Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Fished:Unfished Ratio,Indicator >= Target,Indicator >= Target,Unfished area has a lower density and does not represent a healthy undisturbed area (Reserve is new and has not yet led to substantial improvements in ecosystem health),Medium,Orange,"1. Ensure adequate survelience of reserve and 
+
+2. Increase outreach on the importance of compliance with reserves"
+Fished:Unfished Ratio,Target > Indicator > Limit,Target > Indicator > Limit,Unfished area has a lower density and does not represent a healthy undisturbed area (Reserve is new and has not yet led to substantial improvements in ecosystem health),Medium,Orange,"1. Ensure adequate survelience of reserve and 
+
+2. Increase outreach on the importance of compliance with reserves"
+Fished:Unfished Ratio,Indicator >= Target,Indicator >= Target,Unfished area has a lower density and does not represent a healthy undisturbed area (Reserve is small with large amounts of species movement between fished and unfished areas),Medium,Orange,1. Expand reserves or add addditional smaller reserves
+Fished:Unfished Ratio,Target > Indicator > Limit,Target > Indicator > Limit,Unfished area has a lower density and does not represent a healthy undisturbed area (Reserve is small with large amounts of species movement between fished and unfished areas),Medium,Orange,1. Expand reserves or add addditional smaller reserves
+Fished:Unfished Ratio,Limit >= Indicator,Limit >= Indicator,High fishing pressure has caused an ecosystem state change; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Fished:Unfished Ratio,Indicator >= Target,Indicator >= Target,Unfished area has a lower density and does not represent a healthy undisturbed area (significant illegal fishing is occurring within the Reserve),Medium,Orange,"1. Improve enforcement of reserve. 
+
+2. Increase participatory surveillance on reserve. 
+
+3. Increase outreach to improve compliance."
+Fished:Unfished Ratio,Target > Indicator > Limit,Target > Indicator > Limit,Unfished area has a lower density and does not represent a healthy undisturbed area (significant illegal fishing is occurring within the Reserve),Medium,Orange,"1. Improve enforcement of reserve. 
+
+2. Increase participatory surveillance on reserve. 
+
+3. Increase outreach to improve compliance."
+Fished:Unfished Ratio,Target > Indicator > Limit,Target > Indicator > Limit,Unfished area has a lower density and does not represent a healthy undisturbed area (significant illegal fishing is occurring within the Reserve),Medium,Orange,"1. Improve enforcement of reserve. 
+
+2. Increase participatory surveillance on reserve. 
+
+3. Increase outreach to improve compliance."
+Fished:Unfished Ratio,Target > Indicator > Limit,Target > Indicator > Limit,High fishing pressure is putting ecosystem at risk ,Medium,Orange,1. Limit fishing licenses
+Fished:Unfished Ratio,Target > Indicator > Limit,Target > Indicator > Limit,Environmental catastophe putting ecosystem at risk ,Medium,Orange,"1. Limit fishing licenses and/or 
+
+2. Ensure adequate survelience of the reserves"
+Fished:Unfished Ratio,Indicator >= Target,Indicator >= Target,Unfished area has a lower density and does not represent a healthy undisturbed area (Reserve is not optimally located),Medium,Orange,1. Relocate reserve to areas with high ecological connectivity and high quality habitat
+Fished:Unfished Ratio,Target > Indicator > Limit,Target > Indicator > Limit,Unfished area has a lower density and does not represent a healthy undisturbed area (Reserve is not optimally located),Medium,Orange,1. Relocate reserve to areas with high ecological connectivity and high quality habitat
+Fished:Unfished Ratio,Limit >= Indicator,Limit >= Indicator,Extreme environmental catastrophe has caused an ecosystem state change; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Fishing Gear,No destructive,No destructive fishing practices being used,Non-destructive fishing practices are able to efficiently catch fish and/or destructive fishing practices have been banned,Low,Green,1. Make no changes to fishing practices
+Fishing Gear,Destructive,Destructive fishing practices being used,Non-destructive fishing practices are not longer able to efficiently catch fish and/or destructive fishing practices have not yet been banned,High,Red,1. Ban destructive fishing practices
+Fishing Mortality,Target >= Indicator,Target >= Indicator,Fishing pressure appropriate for maintaining or improving size structure of population,Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Fishing Mortality,Target >= Indicator,Target >= Indicator,Gear shift towards more selective gear (fewer small individuals in catch),Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Fishing Mortality,Limit > Indicator > Target,Limit > Indicator > Target,Strong juvenile recruitment (more small individuals entering the catch),Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Fishing Mortality,Limit > Indicator > Target,Limit > Indicator > Target,Fishers targeting nursery grounds,Medium,Orange,1. Establish reserve around nursery grounds
+Fishing Mortality,Limit > Indicator > Target,Limit > Indicator > Target,Gear shift towards less selective gear (more small individuals in catch),Medium,Orange,"1. Implement gear restriction (e.g., ban certain fishing gears [mesh nets, traps], restrict use of certain fishing gears [compressors, traps], modify fishing gears [decrease number of hooks in long-lines], increase mesh size)."
+Fishing Mortality,Limit > Indicator > Target,Limit > Indicator > Target,Gear shift towards less selective gear (more small individuals in catch),Medium,Orange,"1. Implement gear restriction (e.g., ban certain fishing gears [mesh nets, traps], restrict use of certain fishing gears [compressors, traps], modify fishing gears [decrease number of hooks in long-lines], increase mesh size)."
+Fishing Mortality,Indicator >= Limit,Indicator >= Limit,High fishing pressure negatively affecting size structure and spawning stock biomass; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Fishing Mortality,Target >= Indicator,Target >= Indicator,Market selectivity for larger individuals,Low,Green,"1. Implement maximum size limit and/or 
+
+2. Increase outreach about the importance of large fish to the health of the fisheries"
+Fishing Mortality,Limit > Indicator > Target,Limit > Indicator > Target,Market selectivity for smaller individuals,Medium,Orange,"1. Implement minimum size limit and/or 
+
+2. Increase outreach about the importance of  juvenile fish to the health of the fisheries"
+Fishing Mortality,Target >= Indicator,Target >= Indicator,Weak juvenile recruitment (fewer small individuals entering the catch),Medium,Orange,"1. Implement minimum size limit and/or 
+
+2. Ensure adequate survelience of the reserves"
+Fishing Mortality,Limit > Indicator > Target,Limit > Indicator > Target,Environmental catastrophe affecting size structure and spawning stock biomass,Medium,Orange,"1. Implement minimum size limit and/or 
+
+2. Ensure adequate survelience of the reserves"
+Fishing Mortality,Limit > Indicator > Target,Limit > Indicator > Target,High fishing pressure affecting size structure and spawning stocks biomass,Medium,Orange,"1. Implement minimum size limit and/or 
+
+2. Ensure adequate survelience of the reserves"
+Fishing Mortality,Limit > Indicator > Target,Limit > Indicator > Target,Emigration of large individuals from fishing area,Low,Green,1. Make no changes to fisheries management controls
+Fishing Mortality,Indicator >= Limit,Indicator >= Limit,Extreme environmental catastrophe affecting size structure and spawning stock biomass; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Fishing Mortality,Target >= Indicator,Target >= Indicator,Immigration of large individuals to fishing area,Low,Green,1. Make no changes to fisheries management controls
+Length-based Indicators,"All Indicators at or better than Target (Lopt=100%, Lmat>90%, Lmega<10%)","All Indicators at or better than Target (Lopt=100%, Lmat>90%, Lmega<10%)",Fishing pressure appropriate for maintaining or improving size structure of population and spawning stock biomass,Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Length-based Indicators,Target > Lopt > Limit and/or Target > Lmat > Limit,Target > Lopt > Limit and/or Target > Lmat > Limit,Strong juvenile recruitment (more small individuals entering the catch),Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Length-based Indicators,Target > Lopt > Limit and/or Target > Lmat > Limit,Target > Lopt > Limit and/or Target > Lmat > Limit,Fishers targeting nursery grounds,Medium,Orange,1. Establish reserve around nursery grounds
+Length-based Indicators,Target > Lopt > Limit and/or Target > Lmat > Limit,Target > Lopt > Limit and/or Target > Lmat > Limit,Strong juvenile recruitment (more small individuals entering the catch),Low,Green,"1. If trends have persisted for more than one year, reduce limits on fishing licenses"
+Length-based Indicators,Lopt < Limit (Lopt<80%),Lopt < Limit (Lopt<80%),High fishing pressure affecting size structure and spawning stock biomass; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Length-based Indicators,Lmat < Limit (Lmat<50%),Lmat < Limit (Lmat<50%),High fishing pressure affecting size structure and spawning stock biomass; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Length-based Indicators,Lmega > Limit (Lmega >20%),Lmega > Limit (Lmega >20%),High fishing pressure affecting size structure and spawning stock biomass; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Length-based Indicators,Limit > Lmega > Target,Limit > Lmega > Target,Market selectivity for larger individuals,Medium,Orange,"1. Implement maximum size limit and/or 
+
+2. Increase outreach about the importance of large fish to the health of the fisheries"
+Length-based Indicators,Limit > Lmega > Target,Limit > Lmega > Target,Market selectivity for larger individuals,Medium,Orange,"1. Implement maximum size limit and/or 
+
+2. Increase outreach about the importance of large fish to the health of the fisheries"
+Length-based Indicators,Target > Lopt > Limit and/or Target > Lmat > Limit,Target > Lopt > Limit and/or Target > Lmat > Limit,Market selectivity for smaller individuals,Medium,Orange,"1. Implement minimum size limit and/or 
+
+2. Increase outreach about the importance of  juvenile fish to the health of the fisheries"
+Length-based Indicators,Target > Lopt > Limit and/or Target > Lmat > Limit,Target > Lopt > Limit and/or Target > Lmat > Limit,Market selectivity for smaller individuals,Medium,Orange,"1. Implement minimum size limit and/or 
+
+2. Increase outreach about the importance of  juvenile fish to the health of the fisheries"
+Length-based Indicators,Limit > Lmega > Target,Limit > Lmega > Target,Weak juvenile recruitment (fewer small individuals entering the catch),Medium,Orange,"1. Implement minimum size limit and/or 
+
+2. Ensure adequate survelience of the reserves"
+Length-based Indicators,Target > Lopt > Limit and/or Target > Lmat > Limit,Target > Lopt > Limit and/or Target > Lmat > Limit,Environmental catastrophe affecting size structure and spawning stock biomass,Medium,Orange,"1. Limit fishing licenses and/or 
+
+2. Ensure adequate survelience of the reserves"
+Length-based Indicators,Target > Lopt > Limit and/or Target > Lmat > Limit,Target > Lopt > Limit and/or Target > Lmat > Limit,High fishing pressure affecting size structure and spawning stock biomass,Medium,Orange,"1. Limit fishing licenses and/or 
+
+2. Ensure adequate survelience of the reserves"
+Length-based Indicators,Limit > Lmega > Target,Limit > Lmega > Target,High fishing pressure affecting size structure and spawning stock biomass,Medium,Orange,"1. Limit fishing licenses and/or 
+
+2. Ensure adequate survelience of the reserves"
+Length-based Indicators,Target > Lopt > Limit and/or Target > Lmat > Limit,Target > Lopt > Limit and/or Target > Lmat > Limit,Emigration of large individuals from fishing area,Low,Green,1. Make no changes to fisheries management controls
+Length-based Indicators,Limit > Lmega > Target,Limit > Lmega > Target,Immigration of large individuals to fishing area,Low,Green,1. Make no changes to fisheries management controls
+Spawning Potential Ratio,Target <= Indicator,Target <= Indicator,Fishing pressure appropriate for maintaining or improving size structure of population and spawning stock biomass,Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Spawning Potential Ratio,Target <= Indicator,Target <= Indicator,Gear shift towards more selective gear (fewer small individuals in catch),Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Spawning Potential Ratio,Limit > Indicator < Target,Limit > Indicator < Target,Strong juvenile recruitment (more small individuals entering the catch),Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Spawning Potential Ratio,Limit > Indicator < Target,Limit > Indicator < Target,Fishers targeting nursery grounds,Medium,Orange,1. Establish reserve around nursery grounds
+Spawning Potential Ratio,Limit > Indicator < Target,Limit > Indicator < Target,Gear shift towards less selective gear (more small individuals in catch),Medium,Orange,"1. Implement gear restriction (e.g., ban certain fishing gears [mesh nets, traps], restrict use of certain fishing gears [compressors, traps], modify fishing gears [decrease number of hooks in long-lines], increase mesh size)."
+Spawning Potential Ratio,Indicator <= Limit,Indicator <= Limit,High fishing pressure affecting size structure and spawning stock biomass; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Spawning Potential Ratio,Target <= Indicator,Target <= Indicator,Market selectivity for larger individuals,Medium,Orange,"1. Implement maximum size limit and/or 
+
+2. Increase outreach about the importance of large fish to the health of the fisheries"
+Spawning Potential Ratio,Target <= Indicator,Target <= Indicator,Market selectivity for larger individuals,Medium,Orange,"1. Implement maximum size limit and/or 
+
+2. Increase outreach about the importance of large fish to the health of the fisheries"
+Spawning Potential Ratio,Limit > Indicator < Target,Limit > Indicator < Target,Market selectivity for smaller individuals,Medium,Orange,"1. Implement minimum size limit and/or 
+
+2. Increase outreach about the importance of  juvenile fish to the health of the fisheries"
+Spawning Potential Ratio,Limit > Indicator < Target,Limit > Indicator < Target,Market selectivity for smaller individuals,Medium,Orange,"1. Implement minimum size limit and/or 
+
+2. Increase outreach about the importance of  juvenile fish to the health of the fisheries"
+Spawning Potential Ratio,Target <= Indicator,Target <= Indicator,Weak juvenile recruitment (fewer small individuals entering the catch),Medium,Orange,"1. Implement minimum size limit and/or 
+
+2. Ensure adequate survelience of the reserves"
+Spawning Potential Ratio,Limit > Indicator < Target,Limit > Indicator < Target,Environmental catastrophe affecting size structure and spawning stock biomass,Medium,Orange,"1. Limit fishing licenses and/or 
+
+2. Ensure adequate survelience of the reserves"
+Spawning Potential Ratio,Limit > Indicator < Target,Limit > Indicator < Target,High fishing pressure affecting size structure and spawning stock biomass,Medium,Orange,"1. Limit fishing licenses and/or 
+
+2. Ensure adequate survelience of the reserves"
+Spawning Potential Ratio,Limit > Indicator < Target,Limit > Indicator < Target,Emigration of large individuals from fishing area,Low,Green,1. Make no changes to fisheries management controls
+Spawning Potential Ratio,Indicator <= Limit,Indicator <= Limit,Extreme environmental catastrophe affecting size structure and spawning stock biomass; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Spawning Potential Ratio,Target <= Indicator,Target <= Indicator,Immigration of large individuals to fishing area,Low,Green,1. Make no changes to fisheries management controls
+Species Composition,Increasing,Increasing,Ecosystem may be healthy enough to support historical target species,Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Species Composition,Decreasing,Decreasing,"Ecosystem likely not healthy enough to support historical target species (fewer species, more pelagic)",Medium,Orange,1. Limit fishing licenses
+Species Composition,No change,No change,Ecosystem may be healthy enough to support historical target species,Low,Green,1. Reduce limits on fishing licenses
+Species Composition,No change,No change,Ecosystem may be healthy enough to support historical target species,Low,Green,1. Make no changes to fisheries management controls
+Species Vulnerability,High,Target species have high vulnerability,Target species have high susceptibility and/or low productivity,Medium,Orange,"1. Implement harvesting ban on vulnerable species or 
+
+2. Implement seasonal closures"
+Species Vulnerability,Medium,Target species have medium vulnerability,Target species have medium susceptibility medium productivity,Medium,Orange,1. Implement seasonal closures
+Species Vulnerability,Low,Target species have low vulnerability,Target species have low susceptibility and/or high productivity,Low,Green,1. Reduce limits on fishing licenses
+Total Landings,Increasing,Indicator >= Target,Fishing pressure appropriate for maintaining or improving spawning stock biomass,Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Total Landings,No change,Target > Indicator > Limit,Fishing effort decreased,Low,Green,"1. Make no changes to fisheries management controls or
+
+2. If trends have persisted for more than one year reduce limits on fishing licenses"
+Total Landings,Decreasing,Target > Indicator > Limit,High fishing pressure negatively affecting spawning stock biomass,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Total Landings,Decreasing,Limit >= Indicator,High fishing pressure negatively affecting spawning stock biomass; fishery in danger of collapse,High,Red,"1. Implement harvesting ban and/or
+
+2. Limit fishing licenses"
+Total Landings,Increasing,Indicator >= Target,Fishing effort increased,Medium,Orange,"1. Limit fishing licenses and/or 
+
+2. Ensure adequate survelience of the reserves"
+Total Landings,No change,Target > Indicator > Limit,High fishing pressure negatively affecting spawning stock biomass,Medium,Orange,1. Make no changes to fisheries management controls 
+Total Landings,Decreasing,Target > Indicator > Limit,Reported catch decreasing,Medium,Orange,"1. Increase mumber of registered fishers and buyers reporting.
+
+2. Maintain a consistant reporting effort."
+Total Landings,Increasing,Indicator >= Target,Reported catch increasing,Medium,Orange,"1. Make no changes to fisheries management controls. 
+
+2. Reporting effort is  increasing over time due to more buyers reporting. "
+Reporting Effort,Decreasing,"Increased variability in fishing season, or decreased fishing season","Number of fishers and/or buyers reporting catch significantly declined because external events (e.g., pandemics, environmental catastrophes, ",Medium,Orange,"1. Make no changes to fisheries management controls
+
+"
+Reporting Effort,Decreasing,"Increased variability in fishing season, or decreased fishing season",Ecosystem likely not healthy enough to support historical fishing season,High,Red,1. Limit fishing licenses
