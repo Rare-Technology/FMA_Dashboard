@@ -39,8 +39,6 @@ interpretServer <- function(id, state) {
               `Assessment Result` == trend
             ) %>%
             create_gt_table(
-              "Harvest Controls",
-              "(a subtitle)",
               "Performance Indicator"
             )
         }

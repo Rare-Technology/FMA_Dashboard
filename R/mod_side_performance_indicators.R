@@ -68,7 +68,7 @@ sidebarIndicatorServer <- function(id, state) {
         }
 
         # ---- Data tab
-        if (current_tab %in% c("1. Assess data", "3. Visualize data")) {
+        if (current_tab %in% c("1. Assess data", "2. Visualize data", "3. Visualize data")) {
           ui[["date_slider"]] <- div(
             class = "date_slider pi_widget",
             sliderInput(ns("date_range"),
