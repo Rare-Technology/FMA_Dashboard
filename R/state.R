@@ -36,6 +36,7 @@ initialize_state <- function() {
     current_indicator = "Species Composition",
     current_min_records = list(min = 0, max = 300, value = 0),
     current_trend = NA,
-    loess_span = 0.5
+    loess_span = 0.5,
+    current_plot = NULL
   )
 }

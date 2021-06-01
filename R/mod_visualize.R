@@ -11,6 +11,9 @@ visualizeUI <- function(id) {
   ns <- NS(id)
   tagList(
         uiOutput(ns("plot_holder")) %>% withSpinner(color = SPINNER_COLOR)
+
+        
+
     
   )
 }
@@ -89,20 +92,36 @@ visualizeServer <- function(id, state) {
           msg <- "There was an error creating the plot"
         }
         
-        
+        state$current_plot <- p
         output$plot <- renderPlot(
           suppressWarnings(print(p)), # suppress stat_smooth/geom_smooth warnings
           height = PLOT_HEIGHT, 
           width = PLOT_WIDTH
         )
         
-        tagList(
+      ui_result <- list()
+      
+      if(!is.null(p)) 
+        ui_result[[1]] <- downloadButton(ns("downloadPlot"),class = "download-button", 'Download Plot')
+        
+      ui_result <- c(
+        ui_result,
+        list(
           div(class = 'errormsg', msg),
           plotOutput(ns('plot'))
-        )
+      )
+      )
+      
+      
+      ui_result
 
       })
       
+      output$downloadPlot <- downloadHandler(
+        filename = function(){paste0("plot_", tolower(gsub(" ", "_", state$current_indicator)), ".png")},
+        content = function(file){
+          ggsave(file,plot=state$current_plot)
+        })
 
 
       outputOptions(output, "plot_holder", suspendWhenHidden = FALSE)
