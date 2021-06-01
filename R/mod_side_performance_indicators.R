@@ -38,12 +38,15 @@ sidebarIndicatorServer <- function(id, state) {
   
      
         # ---- Select, Visualize, Interpret tabs
-        if (current_tab %in% c("2. Select indicators", "3. Visualize data", "4. Interpret results")) {
+        if (current_tab %in% c("2. Visualize data", "3. Interpret results")) {
           ui[["performance_indicators"]] <- 
           div(class = " pi_widget", 
           selectInput(
             inputId = ns("performance_indicators"),
-            label = "Select performance indicator",
+            label = div(
+              "Select performance indicator", 
+              actionLink(inputId = ns("show_defs"), label = "(definitions)")
+              ),
             choices = c(
               "Fishing Gear",
               "Reporting Effort",
@@ -81,7 +84,7 @@ sidebarIndicatorServer <- function(id, state) {
 
 
 
-        if (current_tab %in% c("3. Visualize data") && !current_indicator %in% c("Fishing Gear", "Size Structure", "Size Proportions")) {
+        if (current_tab %in% c("2. Visualize data") && !current_indicator %in% c("Fishing Gear", "Size Structure", "Size Proportions")) {
           ui[["loess_span"]] <- div(
             class = "smooth_slider pi_widget",
             sliderInput(
@@ -153,6 +156,29 @@ sidebarIndicatorServer <- function(id, state) {
       observeEvent(input$loess_span, {
         state$loess_span <- input$loess_span
       })
+      
+      observeEvent(input$show_defs, {
+        showModal(modalDialog(
+          title = "Performance indicator definitions",
+          gt::gt_output(outputId = ns("reference_points")),
+          easyClose = TRUE,
+          footer = modalButton("Dismiss"),
+          #footer = NULL,
+          size = "l"
+        ))
+      })  
+      
+      
+      output$reference_points <-
+        gt::render_gt(
+          {
+            create_gt_table(
+              fma_reference_points,
+              "Performance Indicator"
+            )
+          },
+          height = gt::px(STATIC_TABLE_HEIGHT)
+        )
       
       # Commented out per git 21
       # observeEvent(input$min_records, {
