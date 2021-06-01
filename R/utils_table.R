@@ -17,14 +17,14 @@ table_column_alignment <- function(.data) {
   )
 }
 
-create_gt_table <- function(.data, title, subtitle, var1) {
+create_gt_table <- function(.data,  var1) {
   vals <- seq(1, nrow(.data), by = 2)
   tbl <- .data %>%
     gt::gt() %>%
-    gt::tab_header(
-      title = title,
-      subtitle = subtitle
-    ) %>%
+    # gt::tab_header(
+    #   title = title,
+    #   subtitle = subtitle
+    # ) %>%
     gt::tab_style(
       style = list(
         # cell_fill(color = "lightcyan"),
