@@ -2,6 +2,10 @@
 
 The FMA Dashboard is an R package called `{ rarefma }`
 
+### Generating updated data
+
+There are scripts in the `data-raw` folder to create the underlying data. The main one is `prepare-ourfish-data`
+
 ### To install for development
 
 1. Make sure you have `{ devtools }` installed

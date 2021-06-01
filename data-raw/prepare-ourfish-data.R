@@ -78,15 +78,15 @@ create_geo_table <- function(.data) {
 
 # ---- !!! For testing only, a fake dataset
 
-fake_data <- ourfish %>%
-  dplyr::mutate()
-fake_data$country[fake_data$country == "Philippines"] <- "Fake country"
-
-fake_data$subnational <- paste0(fake_data$subnational, "2")
-fake_data$local <- paste0(fake_data$local, "2")
-fake_data$maa <- paste0(fake_data$maa, "2")
-fake_data$family <- paste0(fake_data$family, "2")
-fake_data$species <- paste0(fake_data$species, "2")
+# fake_data <- ourfish %>%
+#   dplyr::mutate()
+# fake_data$country[fake_data$country == "Philippines"] <- "Fake country"
+# 
+# fake_data$subnational <- paste0(fake_data$subnational, "2")
+# fake_data$local <- paste0(fake_data$local, "2")
+# fake_data$maa <- paste0(fake_data$maa, "2")
+# fake_data$family <- paste0(fake_data$family, "2")
+# fake_data$species <- paste0(fake_data$species, "2")
 
 
 # ---- List of two raw datasets
@@ -95,11 +95,11 @@ fma_data_raw <- list(
   ourfish = list(
     label = "OurFish Data",
     data = ourfish
-  ),
-  other = list(
-    label = "Test other data source",
-    data = fake_data
-  )
+  )#,
+  # other = list(
+  #   label = "Test other data source",
+  #   data = fake_data
+  # )
 )
 
 
@@ -165,8 +165,8 @@ fma_init_family_species_selections <-
     country = fma_init_geo_selections$country$selected,
     subnational = fma_init_geo_selections$subnational$selected,
     local = fma_init_geo_selections$local$selected,
-    maa = fma_init_geo_selections$maa$selected,
-    dates = c(fma_init_date_range$min, fma_init_date_range$max)
+    maa = fma_init_geo_selections$maa$selected#,
+    #dates = c(fma_init_date_range$min, fma_init_date_range$max)
   )
 
 
@@ -196,7 +196,7 @@ fma_data_geo_family_species <- purrr::map(
 
 usethis::use_data(
   fma_data_raw,
-  # fma_reference_points,
+  # fma_reference_points, #see other script
   fma_data_sources,
   fma_data_geo_family_species,
   fma_data_summary,
