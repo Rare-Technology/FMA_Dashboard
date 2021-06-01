@@ -30,7 +30,7 @@ create_gt_table <- function(.data,  var1) {
         # cell_fill(color = "lightcyan"),
         "font-variant: small-caps;"
       ),
-      locations = gt::cells_body(columns = gt::vars({{ var1 }}))
+      locations = gt::cells_body(columns = c({{ var1 }}))
     ) %>%
     gt::tab_style(
       style = list(
@@ -41,7 +41,7 @@ create_gt_table <- function(.data,  var1) {
       )
     ) %>%
     gt::cols_width(
-      gt::vars(`Performance Indicator`) ~ px(125),
+      c(`Performance Indicator`) ~ px(125),
       gt::everything() ~ px(145)
     ) %>%
     gt::tab_options(
