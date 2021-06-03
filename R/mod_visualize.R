@@ -85,6 +85,8 @@ visualizeServer <- function(id, state) {
         if(is.null(p)){
           p <- NULL
           msg <- "There was not enough data to create a plot"
+          if(performance_indicators %in% c("Size Structure", "Size Proportions"))
+            msg <- "At least 100 records per species per month are required to create this plot"
         } 
         
         if("try-error" %in% class(p)){
@@ -120,7 +122,7 @@ visualizeServer <- function(id, state) {
       output$downloadPlot <- downloadHandler(
         filename = function(){paste0("plot_", tolower(gsub(" ", "_", state$current_indicator)), ".png")},
         content = function(file){
-          ggsave(file,plot=state$current_plot)
+          ggsave(file,plot=state$current_plot, width = 27, height = 20, units = "cm")
         })
 
 
