@@ -69,6 +69,7 @@ sidebarIndicatorServer <- function(id, state) {
 
         # ---- Data tab
         if (current_tab %in% c("1. Assess data", "2. Visualize data", "3. Visualize data")) {
+ 
           ui[["date_slider"]] <- div(
             class = "date_slider pi_widget",
             sliderInput(ns("date_range"),
@@ -80,7 +81,8 @@ sidebarIndicatorServer <- function(id, state) {
               timeFormat = "%F"
             )
           )
-        }
+          }
+ 
 
 
 
@@ -145,6 +147,7 @@ sidebarIndicatorServer <- function(id, state) {
         
         state$data_filtered <- data_filtered
         
+   
         state$data_summary_filtered <- data_filtered %>%
           create_data_summary()
 

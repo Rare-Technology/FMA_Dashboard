@@ -42,7 +42,7 @@ sidebarGeoUI <- function(id) {
       ns("sel_maa"),
       "Managed access area",
       choices = fma_init_geo_selections$maa$choices,
-      selected = fma_init_geo_selections$maa$selected,
+      selected = NULL,
       multiple = TRUE,
       selectize = TRUE
     ),
@@ -176,13 +176,19 @@ sidebarGeoServer <- function(id, state) {
           if (!setequal(input$sel_maa, state$maa$selected)) {
             state$maa$selected <- input$sel_maa
           }
-          state$data_filtered <- state$data_full %>%
+           data_filtered <- state$data_full %>%
             dplyr::filter(
               country %in% input$sel_country,
               subnational %in% input$sel_subnational,
               local %in% input$sel_local,
               maa %in% input$sel_maa
             )
+          
+          
+          state$data_filtered <- data_filtered
+          state$data_summary_filtered <- data_filtered %>%
+            create_data_summary()
+          
         },
         ignoreInit = TRUE
       )

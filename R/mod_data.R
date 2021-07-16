@@ -36,7 +36,6 @@ dataServer <- function(id, state) {
           )
 
 
-
         tbl <- DT::datatable(
           data = table_data,
           class = "display nowrap",
