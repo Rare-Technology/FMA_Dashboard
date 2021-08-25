@@ -1,5 +1,47 @@
+library(dplyr)
+
 # ---- Read in raw data
-ourfish <- readr::read_rds("data-raw/ourfish.rds")
+# ourfish <- readr::read_rds("data-raw/ourfish.rds")
+
+# Join_OurFish_Fishbase from Communities Fisheries
+# https://data.world/rare/community-fisheries
+ourfish <- read.csv("https://query.data.world/s/cdlghaklyefefl3fqlxzdeboqvkjt7",
+               header=TRUE, stringsAsFactors=FALSE);
+
+###### FROM ORIGINAL CODE
+ourfish$country <- ourfish$footprint_global_ourfish_country
+
+ourfish$date_2 <- as.Date(ourfish$date_2, "%Y-%m-%d")
+
+weight_length <- function (weight, .count, a, b) {
+  exp(log(weight*1000/.count/a)/b)
+}
+
+ourfish$Length <- weight_length(ourfish$weight_kg, 
+                                ourfish$count, 
+                                ourfish$a, 
+                                ourfish$b)
+
+lhiData <- readr::read_csv('data-raw/LHI_Database.csv')
+
+## Select country, managed access, and species 
+ourfish_ctry_raw <- ourfish %>%
+  filter (country != ""  & 
+            ma_name != "" &
+            species != "" &
+            family != "" & 
+            count < 150000 ) %>%
+  filter(!is.na(date_2)) %>%
+  droplevels()
+
+##Add trophic level data by species
+ourfish <- left_join (ourfish_ctry_raw, lhiData[,c("Species", "Troph")], 
+                      by = c("species" = "Species"))
+#set month and year as Date
+ourfish$yearmonth <- as.Date(paste0(ourfish$year, "-", ourfish$month,"-", "01"),
+                             "%Y-%m-%d")
+####### END ORIGINAL CODE
+
 fma_reference_points <- readr::read_csv("data-raw/reference_points.csv")
 
 # ---- Convert factors to character

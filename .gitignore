@@ -6,3 +6,4 @@ rsconnect/
 config.yml
 .Rproj.user
 .RHistory
+data_old/
