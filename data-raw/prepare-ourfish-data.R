@@ -96,8 +96,9 @@ ourfish <- ourfish %>%
 # ---- Fixes
 
 # uncomment this when implementing gear type data
-ourfish$gear_type[ourfish$gear_type == "spear gun"] <- "Spear gun"
+ourfish$gear_type[ourfish$gear_type == "Spear Gun"] <- "Spear gun"
 ourfish$gear_type[ourfish$gear_type == "Beach Seine"] <- "Beach seine"
+ourfish$gear_type[ourfish$gear_type == "Línea y anzuelo"] <- "Handline"
 ourfish$length[is.infinite(ourfish$length)] <- NA
 ourfish$count[ourfish$count == 0] <- NA
 

@@ -48,16 +48,16 @@ sidebarIndicatorServer <- function(id, state) {
               actionLink(inputId = ns("show_defs"), label = "(definitions)")
               ),
             choices = c(
-              # "Fishing Gear",
-              # "Reporting Effort",
+              "Fishing Gear",
+              "Reporting Effort",
               "Species Composition",
               # "Fished:Unfished Ratio",
               "Average Length",
               "Average Trophic Level",
-              #' Spawning Potential Ratio',
+              # "Spawning Potential Ratio",
               "Size Structure",
               "Size Proportions",
-              # "CPUE",
+              "CPUE",
               "Total Landings"
             ),
             selected = current_indicator
@@ -70,17 +70,6 @@ sidebarIndicatorServer <- function(id, state) {
         # ---- Data tab
         if (current_tab %in% c("1. Assess data", "2. Visualize data", "3. Visualize data")) {
  
-          # ui[["date_slider"]] <- div(
-          #   class = "date_slider pi_widget",
-          #   sliderInput(ns("date_range"),
-          #     label = "Select date range",
-          #     min = current_date_range$min,
-          #     max = current_date_range$max + 1,
-          #     value = c(current_date_range$valmin, current_date_range$valmax),
-          #     ticks = FALSE,
-          #     timeFormat = "%F"
-          #   )
-          # )
           ui[["date_range"]] <- div(
             dateRangeInput(ns("date_range"),
               label = "Select date range",
@@ -91,10 +80,7 @@ sidebarIndicatorServer <- function(id, state) {
               startview='year',
               )
           )
-          }
- 
-
-
+        }
 
         if (current_tab %in% c("2. Visualize data") && !current_indicator %in% c("Fishing Gear", "Size Structure", "Size Proportions")) {
           ui[["loess_span"]] <- div(
@@ -124,8 +110,6 @@ sidebarIndicatorServer <- function(id, state) {
         #       ticks = FALSE)
         #   )
         # }
-        
-      
 
         ui[['tippy']] <- list(
           tippy_class_alt("tip-smooth", "Controls the amount of smoothing of the loess curve. Smaller numbers produce wigglier lines, larger numbers produce smoother lines"),
@@ -135,13 +119,10 @@ sidebarIndicatorServer <- function(id, state) {
         ui
       })
 
-
-
       observeEvent(input$performance_indicators, {
         state$current_indicator <- input$performance_indicators
       })
-
-
+      
       observeEvent(input$date_range, {
         
         data_filtered <- state$data_full %>%
@@ -156,7 +137,6 @@ sidebarIndicatorServer <- function(id, state) {
           )
         
         state$data_filtered <- data_filtered
-        
    
         state$data_summary_filtered <- data_filtered %>%
           create_data_summary()
@@ -180,7 +160,6 @@ sidebarIndicatorServer <- function(id, state) {
           size = "l"
         ))
       })  
-      
       
       output$reference_points <-
         gt::render_gt(
