@@ -14,6 +14,7 @@ mainUI <- function(id) {
     mainPanel(
       tabsetPanel(
         id = ns("tabs"),
+        tabPanel("Start", startUI("startUI")),
         tabPanel("1. Assess data", dataUI("dataUI")),
         #tabPanel("2. Select indicators", selectUI("selectUI")),
         tabPanel("2. Visualize data", visualizeUI("visualizeUI")),
