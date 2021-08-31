@@ -53,7 +53,7 @@ get_maa_selections <- function(.data,
     as.character() %>%
     sort()
 
-  list(choices = choices, selected = choices)
+  list(choices = choices, selected = NULL)
 }
 
 
