@@ -129,6 +129,6 @@ get_geo_selections <- function(.data,
     country = list(choices = country_choices, selected = country_selected),
     subnational = list(choices = subnational_choices, selected = subnational_selected),
     local = list(choices = local_choices, selected = local_selected),
-    maa = list(choices = maa_choices, selected = maa_selected)
+    maa = list(choices = maa_choices, selected = NULL)
   )
 }

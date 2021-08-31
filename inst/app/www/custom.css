@@ -1,3 +1,4 @@
+ 
 .container{
   width: 1170px !important;
   padding: 0 !important;
@@ -41,11 +42,6 @@
 
 .navbar-default .navbar-nav > li > a {
   color: #fff;
-}
-
-.dropdown-menu {
-  right: 0;
-  left: auto;
 }
 
 .well{

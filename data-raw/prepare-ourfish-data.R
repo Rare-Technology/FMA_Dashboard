@@ -1,17 +1,22 @@
 library(dplyr)
+library(lubridate)
 
 # ---- Read in raw data
 # ourfish <- readr::read_rds("data-raw/ourfish.rds")
 
-# Join_OurFish_Fishbase from Communities Fisheries
-# https://data.world/rare/community-fisheries
-ourfish <- read.csv("https://query.data.world/s/cdlghaklyefefl3fqlxzdeboqvkjt7",
+# join_ourfish_footprint_fishbase from Fisheries Dashboard
+# https://data.world/rare/fisheries-dashboard/workspace/
+ourfish <- read.csv("https://query.data.world/s/lxjnrn7fhkv6cbivbt2uqrqwmskyv2",
                header=TRUE, stringsAsFactors=FALSE);
 
-###### FROM ORIGINAL CODE
-ourfish$country <- ourfish$footprint_global_ourfish_country
 
-ourfish$date_2 <- as.Date(ourfish$date_2, "%Y-%m-%d")
+ourfish$date <- as.Date(ourfish$date, "%Y-%m-%d")
+ourfish$year <- lubridate::year(ourfish$date)
+ourfish$month <- lubridate::month(ourfish$date)
+ourfish$week <- lubridate::week(ourfish$date)
+
+
+ourfish <- ourfish %>% mutate(weight_kg=weight_mt*1000)
 
 weight_length <- function (weight, .count, a, b) {
   exp(log(weight*1000/.count/a)/b)
@@ -26,21 +31,19 @@ lhiData <- readr::read_csv('data-raw/LHI_Database.csv')
 
 ## Select country, managed access, and species 
 ourfish_ctry_raw <- ourfish %>%
-  filter (country != ""  & 
-            ma_name != "" &
-            species != "" &
-            family != "" & 
-            count < 150000 ) %>%
-  filter(!is.na(date_2)) %>%
+  dplyr::filter (country != "",
+            ma_name != "",
+            species_scientific != "",
+            family_scientific != "", 
+            !is.na(date)) %>%
   droplevels()
 
 ##Add trophic level data by species
-ourfish <- left_join (ourfish_ctry_raw, lhiData[,c("Species", "Troph")], 
-                      by = c("species" = "Species"))
+ourfish <- merge (ourfish_ctry_raw, lhiData[,c("Species", "Troph")],
+                      by.x= 'species_scientific', by.y="Species")
 #set month and year as Date
 ourfish$yearmonth <- as.Date(paste0(ourfish$year, "-", ourfish$month,"-", "01"),
                              "%Y-%m-%d")
-####### END ORIGINAL CODE
 
 fma_reference_points <- readr::read_csv("data-raw/reference_points.csv")
 
@@ -59,27 +62,27 @@ ourfish <- ourfish %>%
 ourfish <- ourfish %>%
   dplyr::select(
     country,
-    iso3 = country_code,
-    subnational = level1_name,
-    subnational_id = level1_id,
-    local = level2_name,
-    local_id = level2_id,
+    # iso3 = country_code,
+    subnational = snu_name,
+    subnational_id = snu_id,
+    local = lgu_name,
+    local_id = lgu_id,
     maa = ma_name,
     maa_id = ma_id,
-    family,
-    species,
-    community,
+    family = family_scientific,
+    species = species_scientific,
+    community = community_name,
     year,
     yearmonth,
     week,
-    transaction_date = date_2,
+    transaction_date = date,
     label,
     length = Length,
     count,
     weight_kg,
-    gear_type,
-    fisher_id,
-    buyer_id,
+    # gear_type,
+    # fisher_id,
+    # buyer_id,
     trophic_level = Troph,
     lmax
   ) %>%
@@ -95,8 +98,9 @@ ourfish <- ourfish %>%
 
 # ---- Fixes
 
-ourfish$gear_type[ourfish$gear_type == "spear gun"] <- "Spear gun"
-ourfish$gear_type[ourfish$gear_type == "Beach Seine"] <- "Beach seine"
+# uncomment this when implementing gear type data
+# ourfish$gear_type[ourfish$gear_type == "spear gun"] <- "Spear gun"
+# ourfish$gear_type[ourfish$gear_type == "Beach Seine"] <- "Beach seine"
 ourfish$length[is.infinite(ourfish$length)] <- NA
 ourfish$count[ourfish$count == 0] <- NA
 
@@ -106,7 +110,7 @@ create_geo_table <- function(.data) {
   dplyr::distinct(
     .data,
     country,
-    iso3,
+    # iso3,
     subnational,
     subnational_id,
     local,
@@ -116,20 +120,6 @@ create_geo_table <- function(.data) {
   ) %>%
     dplyr::arrange(country, subnational, local, maa)
 }
-
-
-# ---- !!! For testing only, a fake dataset
-
-# fake_data <- ourfish %>%
-#   dplyr::mutate()
-# fake_data$country[fake_data$country == "Philippines"] <- "Fake country"
-# 
-# fake_data$subnational <- paste0(fake_data$subnational, "2")
-# fake_data$local <- paste0(fake_data$local, "2")
-# fake_data$maa <- paste0(fake_data$maa, "2")
-# fake_data$family <- paste0(fake_data$family, "2")
-# fake_data$species <- paste0(fake_data$species, "2")
-
 
 # ---- List of two raw datasets
 
@@ -221,7 +211,7 @@ fma_data_geo_family_species <- purrr::map(
   ~ dplyr::distinct(
     .$data,
     country,
-    iso3,
+    # iso3,
     subnational,
     subnational_id,
     local,

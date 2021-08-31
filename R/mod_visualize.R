@@ -36,8 +36,8 @@ visualizeServer <- function(id, state) {
         sel_species <- state$species$selected[1]
         
         result <- switch(performance_indicators,
-                         "Fishing Gear" = plot_fishing_gear(data),
-                         "Reporting Effort" = plot_reporting_effort(data, loess_span),
+                         # "Fishing Gear" = plot_fishing_gear(data),
+                         # "Reporting Effort" = plot_reporting_effort(data, loess_span),
                          "Species Composition" = plot_trend_smooth(
                            data,
                            species,
@@ -66,7 +66,7 @@ visualizeServer <- function(id, state) {
                          ),
                          "Size Structure" = plot_size_structure(data, sel_species),
                          "Size Proportions" = plot_size_proportions(data, sel_species),
-                         "CPUE" = plot_cpue(data, loess_span, ymin = 0),
+                         # "CPUE" = plot_cpue(data, loess_span, ymin = 0),
                          "Total Landings" = plot_trend_smooth(
                            data,
                            weight_kg,

@@ -24,7 +24,5 @@ app_server <- function(input, output, session) {
   visualizeServer("visualizeUI", state)
   interpretServer("interpretUI", state)
   managementServer("managementUI")
-
-
   #outputOptions(output, "visualizeUI-plot", suspendWhenHidden = FALSE)
 }

@@ -48,8 +48,8 @@ sidebarIndicatorServer <- function(id, state) {
               actionLink(inputId = ns("show_defs"), label = "(definitions)")
               ),
             choices = c(
-              "Fishing Gear",
-              "Reporting Effort",
+              # "Fishing Gear",
+              # "Reporting Effort",
               "Species Composition",
               # "Fished:Unfished Ratio",
               "Average Length",
@@ -57,7 +57,7 @@ sidebarIndicatorServer <- function(id, state) {
               #' Spawning Potential Ratio',
               "Size Structure",
               "Size Proportions",
-              "CPUE",
+              # "CPUE",
               "Total Landings"
             ),
             selected = current_indicator
@@ -70,16 +70,26 @@ sidebarIndicatorServer <- function(id, state) {
         # ---- Data tab
         if (current_tab %in% c("1. Assess data", "2. Visualize data", "3. Visualize data")) {
  
-          ui[["date_slider"]] <- div(
-            class = "date_slider pi_widget",
-            sliderInput(ns("date_range"),
+          # ui[["date_slider"]] <- div(
+          #   class = "date_slider pi_widget",
+          #   sliderInput(ns("date_range"),
+          #     label = "Select date range",
+          #     min = current_date_range$min,
+          #     max = current_date_range$max + 1,
+          #     value = c(current_date_range$valmin, current_date_range$valmax),
+          #     ticks = FALSE,
+          #     timeFormat = "%F"
+          #   )
+          # )
+          ui[["date_range"]] <- div(
+            dateRangeInput(ns("date_range"),
               label = "Select date range",
+              start = current_date_range$valmin,
+              end = current_date_range$valmax,
               min = current_date_range$min,
-              max = current_date_range$max + 1,
-              value = c(current_date_range$valmin, current_date_range$valmax),
-              ticks = FALSE,
-              timeFormat = "%F"
-            )
+              max = current_date_range$max,
+              startview='year',
+              )
           )
           }
  
