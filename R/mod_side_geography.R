@@ -7,6 +7,7 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
+#' @importFrom shinyWidgets pickerInput updatePickerInput
 sidebarGeoUI <- function(id) {
   ns <- NS(id)
   tagList(
@@ -22,29 +23,38 @@ sidebarGeoUI <- function(id) {
       choices = fma_init_geo_selections$country$choices,
       selected = fma_init_geo_selections$country$selected
     ),
-    selectInput(
+    pickerInput(
       ns("sel_subnational"),
       "Subnational government",
       choices = fma_init_geo_selections$subnational$choices,
       selected = fma_init_geo_selections$subnational$selected,
       multiple = TRUE,
-      selectize = TRUE
+      options = list(
+        `actions-box` = TRUE,
+        `selected-text-format` = "count > 2"
+      )
     ),
-    selectInput(
+    pickerInput(
       ns("sel_local"),
       "Local government",
       choices = fma_init_geo_selections$local$choices,
       selected = fma_init_geo_selections$local$selected,
       multiple = TRUE,
-      selectize = TRUE
+      options = list(
+        `actions-box` = TRUE,
+        `selected-text-format` = "count > 2"
+      )
     ),
-    selectInput(
+    pickerInput(
       ns("sel_maa"),
       "Managed access area",
       choices = fma_init_geo_selections$maa$choices,
       selected = NULL,
       multiple = TRUE,
-      selectize = TRUE
+      options = list(
+        `actions-box` = TRUE,
+        `selected-text-format` = "count > 2"
+      )
     ),
     div(class = 'timeouttxt',
         h3(class = 'timeouttitle', "Please note"),
@@ -105,11 +115,7 @@ sidebarGeoServer <- function(id, state) {
             choices = subnational_info$choices,
             selected = subnational_info$selected
           )
-
-
-
-
-          updateSelectInput(
+          updatePickerInput(
             session,
             "sel_subnational",
             choices = subnational_info$choices,
@@ -134,7 +140,7 @@ sidebarGeoServer <- function(id, state) {
             choices = local_info$choices,
             selected = local_info$selected
           )
-          updateSelectInput(
+          updatePickerInput(
             session,
             "sel_local",
             choices = local_info$choices,
@@ -160,7 +166,7 @@ sidebarGeoServer <- function(id, state) {
             choices = maa_info$choices,
             selected = maa_info$selected
           )
-          updateSelectInput(
+          updatePickerInput(
             session,
             "sel_maa",
             choices = maa_info$choices,

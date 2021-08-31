@@ -43,7 +43,6 @@ sidebarStockServer <- function(id, state) {
     function(input, output, session) {
       observeEvent(state$maa,
         {
-          print("in maa")
           species_info <- get_family_species_selections(
             state$data_full,
             state$country$selected,

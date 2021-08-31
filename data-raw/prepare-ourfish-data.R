@@ -2,8 +2,6 @@ library(dplyr)
 library(lubridate)
 
 # ---- Read in raw data
-# ourfish <- readr::read_rds("data-raw/ourfish.rds")
-
 # join_ourfish_footprint_fishbase from Fisheries Dashboard
 # https://data.world/rare/fisheries-dashboard/workspace/
 ourfish <- read.csv("https://query.data.world/s/lxjnrn7fhkv6cbivbt2uqrqwmskyv2",
@@ -62,7 +60,6 @@ ourfish <- ourfish %>%
 ourfish <- ourfish %>%
   dplyr::select(
     country,
-    # iso3 = country_code,
     subnational = snu_name,
     subnational_id = snu_id,
     local = lgu_name,
@@ -80,9 +77,9 @@ ourfish <- ourfish %>%
     length = Length,
     count,
     weight_kg,
-    # gear_type,
-    # fisher_id,
-    # buyer_id,
+    gear_type,
+    fisher_id,
+    buyer_id,
     trophic_level = Troph,
     lmax
   ) %>%
@@ -99,8 +96,8 @@ ourfish <- ourfish %>%
 # ---- Fixes
 
 # uncomment this when implementing gear type data
-# ourfish$gear_type[ourfish$gear_type == "spear gun"] <- "Spear gun"
-# ourfish$gear_type[ourfish$gear_type == "Beach Seine"] <- "Beach seine"
+ourfish$gear_type[ourfish$gear_type == "spear gun"] <- "Spear gun"
+ourfish$gear_type[ourfish$gear_type == "Beach Seine"] <- "Beach seine"
 ourfish$length[is.infinite(ourfish$length)] <- NA
 ourfish$count[ourfish$count == 0] <- NA
 
@@ -110,7 +107,6 @@ create_geo_table <- function(.data) {
   dplyr::distinct(
     .data,
     country,
-    # iso3,
     subnational,
     subnational_id,
     local,
@@ -127,11 +123,7 @@ fma_data_raw <- list(
   ourfish = list(
     label = "OurFish Data",
     data = ourfish
-  )#,
-  # other = list(
-  #   label = "Test other data source",
-  #   data = fake_data
-  # )
+  )
 )
 
 
@@ -156,16 +148,12 @@ fma_init_geo_selections <- rarefma::get_geo_selections(fma_data_geo[[fma_init_da
 fma_data_sources <- names(fma_data_raw)
 names(fma_data_sources) <- purrr::map_chr(fma_data_raw, ~ .$label)
 
-
-
-
-
 fma_init_data_filtered <- fma_data_raw[[fma_init_data_source]]$data %>%
   dplyr::filter(
     country %in% fma_init_geo_selections$country$selected,
     subnational %in% fma_init_geo_selections$subnational$selected,
     local %in% fma_init_geo_selections$local$selected,
-    maa %in% fma_init_geo_selections$maa$selected
+    maa %in% fma_init_geo_selections$maa$choices
   )
 
 fma_init_data_summary_filtered <- fma_data_summary[[fma_init_data_source]] %>%
@@ -173,7 +161,7 @@ fma_init_data_summary_filtered <- fma_data_summary[[fma_init_data_source]] %>%
     country %in% fma_init_geo_selections$country$selected,
     subnational %in% fma_init_geo_selections$subnational$selected,
     local %in% fma_init_geo_selections$local$selected,
-    maa %in% fma_init_geo_selections$maa$selected
+    maa %in% fma_init_geo_selections$maa$choices
   )
 
 
@@ -197,7 +185,7 @@ fma_init_family_species_selections <-
     country = fma_init_geo_selections$country$selected,
     subnational = fma_init_geo_selections$subnational$selected,
     local = fma_init_geo_selections$local$selected,
-    maa = fma_init_geo_selections$maa$selected#,
+    maa = fma_init_geo_selections$maa$choices#,
     #dates = c(fma_init_date_range$min, fma_init_date_range$max)
   )
 
@@ -211,7 +199,6 @@ fma_data_geo_family_species <- purrr::map(
   ~ dplyr::distinct(
     .$data,
     country,
-    # iso3,
     subnational,
     subnational_id,
     local,
@@ -224,11 +211,8 @@ fma_data_geo_family_species <- purrr::map(
     dplyr::arrange(country, subnational, local, maa, family, species)
 )
 
-
-
 usethis::use_data(
   fma_data_raw,
-  # fma_reference_points, #see other script
   fma_data_sources,
   fma_data_geo_family_species,
   fma_data_summary,
@@ -238,6 +222,5 @@ usethis::use_data(
   fma_init_family_species_selections,
   fma_init_data_summary_filtered,
   fma_init_date_range,
-  #fma_table_names,
   overwrite = TRUE
 )
