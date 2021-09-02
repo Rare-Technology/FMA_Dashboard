@@ -10,6 +10,7 @@
 sidebarStockUI <- function(id) {
   ns <- NS(id)
   tagList(
+    div(class='sidetitle', 'Stock'),
     selectInput(
       ns("sel_family"),
       tooltip_label("tip-family", "Select family"),

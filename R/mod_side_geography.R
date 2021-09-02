@@ -11,6 +11,7 @@
 sidebarGeoUI <- function(id) {
   ns <- NS(id)
   tagList(
+    div(class='sidetitle', "Geography"),
     selectInput(
       ns("sel_datasource"),
       "Data source",
@@ -55,11 +56,6 @@ sidebarGeoUI <- function(id) {
         `actions-box` = TRUE,
         `selected-text-format` = "count > 2"
       )
-    ),
-    div(class = 'timeouttxt',
-        h3(class = 'timeouttitle', "Please note"),
-        p(glue::glue("This app may time-out if left idle too long, which will cause the",
-                     " screen to grey-out. To use the app again, refresh the page."))
     )
   )
 }

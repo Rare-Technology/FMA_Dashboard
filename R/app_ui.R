@@ -27,9 +27,12 @@ golem_add_external_resources <- function() {
 
   tags$head(
     favicon(),
-    bundle_resources(
-      path = app_sys("app/www"),
-      app_title = "rarefma"
-    )
+    # bundle_resources(
+    #   path = app_sys("app/www"),
+    #   app_title = "rarefma"
+    # )
+    # need this line so that changes to custom.css take effect!
+    # this might be a bug on golem's end?
+    tags$link(rel='stylesheet', type='text/css', href='www/custom.css')
   )
 }

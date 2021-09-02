@@ -10,16 +10,10 @@
 sidebarUI <- function(id) {
   ns <- NS(id)
   tagList(
-    sidebarPanel(
-      class = "sidebar",
-      tabsetPanel(
-        tabPanel("Geography", sidebarGeoUI("sidebarGeoUI")),
-        tabPanel("Stock", sidebarStockUI("sidebarStockUI")),
-        tabPanel("Indicator", sidebarIndicatorUI("sidebarIndicatorUI")),
-        tabPanel("Help", sidebarHelpUI("sidebarHelpUi"))
- 
-      )
-    )
+      sidebarGeoUI("sidebarGeoUI"),
+      sidebarStockUI("sidebarStockUI"),
+      sidebarIndicatorUI("sidebarIndicatorUI"),
+      sidebarHelpUI("sidebarHelpUi")
   )
 }
 

@@ -11,10 +11,6 @@ visualizeUI <- function(id) {
   ns <- NS(id)
   tagList(
         uiOutput(ns("plot_holder")) %>% withSpinner(color = SPINNER_COLOR)
-
-        
-
-    
   )
 }
 
@@ -103,17 +99,26 @@ visualizeServer <- function(id, state) {
         
       ui_result <- list()
       
-      if(!is.null(p)) 
-        ui_result[[1]] <- downloadButton(ns("downloadPlot"),class = "download-button", 'Download Plot')
-        
-      ui_result <- c(
-        ui_result,
-        list(
-          div(class = 'errormsg', msg),
-          plotOutput(ns('plot'))
-      )
-      )
+      # output$reference_desc <- gt::render_gt({
+      #   create_gt_table(
+      #     fma_reference_points %>%
+      #       dplyr::filter(`Performance Indicator` == performance_indicators),
+      #     "Performance Indicator"
+      #   )
+      # })
       
+      if(!is.null(p)) {
+        ui_result <- c(ui_result,
+          list(
+            # gt::gt_output(ns('reference_desc')),
+            tags$br(),
+            downloadButton(ns("downloadPlot"),class = "download-button", 'Download Plot'),
+            plotOutput(ns('plot'))
+          )
+        )
+      } else {
+        ui_result <- c(ui_result, list(div(class = 'errormsg', msg)))
+      }    
       
       ui_result
 

@@ -171,6 +171,12 @@ a {
   margin-right: 5px;
 }
 
-.download-button{
-  margin-left: 75%;
+.sw-dropdown-content {
+  height: 500px;
+  overflow-y: scroll;
+}
+
+.sidetitle {
+  text-align: center;
+  font-size: 16px;
 }

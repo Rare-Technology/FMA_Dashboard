@@ -34,11 +34,11 @@ sidebarIndicatorServer <- function(id, state) {
         current_min_records <- state$current_min_records
         
         ui <- list()
-
   
-     
         # ---- Select, Visualize, Interpret tabs
         if (current_tab %in% c("2. Visualize data", "3. Interpret results")) {
+          ui[[1]] <- div(class='sidetitle', 'Indicators')
+          
           ui[["performance_indicators"]] <- 
           div(class = " pi_widget", 
           selectInput(

@@ -10,6 +10,7 @@
 sidebarHelpUI <- function(id) {
   ns <- NS(id)
   tagList(
+    div(class='sidetitle', 'Help'),
     div(class = 'guidelink', 
         a(
           span(
