@@ -12,6 +12,18 @@ startUI <- function(id){
   tagList(
     tags$h1("Welcome!"),
     
+    tags$p("To get started, click on ", icon('gear'), " to select a country and then select the managed access areas you would like to see."),
+    div(class = 'timeouttxt',
+        h3(class = 'timeouttitle', "Please note"),
+        p(glue::glue("This app may time-out if left idle too long, which will cause the",
+                     " screen to grey-out. To use the app again, refresh the page."))
+    ),
+    
+    tags$h2("September 2 Notes"),
+    tags$li("Gear type, reporting efforts, and CPUE plots are enabled again."),
+    tags$li("The sidebar can be toggled on and off. Click on ", icon('gear'), "!"),
+    tags$li("Added full screen button. Click the icon on the top right to toggle full screen on and off."),
+    
     tags$h2("September 1 Notes"),
     tags$li("Updated geological selection menu. Select or deselect all regions with one click!"),
     
@@ -19,14 +31,7 @@ startUI <- function(id){
     tags$li("Data is finally up to date! Automated data updates coming soon."),
     tags$li("Gear type, reporting efforts, and CPUE plots temporarily disabled due to conflicts with new data."),
     tags$li("Date selection now uses a pop-up calendar instead of a slider."),
-    tags$li("MA selections are empty by default."),
-    tags$br(),
-    tags$p("To get started, click on ", icon('gear'), " to select a country and then select the managed access areas you would like to see."),
-    div(class = 'timeouttxt',
-        h3(class = 'timeouttitle', "Please note"),
-        p(glue::glue("This app may time-out if left idle too long, which will cause the",
-                     " screen to grey-out. To use the app again, refresh the page."))
-    )
+    tags$li("MA selections are empty by default.")
   )
 }
     

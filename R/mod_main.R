@@ -8,7 +8,7 @@
 #'
 #' @importFrom shiny NS tagList
 #' @importFrom shinyWidgets dropdown
-#' @importFrom shinyjs useShinyjs
+#' @importFrom shinyjs useShinyjs extendShinyjs
 mainUI <- function(id) {
   ns <- NS(id)
   fillPage(
