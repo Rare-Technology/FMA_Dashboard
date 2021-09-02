@@ -18,6 +18,7 @@
 usethis::use_package( "dplyr" )
 usethis::use_package( "DT" )
 usethis::use_package("shinyWidgets")
+usethis::use_package("shinyjs")
 usethis::use_pipe()
 
 ## Add modules ----

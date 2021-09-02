@@ -180,3 +180,18 @@ a {
   text-align: center;
   font-size: 16px;
 }
+
+.flow-div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.fs-button {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
