@@ -105,7 +105,6 @@ a {
 }
 
 .timeouttxt{
-  margin: 7px;
   color: grey;
 }
 
@@ -194,4 +193,8 @@ a {
   width: 32px;
   height: 32px;
   cursor: pointer;
+}
+
+.startpage {
+  margin-left: 20px;
 }
