@@ -19,7 +19,7 @@ mainUI <- function(id) {
         sidebarUI("sidebarUI"),
         width='300px',
         size='sm',
-        icon = icon('gear'),
+        icon = icon('filter'),
         status = 'success',
         style='material-circle'
       ),

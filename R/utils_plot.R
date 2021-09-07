@@ -58,3 +58,64 @@ theme_rare <- function(rotate_x = FALSE, subtitle_color = "black") {
 
   theme
 }
+
+display_filters <- function(state) {
+  out <- c('<div class="column">
+           <strong>Country</strong><br>&emsp;&emsp;',
+      paste(state$country$selected, collapse=', '),
+    '<br>',
+    '<strong>Subnational Unit</strong><br>&emsp;&emsp;',
+      paste(state$subnational$selected, collapse=', '),
+    '<br>',
+    '<strong>Local Government Unit</strong><br>&emsp;&emsp;',
+      paste(state$local$selected, collapse=', '),
+    '<br>',
+    '<strong>Managed Access Area</strong><br>&emsp;&emsp;',
+      paste(state$maa$selected, collapse=', '),
+    '</div>
+    <div class="column">
+    <strong>Date</strong><br>&emsp;&emsp;',
+      paste(state$current_date_range$valmin, state$current_date_range$valmax, sep=' to '),
+    '<br>')
+  if (length(state$family$selected) == length(state$family$choices)) {
+    out <- c(out,
+             '<strong>Family</strong>
+             <details>
+                  <summary>&emsp;&emsp;All selected. <u>Click to show</u></summary>',
+                  paste(state$family$selected, collapse=', '),
+             '</details>')
+  } else {
+    out <- c(out,
+             '<strong>Family</strong>
+             <details>
+                <summary&emsp;&emsp;><u>Click to show</u></summary>',
+                paste(state$family$selected, collapse = ', '),
+             '</details>')
+  }
+  if (length(state$species$selected) == length(state$species$choices)) {
+    out <- c(out,
+             '<strong>Species</strong><details>
+                <summary>&emsp;&emsp;All selected. <u>Click to show</u></summary>',
+                paste(state$species$selected, collapse=', '),
+             '</details>')
+  } else {
+    out <- c(out,
+             '<strong>Species</strong>
+             <details>
+                <summary>&emsp;&emsp;<u>Click to show.</u></summary>',
+                paste(state$species$selected, collapse=', '),
+             '</details>')
+  }
+  if (!state$current_indicator %in% c("Fishing Gear", "Size Structure", "Size Proportions")) {
+    out <- c(out,
+             '<strong>Curve Smoothing</strong><br>&emsp;&emsp;',
+                paste(state$loess_span),
+             '<br>')
+  }
+  reference_idx <- which(fma_reference_points$`Performance Indicator` == state$current_indicator)
+  out <- c(out,
+           '<strong>Indicator Description</strong><br>&emsp;&emsp;',
+              paste(fma_reference_points$Description[reference_idx]),
+            '</div>')
+  out
+}

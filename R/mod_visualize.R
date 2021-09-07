@@ -30,7 +30,7 @@ visualizeServer <- function(id, state) {
         data <- state$data_filtered
         loess_span <- state$loess_span
         sel_species <- state$species$selected[1]
-        
+
         result <- switch(performance_indicators,
                          "Fishing Gear" = plot_fishing_gear(data),
                          "Reporting Effort" = plot_reporting_effort(data, loess_span),
@@ -108,10 +108,14 @@ visualizeServer <- function(id, state) {
       # })
       
       if(!is.null(p)) {
+        plot_info <- display_filters(state)
+        
         ui_result <- c(ui_result,
           list(
             # gt::gt_output(ns('reference_desc')),
-            tags$br(),
+            #tags$br(),
+            div(class='display-filters',
+                HTML(paste(plot_info, collapse=' '))),
             downloadButton(ns("downloadPlot"),class = "download-button", 'Download Plot'),
             plotOutput(ns('plot'))
           )

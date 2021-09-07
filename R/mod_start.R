@@ -12,7 +12,7 @@ startUI <- function(id){
   div(class='startpage',
     tags$h1("Welcome!"),
     
-    tags$p("To get started, click on ", icon('gear'),
+    tags$p("To get started, click on ", icon('filter'),
            " to select a country and then select the managed access areas you ",
            " would like to see."),
     div(class = 'timeouttxt',
@@ -21,9 +21,12 @@ startUI <- function(id){
           " screen to grey-out. To use the app again, refresh the page.")
     ),
     
+    tags$h2("September 7 Notes"),
+    tags$li("Selected filters are shown above the plot."),
+    
     tags$h2("September 2 Notes"),
     tags$li("Gear type, reporting efforts, and CPUE plots are enabled again."),
-    tags$li("The sidebar can be toggled on and off. Click on ", icon('gear'), "!"),
+    tags$li("The sidebar can be toggled on and off. Click on ", icon('filter'), "!"),
     tags$li("Added full screen button. Click the icon on the top right to toggle ",
             " full screen on and off."),
     

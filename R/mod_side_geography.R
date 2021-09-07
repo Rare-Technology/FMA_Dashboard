@@ -166,7 +166,7 @@ sidebarGeoServer <- function(id, state) {
             session,
             "sel_maa",
             choices = maa_info$choices,
-            selected = maa_info$selected
+            selected = NULL
           )
         },
         ignoreInit = TRUE
