@@ -21,6 +21,9 @@ startUI <- function(id){
           " screen to grey-out. To use the app again, refresh the page.")
     ),
     
+    tags$h2("September 8 Notes"),
+    tags$li("A text file with selected filters is included when you download a plot."),
+    
     tags$h2("September 7 Notes"),
     tags$li("Selected filters are shown above the plot."),
     

@@ -129,10 +129,24 @@ visualizeServer <- function(id, state) {
       })
       
       output$downloadPlot <- downloadHandler(
-        filename = function(){paste0("plot_", tolower(gsub(" ", "_", state$current_indicator)), ".png")},
+        filename = 'out.zip',
         content = function(file){
-          ggsave(file,plot=state$current_plot, width = 27, height = 20, units = "cm")
-        })
+          wd <- getwd()
+          setwd(tempdir())
+          
+          meta_name <- 'filters.txt'
+          plot_name <- paste0("plot_", tolower(gsub(" ", "_", state$current_indicator)), ".png")
+          
+          filters_text <- display_filters(state, html=FALSE)
+          write(filters_text, meta_name)
+          ggsave(plot_name,plot=state$current_plot, width = 27, height = 20, units = "cm")
+          
+          fs = c(meta_name, plot_name)
+          zip(zipfile=file, files=fs)
+          
+          setwd(wd)
+        },
+        contentType='application/zip')
 
 
       outputOptions(output, "plot_holder", suspendWhenHidden = FALSE)

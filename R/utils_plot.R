@@ -59,7 +59,8 @@ theme_rare <- function(rotate_x = FALSE, subtitle_color = "black") {
   theme
 }
 
-display_filters <- function(state) {
+display_filters <- function(state, html=TRUE) {
+  if (html == TRUE) {
   out <- c('<div class="column">
            <strong>Country</strong><br>&emsp;&emsp;',
       paste(state$country$selected, collapse=', '),
@@ -117,5 +118,15 @@ display_filters <- function(state) {
            '<strong>Indicator Description</strong><br>&emsp;&emsp;',
               paste(fma_reference_points$Description[reference_idx]),
             '</div>')
+  } else {
+    out <- c('Country', paste(state$country$selected), '\n',
+    'Subnational Unit', paste(state$subnational$selected, collapse=', '), '\n',
+    'Local Government Unit', paste(state$local$selected, collapse=', '), '\n',
+    'Managed Access Area', paste(state$maa$selected, collapse=', '), '\n',
+    'Date', paste(state$current_date_range$valmin, state$current_date_range$valmax, sep=' to '), '\n',
+    'Family', paste(state$family$selected), '\n',
+    'Species', paste(state$species$selected), '\n')
+    out <- paste(out, collapse='\n')
+  }
   out
 }
