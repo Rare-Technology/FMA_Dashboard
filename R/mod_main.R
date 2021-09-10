@@ -15,7 +15,7 @@ mainUI <- function(id) {
     useShinyjs(),
     extendShinyjs(script="www/toggleFullScreen.js", functions=c("toggleFullScreen")),
     div(class='flow-div',
-      dropdown(
+      dropdown(id='step1',
         sidebarUI("sidebarUI"),
         width='300px',
         size='sm',
@@ -23,7 +23,8 @@ mainUI <- function(id) {
         status = 'success',
         style='material-circle'
       ),
-      div(style='width: auto;'),
+      div(style='flex-grow: 1;'),
+      div(id='help-button', icon('question-circle-o'), onclick='tour()'),
       div(class = 'fs-button',
         HTML(
         "<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' class='bi bi-fullscreen' viewBox='0 0 16 16'>
@@ -35,7 +36,7 @@ mainUI <- function(id) {
     # mainPanel(
     tabsetPanel(
       id = ns("tabs"),
-      tabPanel("Start", startUI("startUI")),
+      tabPanel("Start", startUI("startUI")) %>% tagAppendAttributes(id='startPanel'),
       tabPanel("1. Assess data", dataUI("dataUI")),
       #tabPanel("2. Select indicators", selectUI("selectUI")),
       tabPanel("2. Visualize data", visualizeUI("visualizeUI")),

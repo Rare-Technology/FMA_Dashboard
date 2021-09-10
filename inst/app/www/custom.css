@@ -81,6 +81,7 @@ a {
 
 .tab-content{
   margin-top: 20px;
+  overflow-y: scroll;
 }
 
 .img-holder{
@@ -187,6 +188,13 @@ a {
   padding: 5px;
 }
 
+#help-button {
+  margin-top: -5px;
+  margin-right: 15px;
+  font-size: 32px;
+  cursor: pointer;
+}
+
 .fs-button {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -224,5 +232,11 @@ a {
   width: 49%;
   float: left;
   margin: 5px;
+}
+
+.sneakymail:after {
+  content: attr(data-name) "@" attr(data-domain) "." attr(data-tld);
+  color: #005BBB;
+  font-size: 14px;
 }
 

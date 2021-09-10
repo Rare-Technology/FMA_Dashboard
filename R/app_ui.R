@@ -33,6 +33,9 @@ golem_add_external_resources <- function() {
     # )
     # need this line so that changes to custom.css take effect!
     # this might be a bug on golem's end?
-    tags$link(rel='stylesheet', type='text/css', href='www/custom.css')
+    tags$link(rel='stylesheet', type='text/css', href='www/custom.css'),
+    tags$link(rel='stylesheet', type='text/css', href='www/introjs.min.css'),
+    tags$script(src='www/intro.min.js'),
+    tags$script(src='www/tour.js')
   )
 }

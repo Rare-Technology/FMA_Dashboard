@@ -42,11 +42,12 @@ golem::add_utils( 'table')
 golem::add_js_file( "script" )
 golem::add_js_handler( "handlers" )
 golem::add_css_file( "main" )
-golem::add_i
-
+golem::use_external_js_file('https://cdn.jsdelivr.net/npm/intro.js@4.2.2/minified/intro.min.js')
+golem::use_external_css_file('https://cdn.jsdelivr.net/npm/intro.js@4.2.2/minified/introjs.min.css')
+golem::add_js_file('tour')
 ## Add internal datasets ----
 ## If you have data in your package
-usethis::use_data_raw( name = "/Users/zevross/git-repos/FMA_Dashboard/Data/ourfish.rds", open = FALSE ) 
+
 
 ## Tests ----
 ## Add one line by test you want to create
