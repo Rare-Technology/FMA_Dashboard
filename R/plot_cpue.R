@@ -48,8 +48,6 @@ plot_cpue <- function(.data, loess_span, ymin = NA, ymax = NA) {
     ) +
     scale_y_continuous(limits = c(ymin, ymax), oob = scales::squish) +
     theme_rare(subtitle_color = indicator_color), silent = TRUE)
-  
-  
 
   list(plot = p, trend = indicator_trend)
 }

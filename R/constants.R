@@ -7,3 +7,5 @@ MIN_DATA_ROWS <- 0
 NO_TREND_ATTEMP <- NULL
 FAIL_TREND <- "FAIL_TREND"
 NO_PLOT_ATTEMP <- NULL
+CURRENT_YEAR <- lubridate::year(lubridate::now())
+WATERMARK_LABEL <- paste("Fish Forever (", CURRENT_YEAR, "). Rare.", sep="")

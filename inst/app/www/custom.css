@@ -195,6 +195,11 @@ a {
   cursor: pointer;
 }
 
+.download-button {
+  display: flex;
+  justify-content: center;
+}
+
 .fs-button {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -239,4 +244,3 @@ a {
   color: #005BBB;
   font-size: 14px;
 }
-

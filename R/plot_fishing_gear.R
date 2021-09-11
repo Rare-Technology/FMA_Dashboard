@@ -23,7 +23,7 @@ plot_fishing_gear <- function(.data) {
     "#F39B7FFF", "#8491B4FF", "#91D1C2FF", "#DC0000FF",
     "#7E6148FF"
   )
-
+  
   p <- try(.data %>%
     ggplot(aes(
       x = yearmonth,
@@ -49,6 +49,6 @@ plot_fishing_gear <- function(.data) {
 
 
   trend <- ifelse("Destructive" %in% .data$gear_type, "Destructive", "No destructive")
-
+  
   list(plot = p, trend = trend)
 }

@@ -97,7 +97,6 @@ plot_size_proportions <- function(.data, sel_species) {
       col = c(2, "darkgreen", 4)
     ) +
     theme_rare(), silent = TRUE)
-  
 
-  list(plot = p, trend =  NO_TREND_ATTEMP)
+  list(plot = p, trend = NO_TREND_ATTEMP)
 }

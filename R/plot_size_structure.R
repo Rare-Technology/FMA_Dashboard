@@ -128,6 +128,6 @@ plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, P
       label = paste("Pmega: ", signif(froeseTemp$percentMega, 2), "%")
     ) +
     theme_rare()
-
+  
   list(plot = p, trend = NO_TREND_ATTEMP)
 }

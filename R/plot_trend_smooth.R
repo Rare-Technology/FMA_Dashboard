@@ -18,7 +18,7 @@ plot_trend_smooth <- function(.data, var, f,
 
   indicator_trend <- trend_indicator(mod)
   indicator_color <- trend_color(mod)
-
+  
   # Number of species recorded
   p <- try(.data %>%
     ggplot(aes(yearmonth, result)) +

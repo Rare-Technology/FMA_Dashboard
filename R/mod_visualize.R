@@ -90,7 +90,17 @@ visualizeServer <- function(id, state) {
           msg <- "There was an error creating the plot"
         }
         
-        state$current_plot <- p
+        if (performance_indicators != "Reporting Effort") {
+          state$current_plot <- p + ggplot2::labs(caption=WATERMARK_LABEL)
+        } else {
+          # have to treat Reporting Effort plot differently because result$p is a
+          # cowplot object and you can't just "+ labs" it
+          state$current_plot <- cowplot::plot_grid(result$subplots[[1]] + ggplot2::labs(caption=''),
+            result$subplots[[2]] + ggplot2::labs(caption=WATERMARK_LABEL),
+            ncol = 2
+          )
+        }
+
         output$plot <- renderPlot(
           suppressWarnings(print(p)), # suppress stat_smooth/geom_smooth warnings
           height = PLOT_HEIGHT, 
@@ -112,12 +122,13 @@ visualizeServer <- function(id, state) {
         
         ui_result <- c(ui_result,
           list(
-            # gt::gt_output(ns('reference_desc')),
-            #tags$br(),
             div(class='display-filters',
                 HTML(paste(plot_info, collapse=' '))),
-            downloadButton(ns("downloadPlot"),class = "download-button", 'Download Plot'),
-            plotOutput(ns('plot'))
+            div(class='download-button',
+                downloadButton(ns("downloadPlot"), 'Download Plot')),
+            plotOutput(ns('plot'), width='1000px') %>% 
+              # couldn't figure out how to do this in custom.css
+              tagAppendAttributes(style="margin: 0 auto;")
           )
         )
       } else {
@@ -129,7 +140,7 @@ visualizeServer <- function(id, state) {
       })
       
       output$downloadPlot <- downloadHandler(
-        filename = 'out.zip',
+        filename = function(){paste0("fma_", tolower(gsub(" ", "_", state$current_indicator)), ".zip")},
         content = function(file){
           wd <- getwd()
           setwd(tempdir())
