@@ -68,21 +68,20 @@ sidebarIndicatorServer <- function(id, state) {
         }
 
         # ---- Data tab
-        if (current_tab %in% c("1. Assess data", "2. Visualize data", "3. Visualize data")) {
- 
-          ui[["date_range"]] <- div(
-            dateRangeInput(ns("date_range"),
-              label = "Select date range",
-              start = current_date_range$valmin,
-              end = current_date_range$valmax,
-              min = current_date_range$min,
-              max = current_date_range$max,
-              startview='year',
-              )
-          )
-        }
+        ui[['date_range_title']] <- div(class='sidetitle', 'Time Period')
+        ui[["date_range"]] <- div(
+          dateRangeInput(ns("date_range"),
+            label = "Select date range",
+            start = current_date_range$valmin,
+            end = current_date_range$valmax,
+            min = current_date_range$min,
+            max = current_date_range$max,
+            startview='year',
+            )
+        )
 
         if (current_tab %in% c("2. Visualize data") && !current_indicator %in% c("Fishing Gear", "Size Structure", "Size Proportions")) {
+          ui[['other_title']] <- div(class='sidetitle', 'Other')
           ui[["loess_span"]] <- div(
             class = "smooth_slider pi_widget",
             sliderInput(

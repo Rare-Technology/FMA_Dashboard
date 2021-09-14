@@ -6,6 +6,12 @@ function tour(){
       postion: 'bottom'
     },
     {
+      element: '.sw-dropdown',
+      title: 'Using filters',
+      intro: "<video controls width='400'> <source src='www/filters_demo.webm' type='video/webm'> Video could not load. </video>",
+      position: 'bottom'
+    },
+    {
       element: "a[data-value='1. Assess data']",
       intro: 'After selecting your filters, you can see the data in a table here.',
       position: 'bottom'

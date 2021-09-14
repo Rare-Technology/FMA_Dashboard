@@ -11,13 +11,13 @@
 sidebarGeoUI <- function(id) {
   ns <- NS(id)
   tagList(
-    div(class='sidetitle', "Geography"),
     selectInput(
       ns("sel_datasource"),
       "Data source",
       choices = fma_data_sources,
       selected = fma_init_data_source,
     ),
+    div(class='sidetitle', "Geography"),
     selectInput(
       ns("sel_country"),
       "Country",

@@ -244,3 +244,7 @@ a {
   color: #005BBB;
   font-size: 14px;
 }
+
+.introjs-tooltip {
+  max-width: 440px !important;
+}

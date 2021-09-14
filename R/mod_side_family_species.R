@@ -7,31 +7,36 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
+#' @importFrom shinyWidgets pickerInput updatePickerInput
 sidebarStockUI <- function(id) {
   ns <- NS(id)
   tagList(
     div(class='sidetitle', 'Stock'),
-    selectInput(
+    pickerInput(
       ns("sel_family"),
-      tooltip_label("tip-family", "Select family"),
+      "Family",
       choices = fma_init_family_species_selections$family,
       selected = fma_init_family_species_selections$family,
       multiple = TRUE,
-      selectize = FALSE
+      options = list(
+        `actions-box` = TRUE,
+        `selected-text-format` = "count > 1"
+      )
     ),
     div(
       class = "fam-spec-select",
-      selectInput(
+      pickerInput(
         ns("sel_species"),
-        tooltip_label("tip-species", "Select species"),
+        "Species",
         choices = fma_init_family_species_selections$species,
         selected = fma_init_family_species_selections$species,
         multiple = TRUE,
-        selectize = FALSE
+        options = list(
+          `actions-box` = TRUE,
+          `selected-text-format` = "count > 1"
+        )
       )
-    ),
-    tippy_class_alt("tip-family", "Select a fisheries family or all families by clicking Ctrl+A or Comm+A"),
-    tippy_class_alt("tip-species", "Select a fisheries species or all species by clicking Ctrl+A or Comm+A")
+    )
   )
 }
 
@@ -63,7 +68,7 @@ sidebarStockServer <- function(id, state) {
             selected = species_info$species
           )
 
-          updateSelectInput(
+          updatePickerInput(
             session,
             "sel_family",
             choices = species_info$family,
@@ -97,14 +102,14 @@ sidebarStockServer <- function(id, state) {
             }
 
 
-            updateSelectInput(
+            updatePickerInput(
               session,
               "sel_species",
               choices = species_info$species,
               selected = species_info$species
             )
           } else {
-            updateSelectInput(
+            updatePickerInput(
               session,
               "sel_species",
               choices = state$species$choices,
