@@ -95,5 +95,5 @@ plot_reporting_effort <- function(.data, loess_span = 0.5) {
   p <- suppressWarnings(cowplot::plot_grid(fishers_plot, buyers_plot, ncol = 2))
   
   list(plot = p, trend = unique(indicator_trend_fisher, indicator_trend_buyer),
-       subplots = list(fishers_plot, buyers_plot))
+       subplots = list(fishers_plot, buyers_plot), data = .data)
 }

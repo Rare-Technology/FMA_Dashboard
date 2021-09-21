@@ -48,5 +48,5 @@ plot_trend_smooth <- function(.data, var, f,
     theme_rare(subtitle_color = indicator_color),
     silent = TRUE)
 
-  list(plot = p, trend = indicator_trend)
+  list(plot = p, trend = indicator_trend, data = .data)
 }

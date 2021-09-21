@@ -50,5 +50,5 @@ plot_fishing_gear <- function(.data) {
 
   trend <- ifelse("Destructive" %in% .data$gear_type, "Destructive", "No destructive")
   
-  list(plot = p, trend = trend)
+  list(plot = p, trend = trend, data = .data)
 }

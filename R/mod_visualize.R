@@ -83,22 +83,21 @@ visualizeServer <- function(id, state) {
           msg <- "There was not enough data to create a plot"
           if(performance_indicators %in% c("Size Structure", "Size Proportions"))
             msg <- "At least 100 records per species per month are required to create this plot"
-        } 
-        
-        if("try-error" %in% class(p)){
-          p <- NULL
-          msg <- "There was an error creating the plot"
-        }
-        
-        if (performance_indicators != "Reporting Effort") {
-          state$current_plot <- p + ggplot2::labs(caption=WATERMARK_LABEL)
+        } else if("try-error" %in% class(p)){
+            p <- NULL
+            msg <- "There was an error creating the plot"
         } else {
-          # have to treat Reporting Effort plot differently because result$p is a
-          # cowplot object and you can't just "+ labs" it
-          state$current_plot <- cowplot::plot_grid(result$subplots[[1]] + ggplot2::labs(caption=''),
-            result$subplots[[2]] + ggplot2::labs(caption=WATERMARK_LABEL),
-            ncol = 2
-          )
+            state$current_plot_data <- result$data
+            if (performance_indicators != "Reporting Effort") {
+              state$current_plot <- p + ggplot2::labs(caption=WATERMARK_LABEL)
+            } else {
+              # have to treat Reporting Effort plot differently because result$p is a
+              # cowplot object and you can't just "+ labs" it
+              state$current_plot <- cowplot::plot_grid(result$subplots[[1]] + ggplot2::labs(caption=''),
+                result$subplots[[2]] + ggplot2::labs(caption=WATERMARK_LABEL),
+                ncol = 2
+              )
+            }
         }
 
         output$plot <- renderPlot(
@@ -146,13 +145,15 @@ visualizeServer <- function(id, state) {
           setwd(tempdir())
           
           meta_name <- 'filters.txt'
+          data_name <- 'data.csv'
           plot_name <- paste0("plot_", tolower(gsub(" ", "_", state$current_indicator)), ".png")
           
           filters_text <- display_filters(state, html=FALSE)
           write(filters_text, meta_name)
+          write.csv(state$current_plot_data, data_name, row.names = FALSE)
           ggsave(plot_name,plot=state$current_plot, width = 27, height = 20, units = "cm")
           
-          fs = c(meta_name, plot_name)
+          fs = c(meta_name, data_name, plot_name)
           zip(zipfile=file, files=fs)
           
           setwd(wd)
