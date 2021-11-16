@@ -3,7 +3,7 @@ plot_size_proportions <- function(.data, sel_species) {
   .data <- .data %>%
     dplyr::filter(species %in% sel_species) %>%
     dplyr::group_by(yearmonth) %>% 
-    dplyr::filter(sum(count, na.rm = TRUE) > 100) %>% 
+    dplyr::filter(sum(count, na.rm = TRUE) > 50) %>% 
     dplyr::ungroup() %>% 
     droplevels()
 

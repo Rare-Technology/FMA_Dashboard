@@ -23,7 +23,8 @@ Imports:
     shinyjs,
     ggplot2,
     glue,
-    lubridate
+    lubridate,
+    rjson
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1

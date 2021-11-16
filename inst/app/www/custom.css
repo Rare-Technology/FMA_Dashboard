@@ -212,6 +212,13 @@ a {
   margin-left: 20px;
 }
 
+#start_banner {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
 .display-filters {
     display: block;
     font-family: monospace;

@@ -1,0 +1,7 @@
+{
+  "start": "Start",
+  "welcome": "Welcome!",
+  "start_msg1": "To get started, click on ",
+  "start_msg2": " to select a country then select the managed access areas you would like to see. For more information, click on ",
+  "start_note": "Please note: This app may time-out if left idle too long, which will cause the screen to grey-out. To use the app again, refresh the page."
+}
