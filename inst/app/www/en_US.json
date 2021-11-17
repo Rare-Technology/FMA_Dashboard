@@ -1,4 +1,10 @@
 {
+  "mod_main": {
+    "start": "Start",
+    "tab1": "1. Assess data",
+    "tab2": "2. Visualize data",
+    "tab3": "3. Interpret results"
+  },
   "start": "Start",
   "welcome": "Welcome!",
   "start_msg1": "To get started, click on ",

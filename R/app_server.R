@@ -13,13 +13,16 @@ app_server <- function(input, output, session) {
     sel_language <- "en_US"
   } else {
     cookies <- strsplit(http_cookie, split = "; ")[[1]]
-    language_cookie <- cookies[startsWith(cookies, "trp_language=")] 
-    sel_language <- strsplit(language_cookie, "=")[[1]][2]
+    language_cookie <- cookies[startsWith(cookies, "trp_language=")]
+    if (length(language_cookie) == 0) { # developing and testing in browser
+      sel_language <- "en_US"
+    } else {
+      sel_language <- strsplit(language_cookie, "=")[[1]][2]
+    }
   }
   
   script <- load_script(sel_language)
   state <- initialize_state()
-
   # Main application
   mainServer("mainUI", state, script)
 

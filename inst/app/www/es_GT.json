@@ -1,5 +1,7 @@
 {
-  "start": "Inicio",
+  "mod_main": {
+    "start": "Inicio",
+  }
   "welcome": "Bienvenido",
   "start_msg1": "Para comenzar, haga clic en ",
   "start_msg2": " para seleccionar un país, y luego seleccione las áreas de acceso manejado que le gustaría ver. Para obtener más información, haga clic en ",

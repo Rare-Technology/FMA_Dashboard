@@ -32,7 +32,7 @@ initialize_state <- function() {
       selected = fma_init_family_species_selections$species
     ),
     current_date_range = fma_init_date_range,
-    current_tab = "Data",
+    current_tab = "Start",
     current_indicator = "Species Composition",
     current_min_records = list(min = 0, max = 300, value = 0),
     current_trend = NA,
