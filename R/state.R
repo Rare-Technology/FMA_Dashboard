@@ -13,7 +13,7 @@ initialize_state <- function() {
     ),
     subnational = list(
       choices = fma_init_geo_selections$subnational$choices,
-      selected = fma_init_geo_selections$subnational$choices
+      selected = fma_init_geo_selections$subnational$selected
     ),
     local = list(
       choices = fma_init_geo_selections$local$choices,
@@ -33,10 +33,12 @@ initialize_state <- function() {
     ),
     current_date_range = fma_init_date_range,
     current_tab = "Start",
-    current_indicator = "Species Composition",
+    current_indicator = "Species composition",
     current_min_records = list(min = 0, max = 300, value = 0),
     current_trend = NA,
+    facet = FALSE,
     loess_span = 0.5,
-    current_plot = NULL
+    current_plot = NULL,
+    language = "English"
   )
 }

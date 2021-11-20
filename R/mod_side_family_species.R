@@ -11,32 +11,7 @@
 sidebarStockUI <- function(id) {
   ns <- NS(id)
   tagList(
-    div(class='sidetitle', 'Stock'),
-    pickerInput(
-      ns("sel_family"),
-      "Family",
-      choices = fma_init_family_species_selections$family,
-      selected = fma_init_family_species_selections$family,
-      multiple = TRUE,
-      options = list(
-        `actions-box` = TRUE,
-        `selected-text-format` = "count > 1"
-      )
-    ),
-    div(
-      class = "fam-spec-select",
-      pickerInput(
-        ns("sel_species"),
-        "Species",
-        choices = fma_init_family_species_selections$species,
-        selected = fma_init_family_species_selections$species,
-        multiple = TRUE,
-        options = list(
-          `actions-box` = TRUE,
-          `selected-text-format` = "count > 1"
-        )
-      )
-    )
+    uiOutput(ns("stock_out"))
   )
 }
 
@@ -44,9 +19,45 @@ sidebarStockUI <- function(id) {
 #'
 #' @noRd
 sidebarStockServer <- function(id, state) {
+  ns <- NS(id)
   moduleServer(
     id,
     function(input, output, session) {
+      output$stock_out <- renderUI({
+        ui <- list()
+        
+        ui <- list(
+          div(class='sidetitle', tr(state, "Stock")),
+          pickerInput(
+            ns("sel_family"),
+            tr(state, "Family"),
+            choices = fma_init_family_species_selections$family,
+            selected = fma_init_family_species_selections$family,
+            multiple = TRUE,
+            options = list(
+              `actions-box` = TRUE,
+              `selected-text-format` = "count > 1"
+            )
+          ),
+          div(
+            class = "fam-spec-select",
+            pickerInput(
+              ns("sel_species"),
+              tr(state, "Species"),
+              choices = fma_init_family_species_selections$species,
+              selected = fma_init_family_species_selections$species,
+              multiple = TRUE,
+              options = list(
+                `actions-box` = TRUE,
+                `selected-text-format` = "count > 1"
+              )
+            )
+          )
+        )
+        
+        ui
+      })
+      
       observeEvent(state$maa,
         {
           species_info <- get_family_species_selections(

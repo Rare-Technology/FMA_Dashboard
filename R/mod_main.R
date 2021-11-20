@@ -26,6 +26,10 @@ mainUI <- function(id) {
             ),
             div(style='flex-grow: 1;'),
             div(id='help-button', icon('question-circle-o'), onclick='tour()'),
+            div(id="lang-select", selectInput(ns("language"), "", width = 80,
+                  c("EN" = "English",
+                    "ID" = "Bahasa Indonesia"))
+                ),
             div(class = 'fs-button',
                 HTML(
                   "<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' class='bi bi-fullscreen' viewBox='0 0 16 16'>
@@ -45,7 +49,7 @@ mainUI <- function(id) {
 #' main Server Function
 #'
 #' @noRd
-mainServer <- function(id, state, script) {
+mainServer <- function(id, state) {
   ns <- NS(id)
   moduleServer(
     id,
@@ -54,10 +58,10 @@ mainServer <- function(id, state, script) {
         ui <- list(
           # mainPanel(
           tabsetPanel(id = ns("tabs"),
-            tabPanel(script$mod_main$start, startUI("startUI")) %>% tagAppendAttributes(id='startPanel'),
-            tabPanel(script$mod_main$tab1, dataUI("dataUI")),
-            tabPanel(script$mod_main$tab2, visualizeUI("visualizeUI")),
-            tabPanel(script$mod_main$tab3, interpretUI("interpretUI"))#,
+            tabPanel(tr(state, "Start"), startUI("startUI")) %>% tagAppendAttributes(id='startPanel'),
+            tabPanel(tr(state, "1. Assess data"), dataUI("dataUI")),
+            tabPanel(tr(state, "2. Visualize data"), visualizeUI("visualizeUI")),
+            tabPanel(tr(state, "3. Interpret results"), interpretUI("interpretUI"))#,
             #tabPanel("5. Management plan", managementUI("managementUI"))
           )
         )
@@ -66,6 +70,10 @@ mainServer <- function(id, state, script) {
       
       observeEvent(input$tabs, {
         state$current_tab <- input$tabs
+      })
+      
+      observeEvent(input$language, {
+        state$language <- input$language
       })
       #outputOptions(output, "Visualize", suspendWhenHidden = FALSE)
     }

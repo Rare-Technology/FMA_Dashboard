@@ -9,9 +9,7 @@
 #' @importFrom shiny NS tagList
 visualizeUI <- function(id) {
   ns <- NS(id)
-  tagList(
-        uiOutput(ns("plot_holder")) %>% withSpinner(color = SPINNER_COLOR)
-  )
+  uiOutput(ns("plot_holder")) %>% withSpinner(color = SPINNER_COLOR)
 }
 
 #'  Server Function
@@ -28,50 +26,60 @@ visualizeServer <- function(id, state) {
       output$plot_holder <- renderUI({
         performance_indicators <- state$current_indicator
         data <- state$data_filtered
+        use_facet <- state$facet
         loess_span <- state$loess_span
         sel_species <- state$species$selected[1]
 
-        result <- switch(performance_indicators,
-                         "Fishing Gear" = plot_fishing_gear(data),
-                         "Reporting Effort" = plot_reporting_effort(data, loess_span),
-                         "Species Composition" = plot_trend_smooth(
-                           data,
-                           species,
-                           count_unique,
-                           "Number of species in the catch",
-                           "Total number of species recorded in the catch",
-                           loess_span,
-                           ymin = 0
-                         ),
-                         "Average Length" = plot_trend_smooth(
-                           data,
-                           length,
-                           mean,
-                           "Average length",
-                           "Average Length (cm)",
-                           loess_span,
-                           ymin = 0
-                         ),
-                         "Average Trophic Level" = plot_trend_smooth(
-                           data,
-                           trophic_level,
-                           mean,
-                           "Average trophic level",
-                           "Average trophic level",
-                           loess_span
-                         ),
-                         "Size Structure" = plot_size_structure(data, sel_species),
-                         "Size Proportions" = plot_size_proportions(data, sel_species),
-                         "CPUE" = plot_cpue(data, loess_span, ymin = 0),
-                         "Total Landings" = plot_trend_smooth(
-                           data,
-                           weight_kg,
-                           sum,
-                           "Total landings (kg/month)",
-                           "Total Catch (kg/month)",
-                           loess_span
-                         ),
-        )
+        if (performance_indicators == tr(state, "Fishing gear")) {
+          result <- plot_fishing_gear(data, state)
+        } else if (performance_indicators == tr(state, "Reporting effort")) {
+          result <- plot_reporting_effort(data, loess_span)
+        } else if (performance_indicators == tr(state, "Species composition")) {
+          result <- plot_trend_smooth(
+            data,
+            species,
+            count_unique,
+            tr(state, "Number of species in the catch"),
+            tr(state, "Total number of species recorded in the catch"),
+            loess_span,
+            ymin = 0,
+            use_facet = use_facet
+          )
+        } else if (performance_indicators == tr(state, "Average length")) {
+          result <- plot_trend_smooth(
+            data,
+            length,
+            mean,
+            tr(state, "Average length"),
+            paste(tr(state, "Average length"), "(cm)", sep=" "),
+            loess_span,
+            ymin = 0
+          )
+        } else if (performance_indicators == tr(state, "Average trophic level")) {
+          result <- plot_trend_smooth(
+            data,
+            trophic_level,
+            mean,
+            tr(state, "Average trophic level"),
+            tr(state, "Average trophic level"),
+            loess_span
+          )
+        } else if (performance_indicators == tr(state, "Size structure")) {
+          result <- plot_size_structure(data, sel_species)
+        } else if (performance_indicators == tr(state, "Size proportions")) {
+          result <- plot_size_proportions(data, sel_species)
+        } else if (performance_indicators == "CPUE") {
+          result <- plot_cpue(data, loess_span, ymin = 0)
+        } else if (performance_indicators == tr(state, "Total landings")) {
+          result <- plot_trend_smooth(
+            data,
+            weight_kg,
+            sum,
+            tr(state, "Total landings (kg/month)"),
+            tr(state, "Total catch (kg/month)"),
+            loess_span
+          )
+        }
         
         state$current_trend <- result$trend
         
@@ -124,7 +132,7 @@ visualizeServer <- function(id, state) {
             div(class='display-filters',
                 HTML(paste(plot_info, collapse=' '))),
             div(class='download-button',
-                downloadButton(ns("downloadPlot"), 'Download Plot')),
+                downloadButton(ns("downloadPlot"), tr(state, 'Download plot'))),
             plotOutput(ns('plot'), width='1000px') %>% 
               # couldn't figure out how to do this in custom.css
               tagAppendAttributes(style="margin: 0 auto;")

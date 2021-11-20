@@ -25,14 +25,20 @@ dataServer <- function(id, state) {
     id,
     function(input, output, server) {
       observeEvent(state$data_summary_filtered, {
+        Country <- tr(state, "Country")
+        Subnational <- tr(state, "Subnational")
+        Local <- tr(state, "Local")
+        MA <- tr(state, "Managed access area")
+        Family <- tr(state, "Family")
+        Species <- tr(state, "Species")
         table_data <- state$data_summary_filtered %>%
           dplyr::rename(
-            Country = country,
-            Subnational = subnational,
-            Local = local,
-            `MA Name` = maa,
-            Family = family,
-            Species = species
+            !!Country := country,
+            !!Subnational := subnational,
+            !!Local := local,
+            !!MA := maa,
+            !!Family := family,
+            !!Species := species
           )
 
 

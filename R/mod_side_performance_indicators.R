@@ -7,6 +7,7 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
+#' @importFrom shinyWidgets materialSwitch
 sidebarIndicatorUI <- function(id) {
   ns <- NS(id)
   tagList(
@@ -36,29 +37,30 @@ sidebarIndicatorServer <- function(id, state) {
         ui <- list()
   
         # ---- Select, Visualize, Interpret tabs
-        if (current_tab %in% c("2. Visualize data", "3. Interpret results")) {
-          ui[[1]] <- div(class='sidetitle', 'Indicators')
+        # show indicators only on plot and interpret tabs
+        if (current_tab %in% c(tr(state, "2. Visualize data"), tr(state, "3. Interpret results"))) {
+          ui[[1]] <- div(class='sidetitle', tr(state, "Indicator"))
           
           ui[["performance_indicators"]] <- 
           div(class = " pi_widget", 
           selectInput(
             inputId = ns("performance_indicators"),
             label = div(
-              "Select performance indicator", 
+              tr(state, "Select indicator"), 
               actionLink(inputId = ns("show_defs"), label = "(definitions)")
               ),
             choices = c(
-              "Fishing Gear",
-              "Reporting Effort",
-              "Species Composition",
+              tr(state, "Fishing gear"),
+              tr(state, "Reporting effort"),
+              tr(state, "Species composition"),
               # "Fished:Unfished Ratio",
-              "Average Length",
-              "Average Trophic Level",
+              tr(state, "Average length"),
+              tr(state, "Average trophic level"),
               # "Spawning Potential Ratio",
-              "Size Structure",
-              "Size Proportions",
-              "CPUE",
-              "Total Landings"
+              tr(state, "Size structure"),
+              tr(state,  "Size proportions"),
+              tr(state,  "CPUE"),
+              tr(state, "Total landings")
             ),
             selected = current_indicator
           )
@@ -68,10 +70,10 @@ sidebarIndicatorServer <- function(id, state) {
         }
 
         # ---- Data tab
-        ui[['date_range_title']] <- div(class='sidetitle', 'Time Period')
+        ui[['date_range_title']] <- div(class='sidetitle', tr(state, 'Time Period'))
         ui[["date_range"]] <- div(
           dateRangeInput(ns("date_range"),
-            label = "Select date range",
+            label = tr(state, "Select date range"),
             start = current_date_range$valmin,
             end = current_date_range$valmax,
             min = current_date_range$min,
@@ -79,14 +81,29 @@ sidebarIndicatorServer <- function(id, state) {
             startview='year',
             )
         )
+        
+        ui[["plot_options_title"]] <- div(class = "sidetitle", tr(state, "Plot options"))
+        ui[["toggle_facet"]] <- tagList(
+          br(),
+          div(id = "toggle-facet",
+            materialSwitch(
+              ns("facet"),
+              tr(state, "Facet plot"),
+              value = FALSE,
+              width = "100%",
+              status = "primary"
+            )
+          )
+        )
 
-        if (current_tab %in% c("2. Visualize data") && !current_indicator %in% c("Fishing Gear", "Size Structure", "Size Proportions")) {
-          ui[['other_title']] <- div(class='sidetitle', 'Other')
+        # show loess slider only when plotting curves
+        if (current_tab %in% c(tr(state, "2. Visualize data")) && !(current_indicator %in% c(tr(state, "Fishing gear"), tr(state, "Size structure"), tr(state, "Size proportions")))) {
+          # ui[['other_title']] <- div(class='sidetitle', tr(state, 'Other'))
           ui[["loess_span"]] <- div(
             class = "smooth_slider pi_widget",
             sliderInput(
               inputId = ns("loess_span"),
-              label = tooltip_label("tip-smooth", "Change curve smoothing"),
+              label = tooltip_label("tip-smooth", tr(state, "Change curve smoothing")),
               min = 0.1, max = 1,
               value = 0.5,
               step = 0.1,
@@ -144,6 +161,10 @@ sidebarIndicatorServer <- function(id, state) {
         state$current_date_range$valmax <- input$date_range[2]
         
       }, ignoreInit = TRUE)
+      
+      observeEvent(input$facet, {
+        state$facet <- input$facet
+      })
 
       observeEvent(input$loess_span, {
         state$loess_span <- input$loess_span

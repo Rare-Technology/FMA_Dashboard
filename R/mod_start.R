@@ -9,29 +9,35 @@
 #' @importFrom shiny NS tagList 
 startUI <- function(id){
   ns <- NS(id)
-  div(class='startpage',
-    tags$h1("Welcome!"),
-    
-    tags$p("To get started, click on ", icon('filter'),
-           " to select a country and then select the managed access areas you ",
-           " would like to see. For more information, click on ", icon("question-circle-o")),
-    div(class = 'timeouttxt',
-        h3(class = 'timeouttitle', "Please note"),
-        p("This app may time-out if left idle too long, which will cause the",
-          " screen to grey-out. To use the app again, refresh the page.")
-    ),
-    br(),
-    tags$img(id="start_banner", src="www/start_banner.png")
+  tagList(
+    uiOutput(ns("message"))
   )
 }
     
 #' start Server Functions
 #'
 #' @noRd 
-startServer <- function(id){
+startServer <- function(id, state){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
- 
+    output$message <- renderUI({
+      ui <- list(
+        div(class='startpage',
+          tags$h1(tr(state, "Welcome")),
+          
+          tags$p(tr(state, "To get started, click on"), icon('filter'),
+                 tr(state, "to select a country then select the managed access areas you would like to see. For more information, click on"), icon("question-circle-o")),
+          div(class = 'timeouttxt',
+              h3(class = 'timeouttitle', tr(state, "Please note:")),
+              p(tr(state, "This app may time-out if left idle too long, which will cause the screen to grey-out. To use the app again, refresh the page."))
+          ),
+          br(),
+          tags$img(id="start_banner", src="www/start_banner.png")
+        )
+      )
+      
+      ui
+    })
   })
 }
     
