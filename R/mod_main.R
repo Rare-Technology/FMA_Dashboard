@@ -28,7 +28,12 @@ mainUI <- function(id) {
             div(id='help-button', icon('question-circle-o'), onclick='tour()'),
             div(id="lang-select", selectInput(ns("language"), "", width = 80,
                   c("EN" = "English",
-                    "ID" = "Bahasa Indonesia"))
+                    "ID" = "Bahasa Indonesia",
+                    "BR" = "Português (BR)",
+                    "MZ" = "Português (MZ)",
+                    "ES" = "Español",
+                    "PH" = "Philippines"
+                    ))
                 ),
             div(class = 'fs-button',
                 HTML(

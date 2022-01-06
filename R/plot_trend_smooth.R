@@ -2,8 +2,9 @@
 
 plot_trend_smooth <- function(.data, var, f,
                               title = "", y_title = "",
-                              loess_span = 0.5, ymin = NA, ymax = NA, use_facet = FALSE) {
-  if (use_facet) {
+                              loess_span = 0.5, ymin = NA, ymax = NA,
+                              use_MA_facet = FALSE, use_family_facet = FALSE) {
+  if (use_MA_facet) {
     .data <- .data %>% 
       dplyr::group_by(country, maa, yearmonth) %>% 
       dplyr::summarise(result = f({{ var }}, na.rm = TRUE)) %>% 
@@ -17,7 +18,7 @@ plot_trend_smooth <- function(.data, var, f,
     
   if(nrow(.data) <= MIN_DATA_ROWS) return(list(p = NO_PLOT_ATTEMP, trend = NO_TREND_ATTEMP))
   
-  if (use_facet) {
+  if (use_MA_facet) {
     for (ma_name in unique(.data$maa)) { # regression for each maa
       mod <- glm(result ~ yearmonth,
                  family = gaussian,

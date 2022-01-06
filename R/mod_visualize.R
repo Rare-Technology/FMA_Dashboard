@@ -26,7 +26,7 @@ visualizeServer <- function(id, state) {
       output$plot_holder <- renderUI({
         performance_indicators <- state$current_indicator
         data <- state$data_filtered
-        use_facet <- state$facet
+        use_MA_facet <- state$facet
         loess_span <- state$loess_span
         sel_species <- state$species$selected[1]
 
@@ -43,7 +43,7 @@ visualizeServer <- function(id, state) {
             tr(state, "Total number of species recorded in the catch"),
             loess_span,
             ymin = 0,
-            use_facet = use_facet
+            use_MA_facet = use_MA_facet
           )
         } else if (performance_indicators == tr(state, "Average length")) {
           result <- plot_trend_smooth(
