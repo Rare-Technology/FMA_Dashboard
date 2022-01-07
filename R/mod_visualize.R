@@ -30,11 +30,11 @@ visualizeServer <- function(id, state) {
         loess_span <- state$loess_span
         sel_species <- state$species$selected[1]
 
-        if (performance_indicators == tr(state, "Fishing gear")) {
+        if (performance_indicators == tr(state, "Fishing Gear")) {
           result <- plot_fishing_gear(data, state)
-        } else if (performance_indicators == tr(state, "Reporting effort")) {
+        } else if (performance_indicators == tr(state, "Reporting Effort")) {
           result <- plot_reporting_effort(data, loess_span)
-        } else if (performance_indicators == tr(state, "Species composition")) {
+        } else if (performance_indicators == tr(state, "Species Composition")) {
           result <- plot_trend_smooth(
             data,
             species,
@@ -45,39 +45,42 @@ visualizeServer <- function(id, state) {
             ymin = 0,
             use_MA_facet = use_MA_facet
           )
-        } else if (performance_indicators == tr(state, "Average length")) {
+        } else if (performance_indicators == tr(state, "Average Length")) {
           result <- plot_trend_smooth(
             data,
             length,
             mean,
-            tr(state, "Average length"),
+            tr(state, "Average Length"),
             paste(tr(state, "Average length"), "(cm)", sep=" "),
             loess_span,
-            ymin = 0
+            ymin = 0,
+            use_MA_facet = use_MA_facet
           )
-        } else if (performance_indicators == tr(state, "Average trophic level")) {
+        } else if (performance_indicators == tr(state, "Average Trophic Level")) {
           result <- plot_trend_smooth(
             data,
             trophic_level,
             mean,
             tr(state, "Average trophic level"),
             tr(state, "Average trophic level"),
-            loess_span
+            loess_span,
+            use_MA_facet = use_MA_facet
           )
-        } else if (performance_indicators == tr(state, "Size structure")) {
+        } else if (performance_indicators == tr(state, "Size Structure")) {
           result <- plot_size_structure(data, sel_species)
-        } else if (performance_indicators == tr(state, "Size proportions")) {
+        } else if (performance_indicators == tr(state, "Size Proportions")) {
           result <- plot_size_proportions(data, sel_species)
         } else if (performance_indicators == "CPUE") {
           result <- plot_cpue(data, loess_span, ymin = 0)
-        } else if (performance_indicators == tr(state, "Total landings")) {
+        } else if (performance_indicators == tr(state, "Total Landings")) {
           result <- plot_trend_smooth(
             data,
             weight_kg,
             sum,
             tr(state, "Total landings (kg/month)"),
             tr(state, "Total catch (kg/month)"),
-            loess_span
+            loess_span,
+            use_MA_facet = use_MA_facet
           )
         }
         
