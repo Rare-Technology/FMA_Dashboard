@@ -8,6 +8,7 @@
 #'
 #' @importFrom shiny NS tagList
 #' @importFrom shinyWidgets materialSwitch
+#' @importFrom shinyjs reset
 sidebarIndicatorUI <- function(id) {
   ns <- NS(id)
   tagList(
@@ -179,7 +180,11 @@ sidebarIndicatorServer <- function(id, state) {
           #footer = NULL,
           size = "l"
         ))
-      })  
+      })
+      
+      observeEvent(state$resetFilters, {
+        reset("performance_indicators")
+      }, ignoreInit = TRUE)
       
       output$reference_points <-
         gt::render_gt(

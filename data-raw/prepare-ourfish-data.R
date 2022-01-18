@@ -212,6 +212,8 @@ fma_data_geo_family_species <- purrr::map(
     dplyr::arrange(country, subnational, local, maa, family, species)
 )
 
+fma_init_performance_indicators <- "Species Composition"
+
 usethis::use_data(
   fma_data_raw,
   fma_data_sources,
@@ -223,5 +225,6 @@ usethis::use_data(
   fma_init_family_species_selections,
   fma_init_data_summary_filtered,
   fma_init_date_range,
+  fma_init_performance_indicators,
   overwrite = TRUE
 )

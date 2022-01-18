@@ -8,6 +8,7 @@
 #'
 #' @importFrom shiny NS tagList
 #' @importFrom shinyWidgets pickerInput updatePickerInput
+#' @importFrom shinyjs reset
 sidebarGeoUI <- function(id) {
   ns <- NS(id)
   uiOutput(ns("geo_out"))
@@ -44,7 +45,9 @@ sidebarGeoServer <- function(id, state) {
             multiple = TRUE,
             options = list(
               `actions-box` = TRUE,
-              `selected-text-format` = "count > 2"
+              `selected-text-format` = "count > 2",
+              `count-selected-text` = paste("{0}", tr(state, "items selected")),
+              `none-selected-text` = tr(state, "Nothing selected")
             )
           ),
           pickerInput(
@@ -55,7 +58,9 @@ sidebarGeoServer <- function(id, state) {
             multiple = TRUE,
             options = list(
               `actions-box` = TRUE,
-              `selected-text-format` = "count > 2"
+              `selected-text-format` = "count > 2",
+              `count-selected-text` = paste("{0}", tr(state, "items selected")),
+              `none-selected-text` = tr(state, "Nothing selected")
             )
           ),
           pickerInput(
@@ -66,7 +71,9 @@ sidebarGeoServer <- function(id, state) {
             multiple = TRUE,
             options = list(
               `actions-box` = TRUE,
-              `selected-text-format` = "count > 2"
+              `selected-text-format` = "count > 2",
+              `count-selected-text` = paste("{0}", tr(state, "items selected")),
+              `none-selected-text` = tr(state, "Nothing selected")
             )
           )
         )
@@ -101,7 +108,6 @@ sidebarGeoServer <- function(id, state) {
       #   },
       #   ignoreInit = TRUE
       # )
-
 
       observeEvent(input$sel_country,
         {
@@ -200,6 +206,10 @@ sidebarGeoServer <- function(id, state) {
         },
         ignoreInit = TRUE
       )
+      
+      observeEvent(state$resetFilters, {
+        reset("sel_country")
+      }, ignoreInit = TRUE)
     }
   )
 

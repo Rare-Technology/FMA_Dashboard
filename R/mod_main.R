@@ -24,6 +24,7 @@ mainUI <- function(id) {
                      status = 'success',
                      style='material-circle'
             ),
+            div(id="reset-filters", actionButton(ns('resetFilters'), "Reset filters")),
             div(style='flex-grow: 1;'),
             div(id='help-button', icon('question-circle-o'), onclick='tour()'),
             div(id="lang-select", selectInput(ns("language"), "", width = 80,
@@ -79,6 +80,10 @@ mainServer <- function(id, state) {
       
       observeEvent(input$language, {
         state$language <- input$language
+      })
+      
+      observeEvent(input$resetFilters, {
+        state$resetFilters <- 1
       })
       #outputOptions(output, "Visualize", suspendWhenHidden = FALSE)
     }

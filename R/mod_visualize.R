@@ -70,7 +70,7 @@ visualizeServer <- function(id, state) {
           result <- plot_size_structure(data, sel_species)
         } else if (performance_indicators == tr(state, "Size Proportions")) {
           result <- plot_size_proportions(data, sel_species)
-        } else if (performance_indicators == "CPUE") {
+        } else if (performance_indicators == tr(state, "CPUE")) {
           result <- plot_cpue(data, loess_span, ymin = 0)
         } else if (performance_indicators == tr(state, "Total Landings")) {
           result <- plot_trend_smooth(
@@ -132,13 +132,13 @@ visualizeServer <- function(id, state) {
         
         ui_result <- c(ui_result,
           list(
-            div(class='display-filters',
-                HTML(paste(plot_info, collapse=' '))),
             div(class='download-button',
                 downloadButton(ns("downloadPlot"), tr(state, 'Download plot'))),
-            plotOutput(ns('plot'), width='1000px') %>% 
+            plotOutput(ns('plot'), width = '1000px', height = "625") %>% 
               # couldn't figure out how to do this in custom.css
-              tagAppendAttributes(style="margin: 0 auto;")
+              tagAppendAttributes(style="margin: 0 auto;"),
+            div(class='display-filters',
+                HTML(paste(plot_info, collapse=' ')))
           )
         )
       } else {

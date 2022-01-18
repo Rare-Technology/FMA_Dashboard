@@ -264,3 +264,7 @@ a {
 #toggle-facet {
   display: flex;
 }
+
+#reset-filters {
+  margin-left: 15px;
+}

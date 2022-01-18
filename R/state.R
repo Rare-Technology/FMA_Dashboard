@@ -33,12 +33,13 @@ initialize_state <- function() {
     ),
     current_date_range = fma_init_date_range,
     current_tab = "Start",
-    current_indicator = "Species composition",
+    current_indicator = "Species Composition",
     current_min_records = list(min = 0, max = 300, value = 0),
     current_trend = NA,
     facet = FALSE,
     loess_span = 0.5,
     current_plot = NULL,
-    language = "English"
+    language = "English",
+    resetFilters = 0
   )
 }
