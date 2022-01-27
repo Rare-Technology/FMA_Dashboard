@@ -93,7 +93,7 @@ visualizeServer <- function(id, state) {
           p <- NULL
           msg <- "There was not enough data to create a plot"
           if(performance_indicators %in% c("Size Structure", "Size Proportions"))
-            msg <- "At least 100 records per species per month are required to create this plot"
+            msg <- "At least 50 records per species per month are required to create this plot"
         } else if("try-error" %in% class(p)){
             p <- NULL
             msg <- "There was an error creating the plot"

@@ -24,24 +24,44 @@ plot_trend_smooth <- function(.data, var, f,
                  family = gaussian,
                  data = .data %>% dplyr::filter(maa == ma_name))
       .data$indicator_trend[.data$maa == ma_name] <- trend_indicator(mod)
+      .data$indicator_color[.data$maa == ma_name] <- trend_color(mod)
+      .data <- .data %>% tidyr::unite("maa_trend", c('maa', 'indicator_trend'), sep = "\n", remove = FALSE)
     }
-    .data_grey <- dplyr::select(.data, -maa)
+    
+    mod <- glm(result ~ yearmonth,
+               family = gaussian,
+               data = .data
+    )
+    
+    .data_all <- .data %>% dplyr::select(-maa_trend)
     
     p <- try(
-      ggplot(data = .data, aes(yearmonth, result)) +
-        geom_point(data = .data_grey, aes(yearmonth, result), # all points, greyed out
-                   color = "grey70", pch = 16, cex = 1, alpha = 0.4) +
+      ggplot(.data, aes(yearmonth, result)) +
+        geom_smooth(
+          data = .data_all,
+          aes(
+            x = yearmonth,
+            y = result
+          ),
+          color = 'blue',
+          fill = 'blue',
+          method = "loess",
+          span = loess_span,
+          alpha = 0.1
+        ) +
         geom_point(
           aes(color = indicator_trend),
           pch = 16,
           cex = 1,
-          alpha = 0.7
+          alpha = 0.7,
+          show.legend = FALSE
         ) +
         geom_smooth(
           aes(color = indicator_trend, fill = indicator_trend),
           method = "loess",
           span = loess_span,
-          alpha = 0.1
+          alpha = 0.1,
+          show.legend = FALSE
         ) +
         labs(
           x = "",
@@ -52,7 +72,7 @@ plot_trend_smooth <- function(.data, var, f,
           limits = c(ymin, ymax),
           oob = scales::squish
         ) +
-        facet_wrap("maa") +
+        facet_wrap(~ maa_trend) +
         scale_fill_manual(values = c(
           "No change" = "grey20",
           "Increasing" = "darkgreen",

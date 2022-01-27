@@ -1,9 +1,9 @@
 plot_size_proportions <- function(.data, sel_species) {
 
   .data <- .data %>%
-    dplyr::filter(species %in% sel_species) %>%
+    dplyr::filter(species %in% sel_species, !is.na(count)) %>%
     dplyr::group_by(yearmonth) %>% 
-    dplyr::filter(sum(count, na.rm = TRUE) > 50) %>% 
+    dplyr::filter(sum(count) > 50) %>% 
     dplyr::ungroup() %>% 
     droplevels()
 
@@ -32,7 +32,7 @@ plot_size_proportions <- function(.data, sel_species) {
   )[-1, ]
 
   ## loop for calculations
-
+    
   for (k in unique(.data$yearmonth)) {
     ourfish_ctry_sub <- .data %>%
       dplyr::filter(yearmonth == k) %>%
@@ -67,18 +67,14 @@ plot_size_proportions <- function(.data, sel_species) {
     fma_df <- rbind(fma_df, fma_metrics_df)
   }
 
-
   # plot
   p <- try(fma_df %>%
     ggplot(aes(yearmonth)) +
-    geom_line(aes(y = percentMature),
-      col = "red"
+    geom_line(aes(y = percentMature, color = "Mature"), size = 2
     ) +
-    geom_line(aes(y = percentOpt),
-      col = "darkgreen"
+    geom_line(aes(y = percentOpt, color = "Optimal"), size = 2
     ) +
-    geom_line(aes(y = percentMega),
-      col = "blue"
+    geom_line(aes(y = percentMega, color = "Megaspawner"), size = 2
     ) +
     labs(
       title = "Size proportions",
@@ -86,17 +82,27 @@ plot_size_proportions <- function(.data, sel_species) {
       x = "",
       y = "Proportion (%)"
     ) +
-    annotate("label",
-      x = min(fma_df$yearmonth, na.rm = TRUE),
-      y = c(
-        subset(fma_df, yearmonth == min(yearmonth, na.rm = TRUE))$percentMature,
-        subset(fma_df, yearmonth == min(yearmonth, na.rm = TRUE))$percentOpt,
-        subset(fma_df, yearmonth == min(yearmonth, na.rm = TRUE))$percentMega
-      ),
-      label = c("Pmat", "Popt", "Pmega"),
-      col = c(2, "darkgreen", 4)
+    # annotate("label",
+    #   x = c(
+    #     min(fma_df$yearmonth, na.rm = TRUE),
+    #   )
+    #   y = c(
+    #     subset(fma_df, yearmonth == min(yearmonth, na.rm = TRUE))$percentMature,
+    #     subset(fma_df, yearmonth == min(yearmonth, na.rm = TRUE))$percentOpt,
+    #     subset(fma_df, yearmonth == min(yearmonth, na.rm = TRUE))$percentMega
+    #   ),
+    #   label = c("Pmat", "Popt", "Pmega"),
+    #   col = c(2, "darkgreen", 4)
+    # ) +
+    theme_rare(), silent = TRUE) +
+    scale_color_manual(
+      name = "Proportion",
+      values = c(
+        "Mature" = "red",
+        "Optimal" = "darkgreen",
+        "Megaspawner" = "lightblue")
     ) +
-    theme_rare(), silent = TRUE)
+    scale_x_date(date_labels = "%b-%y")
 
   list(plot = p, trend = NO_TREND_ATTEMP)
 }

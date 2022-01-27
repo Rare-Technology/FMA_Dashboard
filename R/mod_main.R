@@ -18,7 +18,7 @@ mainUI <- function(id) {
         div(class='flow-div',
             dropdown(id='step1',
                      sidebarUI("sidebarUI"),
-                     width='300px',
+                     width='400px',
                      size='sm',
                      icon = icon('filter'),
                      status = 'success',

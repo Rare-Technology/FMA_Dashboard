@@ -5,7 +5,8 @@ table_column_alignment <- function(.data) {
   # )
 
   left <- c(
-    "Country", "Subnational"
+    # tr(state, "Country"), tr(state, "Subnational")
+    "Negara", "Provinsi"
   )
 
 
