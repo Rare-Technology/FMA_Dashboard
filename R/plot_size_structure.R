@@ -14,14 +14,12 @@ plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, P
     .data$count
   ))
   
-  cat("getting lmax...\n")
   # Use the highest available Lmax, (from the literature or from the data)
   of_lmax <- ifelse(unique(.data$lmax) > max(length_data$length_cm),
     unique(.data$lmax),
     max(length_data$length_cm)
   )
   
-  cat("getting froeseTemp...\n")
   # calculate Length-based indicators base on Froese and Binohlan formulas
   froeseTemp <- froese_binohlan(of_lmax, length_data$length_cm)
 
@@ -35,7 +33,6 @@ plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, P
     froeseTemp
   )
   # Plot LF
-  cat("plotting...\n")
   p <- ggplot(length_data, aes(x = length_cm)) +
     geom_histogram(
       position = "identity",
@@ -131,6 +128,5 @@ plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, P
       label = paste("Pmega: ", signif(froeseTemp$percentMega, 2), "%")
     ) +
     theme_rare()
-  cat("done plotting !")
   list(plot = p, trend = NO_TREND_ATTEMP)
 }

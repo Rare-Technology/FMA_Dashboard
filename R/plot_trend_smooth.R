@@ -34,6 +34,7 @@ plot_trend_smooth <- function(.data, var, f,
     )
     
     .data_all <- .data %>% dplyr::select(-maa_trend)
+    .data_max <- .data %>% dplyr::filter(result == max(result, na.rm=TRUE)) %>% head(1)
     
     p <- try(
       ggplot(.data, aes(yearmonth, result)) +
@@ -41,13 +42,15 @@ plot_trend_smooth <- function(.data, var, f,
           data = .data_all,
           aes(
             x = yearmonth,
-            y = result
+            y = result,
+            linetype = "Combined MA's"
           ),
           color = 'blue',
           fill = 'blue',
           method = "loess",
           span = loess_span,
-          alpha = 0.1
+          alpha = 0.1,
+          show.legend=TRUE
         ) +
         geom_point(
           aes(color = indicator_trend),
@@ -57,7 +60,7 @@ plot_trend_smooth <- function(.data, var, f,
           show.legend = FALSE
         ) +
         geom_smooth(
-          aes(color = indicator_trend, fill = indicator_trend),
+          aes(color = indicator_trend, fill = indicator_trend, linetype = "Individual MA"),
           method = "loess",
           span = loess_span,
           alpha = 0.1,
@@ -77,12 +80,17 @@ plot_trend_smooth <- function(.data, var, f,
           "No change" = "grey20",
           "Increasing" = "darkgreen",
           "Decreasing" = "darkred"
-        )) +
+        ),
+        guide = FALSE) +
         scale_color_manual(values = c(
           "No change" = "grey20",
           "Increasing" = "darkgreen",
-          "Decreasing" = "darkred"
-        )) +
+          "Decreasing" = "darkred",
+          "Combined MA's" = "blue"
+        ),
+        guide = FALSE) +
+        scale_linetype_manual(name = "",
+          values = c("Combined MA's" = "dashed", "Individual MA" = "solid")) +
         theme_rare(),
       silent = TRUE)
         

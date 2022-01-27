@@ -21,6 +21,7 @@ usethis::use_package("shinyWidgets")
 usethis::use_package("shinyjs")
 usethis::use_package("lubridate")
 usethis::use_package("rjson")
+usethis::use_package("tidyr")
 usethis::use_pipe()
 
 ## Add modules ----

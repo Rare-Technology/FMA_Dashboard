@@ -58,7 +58,7 @@ sidebarIndicatorServer <- function(id, state) {
               tr(state, "Average Length"),
               tr(state, "Average Trophic Level"),
               # "Spawning Potential Ratio",
-              tr(state, "Size Structure"),
+              # tr(state, "Size Structure"), # Need to fix
               tr(state,  "Size Proportions"),
               tr(state,  "CPUE"),
               tr(state, "Total Landings")
@@ -89,7 +89,7 @@ sidebarIndicatorServer <- function(id, state) {
           div(id = "toggle-facet",
             materialSwitch(
               ns("facet"),
-              tr(state, "Facet plot"),
+              tr(state, "Group by MA"),
               value = FALSE,
               width = "100%",
               status = "primary"

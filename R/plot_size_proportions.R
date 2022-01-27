@@ -104,5 +104,5 @@ plot_size_proportions <- function(.data, sel_species) {
     ) +
     scale_x_date(date_labels = "%b-%y")
 
-  list(plot = p, trend = NO_TREND_ATTEMP)
+  list(plot = p, trend = NO_TREND_ATTEMP, data = fma_df)
 }

@@ -84,7 +84,7 @@ mainServer <- function(id, state) {
       })
       
       observeEvent(input$resetFilters, {
-        state$resetFilters <- 1
+        state$resetFilters <- input$resetFilters + 1
       })
       #outputOptions(output, "Visualize", suspendWhenHidden = FALSE)
     }

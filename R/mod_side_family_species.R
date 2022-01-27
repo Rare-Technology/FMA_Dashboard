@@ -38,7 +38,8 @@ sidebarStockServer <- function(id, state) {
               `actions-box` = TRUE,
               `selected-text-format` = "count > 1",
               `count-selected-text` = paste("{0}", tr(state, "items selected")),
-              `none-selected-text` = tr(state, "Nothing selected")
+              `none-selected-text` = tr(state, "Nothing selected"),
+              `live-search` = TRUE
             )
           ),
           div(
@@ -53,7 +54,8 @@ sidebarStockServer <- function(id, state) {
                 `actions-box` = TRUE,
                 `selected-text-format` = "count > 1",
                 `count-selected-text` = paste("{0}", tr(state, "items selected")),
-                `none-selected-text` = tr(state, "Nothing selected")
+                `none-selected-text` = tr(state, "Nothing selected"),
+                `live-search` = TRUE
               )
             )
           )

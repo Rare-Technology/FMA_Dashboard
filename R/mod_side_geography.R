@@ -47,7 +47,8 @@ sidebarGeoServer <- function(id, state) {
               `actions-box` = TRUE,
               `selected-text-format` = "count > 2",
               `count-selected-text` = paste("{0}", tr(state, "items selected")),
-              `none-selected-text` = tr(state, "Nothing selected")
+              `none-selected-text` = tr(state, "Nothing selected"),
+              `live-search` = TRUE
             )
           ),
           pickerInput(
@@ -60,7 +61,8 @@ sidebarGeoServer <- function(id, state) {
               `actions-box` = TRUE,
               `selected-text-format` = "count > 2",
               `count-selected-text` = paste("{0}", tr(state, "items selected")),
-              `none-selected-text` = tr(state, "Nothing selected")
+              `none-selected-text` = tr(state, "Nothing selected"),
+              `live-search` = TRUE
             )
           ),
           pickerInput(
@@ -73,7 +75,8 @@ sidebarGeoServer <- function(id, state) {
               `actions-box` = TRUE,
               `selected-text-format` = "count > 2",
               `count-selected-text` = paste("{0}", tr(state, "items selected")),
-              `none-selected-text` = tr(state, "Nothing selected")
+              `none-selected-text` = tr(state, "Nothing selected"),
+              `live-search` = TRUE
             )
           )
         )
