@@ -37,6 +37,16 @@ color_froese_Popt <- function(indicator) { ifelse(indicator > 80, "darkgreen", i
 
 color_froese_Pmega <- function(indicator) { ifelse(indicator > 40, "red", ifelse (indicator < 20 ,"darkorange", "darkgreen"))[[1]] }
 
+label_percent <- function(pct) {
+  if (pct >= 0.1) {
+    paste(round(pct, 1), "%")
+  } else if (pct > 0) {
+    "< 0.1%"
+  } else {
+    "0%"
+  }
+}
+
 theme_rare <- function(rotate_x = FALSE, subtitle_color = "black") {
 
   # https://github.com/hrbrmstr/hrbrthemes/blob/master/R/theme-ipsum.r

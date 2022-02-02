@@ -1,3 +1,5 @@
+# TODO improve the display for percents. currently, plotting the box and labels separately gives mostly
+# good, but inconsistent results
 plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, Popt = -Inf) {
   .data <- .data %>%
     dplyr::filter(species %in% sel_species, !is.na(count)) %>%
@@ -8,17 +10,13 @@ plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, P
 
   if(nrow(.data) <= MIN_DATA_ROWS) return(list(p = NO_PLOT_ATTEMP, trend = NO_TREND_ATTEMP))
   
-  cat("getting length data.../n")
   length_data <- data.frame(length_cm = rep(
     .data$length,
     .data$count
   ))
   
   # Use the highest available Lmax, (from the literature or from the data)
-  of_lmax <- ifelse(unique(.data$lmax) > max(length_data$length_cm),
-    unique(.data$lmax),
-    max(length_data$length_cm)
-  )
+  of_lmax <- pmax(unique(.data$lmax), max(length_data$length_cm), na.rm = TRUE)
   
   # calculate Length-based indicators base on Froese and Binohlan formulas
   froeseTemp <- froese_binohlan(of_lmax, length_data$length_cm)
@@ -32,6 +30,15 @@ plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, P
     counts = sum(.data$count, na.rm = TRUE),
     froeseTemp
   )
+  
+  # labels for legend
+  Pmat_label <-  label_percent(froeseTemp$percentMature)
+  Popt_label <- label_percent(froeseTemp$percentOpt)
+  Pmega_label <- label_percent(froeseTemp$percentMega)
+  plot_range <- max(length_data$length_cm, na.rm = TRUE) - min(length_data$length_cm, na.rm = TRUE)
+  x_annot_box <- min(length_data$length_cm, na.rm = TRUE) + 0.78 * plot_range
+  x_annot_text <- min(length_data$length_cm, na.rm = TRUE) + 0.8 * plot_range
+  
   # Plot LF
   p <- ggplot(length_data, aes(x = length_cm)) +
     geom_histogram(
@@ -51,82 +58,90 @@ plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, P
       color = "grey50"
     ) +
     annotate("label",
-      x = fma_metrics_df$avg_length,
-      y = 0,
-      label = paste0(
-        "Lavg\n",
-        signif(fma_metrics_df$avg_length, 3), " cm"
-      ),
-      angle = 90
+             x = fma_metrics_df$avg_length,
+             y = 0,
+             label = paste0(
+               "Lavg\n",
+               signif(fma_metrics_df$avg_length, 3), " cm"
+             ),
+             angle = 90
     ) +
     geom_vline(
       xintercept = froeseTemp$Lmat,
-      color = "red"
+      color = "red",
+      show.legend = TRUE
     ) +
     annotate("label",
-      x = froeseTemp$Lmat,
-      y = 0,
-      label = paste0(
-        "Lmat\n",
-        signif(froeseTemp$Lmat, 3), " cm"
-      ),
-      angle = 90
+             x = froeseTemp$Lmat,
+             y = 0,
+             label = paste0(
+               "Lmat\n",
+               signif(froeseTemp$Lmat, 3), " cm"
+             ),
+             angle = 90
     ) +
     geom_vline(
       xintercept = froeseTemp$Lopt,
-      color = "darkgreen"
+      color = "darkgreen",
+      show.legend = TRUE
     ) +
     annotate("label",
-      x = froeseTemp$Lopt,
-      y = 0,
-      label = paste0(
-        "Lopt\n",
-        signif(froeseTemp$Lopt, 3), " cm"
-      ),
-      angle = 90
+             x = froeseTemp$Lopt,
+             y = 0,
+             label = paste0(
+               "Lopt\n",
+               signif(froeseTemp$Lopt, 3), " cm"
+             ),
+             angle = 90
     ) +
     geom_vline(
       xintercept = froeseTemp$Lmega,
-      color = "blue"
+      color = "darkblue",
+      show.legend = TRUE
     ) +
     annotate("label",
-      x = froeseTemp$Lmega,
-      y = 0,
-      label = paste0(
-        "Lmega\n",
-        signif(froeseTemp$Lmega, 3), " cm"
-      ),
-      angle = 0
+             x = froeseTemp$Lmega,
+             y = 0,
+             label = paste0(
+               "Lmega\n",
+               signif(froeseTemp$Lmega, 3), " cm"
+             ),
+             angle = 0
     ) +
-    geom_label(
-      x = Inf,
-      y = Inf,
-      hjust = 1.1,
-      vjust = 1.1,
-      label = "      ",
-      size = 30
+    annotate(
+      geom = "label",
+      x = x_annot_box, y = Inf, hjust = 0, vjust = 1.1,
+      label = "    ",
+      size = 33
     ) +
-    geom_text(
-      x = Inf,
-      y = Inf,
-      hjust = 1.5,
-      vjust = 2,
+    annotate(
+      geom = "text",
+      x = x_annot_text, y = Inf, hjust = 0, vjust = 2,
       size = 5,
-      colour = color_froese_Pmat(froeseTemp$percentMature),
-      label = paste("Pmat: ", signif(froeseTemp$percentMature, 3), "%")
+      label = deparse(bquote(
+        P[mat]:~~.(Pmat_label)
+      )),
+      parse = TRUE
     ) +
-    geom_text(
-      x = Inf, y = Inf, hjust = 1.5, vjust = 4,
+    annotate(
+      geom = "text",
+      x = x_annot_text, y = Inf, hjust = 0, vjust = 3.5,
       size = 5,
-      colour = color_froese_Popt(froeseTemp$percentOpt),
-      label = paste("Popt: ", signif(froeseTemp$percentOpt, 2), "%")
+      label = deparse(bquote(
+        P[opt]:~~.(Popt_label)
+      )),
+      parse = TRUE
     ) +
-    geom_text(
-      x = Inf, y = Inf, hjust = 1.5, vjust = 6,
+    annotate(
+      geom = "text",
+      x = x_annot_text, y = Inf, hjust = 0, vjust = 5,
       size = 5,
-      colour = color_froese_Pmega(froeseTemp$percentMega),
-      label = paste("Pmega: ", signif(froeseTemp$percentMega, 2), "%")
+      label = deparse(bquote(
+        P[mega]:~~.(Pmega_label)
+      )),
+      parse = TRUE
     ) +
     theme_rare()
+  
   list(plot = p, trend = NO_TREND_ATTEMP)
 }

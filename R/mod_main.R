@@ -31,7 +31,7 @@ mainUI <- function(id) {
                                               c("EN" = "English",
                                                 "ID" = "Bahasa Indonesia",
                                                 "BR" = "Portugues (BR)",
-                                                # "MZ" = "Portugues (MZ)",
+                                                "MZ" = "Portugues (MOZ)",
                                                 "ES" = "Español",
                                                 "PH" = "Philippines"
                                               ))

@@ -58,7 +58,7 @@ sidebarIndicatorServer <- function(id, state) {
               tr(state, "Average Length"),
               tr(state, "Average Trophic Level"),
               # "Spawning Potential Ratio",
-              # tr(state, "Size Structure"), # Need to fix
+              tr(state, "Size Structure"),
               tr(state,  "Size Proportions"),
               tr(state,  "CPUE"),
               tr(state, "Total Landings")
