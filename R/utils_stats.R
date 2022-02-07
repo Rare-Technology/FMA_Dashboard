@@ -26,9 +26,9 @@ froese_binohlan <- function(lmax, lengthData) {
   # Lmega
   Lmega <- Lopt * 1.1
 
-  percentMature <- length(which(lengthData > Lmat)) / length(lengthData) * 100
-  percentOpt <- length(which(lengthData > Lopt_lower & lengthData < Lopt_upper)) / length(lengthData) * 100
-  percentMega <- length(which(lengthData > Lmega)) / length(lengthData) * 100
+  percentMature <- length(which(lengthData >= Lmat)) / length(lengthData) * 100
+  percentOpt <- length(which(lengthData >= Lopt_lower & lengthData <= Lopt_upper)) / length(lengthData) * 100
+  percentMega <- length(which(lengthData >= Lmega)) / length(lengthData) * 100
   p_obj <- percentMature / 100 + percentOpt / 100 + percentMega / 100
   selectivity <- dplyr::case_when(
     p_obj < 1 & percentOpt / 100 + percentMega / 100 == 0 & percentMature / 100 > 0.25 ~ "Fish small and immature",
