@@ -8,7 +8,7 @@
 #'
 #' @importFrom shiny NS tagList
 #' @importFrom shinyWidgets materialSwitch
-#' @importFrom shinyjs reset
+#' @importFrom shinyjs reset runjs
 sidebarIndicatorUI <- function(id) {
   ns <- NS(id)
   tagList(
@@ -84,11 +84,11 @@ sidebarIndicatorServer <- function(id, state) {
         )
         
         ui[["plot_options_title"]] <- div(class = "sidetitle", tr(state, "Plot options"))
-        ui[["toggle_facet"]] <- tagList(
+        ui[["ma_facet"]] <- tagList(
           br(),
-          div(id = "toggle-facet",
+          div(id = "ma-facet",
             materialSwitch(
-              ns("facet"),
+              ns("ma_facet"),
               tr(state, "Group by MA"),
               value = FALSE,
               width = "100%",
@@ -96,6 +96,21 @@ sidebarIndicatorServer <- function(id, state) {
             )
           )
         )
+        if (current_indicator %in% c("Size Structure", "Size Proportions")) {
+          ui[["species_facet"]] <- tagList(
+            br(),
+            div(id = "species-facet",
+                materialSwitch(
+                  ns("species_facet"),
+                  tr(state, "Group by species"),
+                  value = FALSE,
+                  width = "100%",
+                  status = "primary"
+                )
+            )
+          )
+        }
+
 
         # show loess slider only when plotting curves
         if (current_tab %in% c(tr(state, "2. Visualize data")) && !(current_indicator %in% c(tr(state, "Fishing gear"), tr(state, "Size structure"), tr(state, "Size proportions")))) {
@@ -163,8 +178,12 @@ sidebarIndicatorServer <- function(id, state) {
         
       }, ignoreInit = TRUE)
       
-      observeEvent(input$facet, {
-        state$facet <- input$facet
+      observeEvent(input$ma_facet, {
+        state$ma_facet <- input$ma_facet
+      })
+      
+      observeEvent(input$species_facet, {
+        state$species_facet <- input$species_facet
       })
 
       observeEvent(input$loess_span, {
