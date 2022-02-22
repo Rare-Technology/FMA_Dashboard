@@ -18,10 +18,28 @@ plot_reporting_effort <- function(.data, loess_span = 0.5) {
     family = gaussian,
     data = .data
   )
-
-  indicator_trend_fisher <- trend_indicator(mod_fisher)
+  
+  indicator_trend_fisher_out <- trend_indicator(mod_fisher)
+  indicator_trend_fisher <- indicator_trend_fisher_out$res
+  pval_fisher <- indicator_trend_fisher_out$pval
+  pval_fisher <- ifelse(!is.na(pval_fisher) & pval_fisher < 0.05,
+                 ifelse(pval_fisher < 0.001,
+                        "(p < 0.001)",
+                        paste0("(", paste("p =", round(pval_fisher, 3)), ")")
+                 ),
+                 ""
+  )
   indicator_color_fisher <- trend_color(mod_fisher)
-  indicator_trend_buyer <- trend_indicator(mod_buyer)
+  indicator_trend_buyer_out <- trend_indicator(mod_buyer)
+  indicator_trend_buyer <- indicator_trend_buyer_out$res
+  pval_buyer <- indicator_trend_buyer_out$pval
+  pval_buyer <- ifelse(!is.na(pval_buyer) & pval_buyer < 0.05,
+                 ifelse(pval_buyer < 0.001,
+                        "(p < 0.001)",
+                        paste0("(", paste("p =", round(pval_buyer, 3)), ")")
+                 ),
+                 ""
+  )
   indicator_color_buyer <- trend_color(mod_buyer)
 
   # Number of fishers reporting
@@ -41,7 +59,7 @@ plot_reporting_effort <- function(.data, loess_span = 0.5) {
     ) +
     labs(
       title = "Fishers reporting",
-      subtitle = indicator_trend_fisher,
+      subtitle = paste(indicator_trend_fisher, pval_fisher),
       x = "",
       y = "Total number of fishers reporting per day"
     ) +
@@ -75,7 +93,7 @@ plot_reporting_effort <- function(.data, loess_span = 0.5) {
     ) +
     labs(
       title = "Buyers reporting",
-      subtitle = indicator_trend_buyer,
+      subtitle = paste(indicator_trend_buyer, pval_buyer),
       x = "",
       y = "Total number of buyers reporting per day"
     ) +

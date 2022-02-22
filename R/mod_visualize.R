@@ -73,7 +73,7 @@ visualizeServer <- function(id, state) {
         } else if (performance_indicators == tr(state, "Size Proportions")) {
           result <- plot_size_proportions(data, sel_species)
         } else if (performance_indicators == tr(state, "CPUE")) {
-          result <- plot_cpue(data, loess_span, ymin = 0)
+          result <- plot_cpue(data, loess_span, ymin = 0, use_MA_facet = use_MA_facet)
         } else if (performance_indicators == tr(state, "Total Landings")) {
           result <- plot_trend_smooth(
             data,
