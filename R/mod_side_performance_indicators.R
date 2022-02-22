@@ -96,6 +96,18 @@ sidebarIndicatorServer <- function(id, state) {
             )
           )
         )
+        ui[["family_facet"]] <- tagList(
+          br(),
+          div(id = "family-facet",
+              materialSwitch(
+                ns("family_facet"),
+                tr(state, "Group by family"),
+                value = FALSE,
+                width = "100%",
+                status = "primary"
+              )
+          )
+        )
         if (current_indicator %in% c("Size Structure", "Size Proportions")) {
           ui[["species_facet"]] <- tagList(
             br(),
@@ -180,6 +192,10 @@ sidebarIndicatorServer <- function(id, state) {
       
       observeEvent(input$ma_facet, {
         state$ma_facet <- input$ma_facet
+      })
+      
+      observeEvent(input$family_facet, {
+        state$family_facet <- input$family_facet
       })
       
       observeEvent(input$species_facet, {

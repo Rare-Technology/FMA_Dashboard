@@ -3,12 +3,12 @@ trend_indicator <- function(mod) {
   coefval <- coef(mod)[2]
   p <- summary(mod)$coef[, "Pr(>|t|)"][2]
   res <- "No change"
-  if(is.na(coefval) | is.na(p)) return(res)
+  if(is.na(coefval) | is.na(p)) return(list(res=res, pval=p))
   
   if(coefval > 0 & p < 0.05) res <- "Increasing"
   if(coefval < 0 & p < 0.05) res <- "Decreasing"
   
-  res
+  list(res=res, pval=p)
 
 }
 

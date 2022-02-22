@@ -37,6 +37,7 @@ initialize_state <- function() {
     current_min_records = list(min = 0, max = 300, value = 0),
     current_trend = NA,
     ma_facet = FALSE,
+    family_facet = FALSE,
     species_facet = FALSE,
     loess_span = 0.5,
     current_plot = NULL,

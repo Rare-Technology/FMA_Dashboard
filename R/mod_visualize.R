@@ -27,6 +27,7 @@ visualizeServer <- function(id, state) {
         performance_indicators <- state$current_indicator
         data <- state$data_filtered
         use_MA_facet <- state$ma_facet
+        use_family_facet <- state$family_facet
         use_species_facet <- state$species_facet
         loess_span <- state$loess_span
         sel_species <- state$species$selected[1]
