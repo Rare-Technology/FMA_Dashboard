@@ -1,12 +1,23 @@
-plot_size_proportions <- function(.data, sel_species) {
+plot_size_proportions <- function(.data, sel_species, use_species_facet = FALSE) {
 
-  .data <- .data %>%
-    dplyr::filter(species %in% sel_species, !is.na(count)) %>%
-    dplyr::group_by(yearmonth) %>% 
-    dplyr::filter(sum(count) > 50) %>% 
-    dplyr::ungroup() %>% 
-    droplevels()
-
+  if (use_species_facet) {
+    if(length(sel_species) > 10) return(list(p = FACET_WARNING, trend = NO_TREND_ATTEMP))
+    
+    .data <- .data %>%
+      dplyr::filter(species %in% sel_species, !is.na(count)) %>%
+      dplyr::group_by(yearmonth, species) %>% 
+      dplyr::filter(sum(count) > 50) %>% 
+      dplyr::ungroup() %>% 
+      droplevels()
+  } else {
+    .data <- .data %>%
+      dplyr::filter(species == sel_species[1], !is.na(count)) %>%
+      dplyr::group_by(yearmonth) %>% 
+      dplyr::filter(sum(count) > 50) %>% 
+      dplyr::ungroup() %>% 
+      droplevels()
+  }
+  
   if(nrow(.data) <= MIN_DATA_ROWS) return(list(p = NO_PLOT_ATTEMP, trend = NO_TREND_ATTEMP))
     
     
@@ -31,78 +42,129 @@ plot_size_proportions <- function(.data, sel_species) {
     status = NA
   )[-1, ]
 
-  ## loop for calculations
+  if (use_species_facet) {
+    for (s in unique(.data$species)) {
+      for (k in unique(.data$yearmonth)) {
+        ourfish_ctry_sub <- .data %>% 
+          dplyr::filter(yearmonth == k, species == s) %>% 
+          droplevels()
+        
+        if (nrow(ourfish_ctry_sub) > 0) {
+        
+          # calculate lengths
+          length_data <- data.frame(length_cm = rep(
+            ourfish_ctry_sub$length,
+            ourfish_ctry_sub$count
+          ))
+          
+          # Use the highest available Lmax, (from the literature or from the data)
+          of_lmax <- ifelse(unique(ourfish_ctry_sub$lmax) > max(length_data$length_cm),
+                            unique(ourfish_ctry_sub$lmax),
+                            max(length_data$length_cm)
+          )
+          
+          # calculate Length-based indicators base on Froese and Binohlan formulas
+          froeseTemp <- froese_binohlan(of_lmax, length_data$length_cm)
+
+          fma_metrics_df <- data.frame(
+            country = unique(ourfish_ctry_sub$country),
+            maa = unique(ourfish_ctry_sub$maa),
+            species = unique(ourfish_ctry_sub$species),
+            yearmonth = unique(ourfish_ctry_sub$yearmonth),
+            avg_length = mean(length_data$length_cm, na.rm = TRUE),
+            uni_length = length(unique(length_data)),
+            counts = sum(ourfish_ctry_sub$count, na.rm = TRUE),
+            froeseTemp
+          )
+          
+          fma_df <- rbind(fma_df, fma_metrics_df)
+        }
+      }
+    }
     
-  for (k in unique(.data$yearmonth)) {
-    ourfish_ctry_sub <- .data %>%
-      dplyr::filter(yearmonth == k) %>%
-      droplevels()
-
-    # calculate lenghts
-    length_data <- data.frame(length_cm = rep(
-      ourfish_ctry_sub$length,
-      ourfish_ctry_sub$count
-    ))
-
-    # Use the highest available Lmax, (from the literature or from the data)
-    of_lmax <- ifelse(unique(ourfish_ctry_sub$lmax) > max(length_data$length_cm),
-      unique(ourfish_ctry_sub$lmax),
-      max(length_data$length_cm)
-    )
-
-    # calculate Length-based indicators base on Froese and Binohlan formulas
-    froeseTemp <- froese_binohlan(of_lmax, length_data$length_cm)
-
-    fma_metrics_df <- data.frame(
-      country = unique(ourfish_ctry_sub$country),
-      maa = unique(ourfish_ctry_sub$maa),
-      species = unique(ourfish_ctry_sub$species[1]),
-      yearmonth = unique(ourfish_ctry_sub$yearmonth),
-      avg_length = mean(length_data$length_cm, na.rm = TRUE),
-      uni_length = length(unique(length_data)),
-      counts = sum(ourfish_ctry_sub$count, na.rm = TRUE),
-      froeseTemp
-    )
-
-    fma_df <- rbind(fma_df, fma_metrics_df)
+    # plot
+    p <- try(
+      ggplot(fma_df, aes(yearmonth)) +
+      geom_line(aes(y = percentMature, color = "Mature"), size = 2) +
+      geom_line(aes(y = percentOpt, color = "Optimal"), size = 2) +
+      geom_line(aes(y = percentMega, color = "Megaspawner"), size = 2) +
+      facet_wrap(~ species) +
+      labs(
+        title = "Size proportions",
+        # subtitle = paste("Species: ", sel_species),
+        x = "",
+        y = "Proportion (%)"
+      ) +
+      theme_rare() +
+      scale_color_manual(
+        name = "Proportion",
+        values = c(
+          "Mature" = "red",
+          "Optimal" = "darkgreen",
+          "Megaspawner" = "lightblue")
+      ) +
+      scale_x_date(date_labels = "%b-%y"), silent = TRUE)
+  } else {
+    ## loop for calculations
+    for (k in unique(.data$yearmonth)) {
+      ourfish_ctry_sub <- .data %>%
+        dplyr::filter(yearmonth == k) %>%
+        droplevels()
+  
+      # calculate lengths
+      length_data <- data.frame(length_cm = rep(
+        ourfish_ctry_sub$length,
+        ourfish_ctry_sub$count
+      ))
+  
+      # Use the highest available Lmax, (from the literature or from the data)
+      of_lmax <- ifelse(unique(ourfish_ctry_sub$lmax) > max(length_data$length_cm),
+        unique(ourfish_ctry_sub$lmax),
+        max(length_data$length_cm)
+      )
+  
+      # calculate Length-based indicators base on Froese and Binohlan formulas
+      froeseTemp <- froese_binohlan(of_lmax, length_data$length_cm)
+  
+      fma_metrics_df <- data.frame(
+        country = unique(ourfish_ctry_sub$country),
+        maa = unique(ourfish_ctry_sub$maa),
+        species = unique(ourfish_ctry_sub$species),
+        yearmonth = unique(ourfish_ctry_sub$yearmonth),
+        avg_length = mean(length_data$length_cm, na.rm = TRUE),
+        uni_length = length(unique(length_data)),
+        counts = sum(ourfish_ctry_sub$count, na.rm = TRUE),
+        froeseTemp
+      )
+  
+      fma_df <- rbind(fma_df, fma_metrics_df)
+    }
+  
+    # plot
+    p <- try(
+      ggplot(fma_df, aes(yearmonth)) +
+      geom_line(aes(y = percentMature, color = "Mature"), size = 2
+      ) +
+      geom_line(aes(y = percentOpt, color = "Optimal"), size = 2
+      ) +
+      geom_line(aes(y = percentMega, color = "Megaspawner"), size = 2
+      ) +
+      labs(
+        title = "Size proportions",
+        subtitle = paste("Species: ", sel_species),
+        x = "",
+        y = "Proportion (%)"
+      ) +
+      theme_rare() +
+      scale_color_manual(
+        name = "Proportion",
+        values = c(
+          "Mature" = "red",
+          "Optimal" = "darkgreen",
+          "Megaspawner" = "lightblue")
+      ) +
+      scale_x_date(date_labels = "%b-%y"), silent = TRUE)
   }
-
-  # plot
-  p <- try(fma_df %>%
-    ggplot(aes(yearmonth)) +
-    geom_line(aes(y = percentMature, color = "Mature"), size = 2
-    ) +
-    geom_line(aes(y = percentOpt, color = "Optimal"), size = 2
-    ) +
-    geom_line(aes(y = percentMega, color = "Megaspawner"), size = 2
-    ) +
-    labs(
-      title = "Size proportions",
-      subtitle = paste("Species: ", sel_species),
-      x = "",
-      y = "Proportion (%)"
-    ) +
-    # annotate("label",
-    #   x = c(
-    #     min(fma_df$yearmonth, na.rm = TRUE),
-    #   )
-    #   y = c(
-    #     subset(fma_df, yearmonth == min(yearmonth, na.rm = TRUE))$percentMature,
-    #     subset(fma_df, yearmonth == min(yearmonth, na.rm = TRUE))$percentOpt,
-    #     subset(fma_df, yearmonth == min(yearmonth, na.rm = TRUE))$percentMega
-    #   ),
-    #   label = c("Pmat", "Popt", "Pmega"),
-    #   col = c(2, "darkgreen", 4)
-    # ) +
-    theme_rare(), silent = TRUE) +
-    scale_color_manual(
-      name = "Proportion",
-      values = c(
-        "Mature" = "red",
-        "Optimal" = "darkgreen",
-        "Megaspawner" = "lightblue")
-    ) +
-    scale_x_date(date_labels = "%b-%y")
-
+  
   list(plot = p, trend = NO_TREND_ATTEMP, data = fma_df)
 }

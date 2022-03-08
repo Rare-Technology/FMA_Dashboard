@@ -30,7 +30,7 @@ visualizeServer <- function(id, state) {
         use_family_facet <- state$family_facet
         use_species_facet <- state$species_facet
         loess_span <- state$loess_span
-        sel_species <- state$species$selected[1]
+        sel_species <- state$species$selected
 
         if (performance_indicators == tr(state, "Fishing Gear")) {
           result <- plot_fishing_gear(data, state)
@@ -71,7 +71,7 @@ visualizeServer <- function(id, state) {
         } else if (performance_indicators == tr(state, "Size Structure")) {
           result <- plot_size_structure(data, sel_species)
         } else if (performance_indicators == tr(state, "Size Proportions")) {
-          result <- plot_size_proportions(data, sel_species)
+          result <- plot_size_proportions(data, sel_species, use_species_facet = use_species_facet)
         } else if (performance_indicators == tr(state, "CPUE")) {
           result <- plot_cpue(data, loess_span, ymin = 0, use_MA_facet = use_MA_facet)
         } else if (performance_indicators == tr(state, "Total Landings")) {
@@ -99,6 +99,9 @@ visualizeServer <- function(id, state) {
         } else if("try-error" %in% class(p)){
             p <- NULL
             msg <- "There was an error creating the plot"
+        } else if (p == "FACET_WARNING") {
+          p <- NULL
+          msg <- "You are attempting to plot too many groups. Try to select fewer than 10 species or disable group by species."
         } else {
             state$current_plot_data <- result$data
             if (performance_indicators != "Reporting Effort") {

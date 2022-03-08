@@ -118,6 +118,8 @@ create_geo_table <- function(.data) {
     dplyr::arrange(country, subnational, local, maa)
 }
 
+historical <- source("prepare-historical-data.R")
+
 # ---- List of two raw datasets
 
 fma_data_raw <- list(
@@ -126,7 +128,6 @@ fma_data_raw <- list(
     data = ourfish
   )
 )
-
 
 fma_data_geo <- purrr::map(fma_data_raw, function(x) {
   create_geo_table(x$data)
