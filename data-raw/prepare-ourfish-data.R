@@ -1,5 +1,7 @@
 library(dplyr)
+library(tidyr)
 library(lubridate)
+library(rfishbase)
 
 # ---- Read in raw data
 # join_ourfish_footprint_fishbase from Fisheries Dashboard
@@ -101,6 +103,49 @@ ourfish$gear_type[ourfish$gear_type == "Beach Seine"] <- "Beach seine"
 ourfish$gear_type[ourfish$gear_type == "Línea y anzuelo"] <- "Handline"
 ourfish$length[is.infinite(ourfish$length)] <- NA
 ourfish$count[ourfish$count == 0] <- NA
+
+# ----- Length data
+# Fill in gaps within Lmax data by taking genus means
+# Put an upper bound of Lmax on catch length data to make data more consistent with literature
+# Unfortunately, as of Mar 16 2022, this process reduced the number of NA lmax's from
+# 14144 to 13513, only a 4% decrease
+# One difficulty is that there are a lot of Genuses that don't have enough literature data
+# to compute aggregate means.
+
+# Get genus info to be able to impute on
+ourfish <- ourfish %>% 
+  tidyr::separate(species, into = c('Genus', 'Species'), sep = ' ', remove = FALSE)
+
+# Get the fishbase Genus-Species info for all fish in the same Genus as fish from our data
+fishbase_filter <- rfishbase::fishbase %>% 
+  dplyr::filter(Genus %in% unique(ourfish$Genus)) %>% 
+  tidyr::unite(Gensp, c('Genus', 'Species'), sep = ' ', remove = FALSE) %>% 
+  dplyr::select(Gensp, Genus, Species)
+
+# Using the filtered fishbase info, get Lmax for all fish
+fishbase_lmax <- rfishbase::length_length(fishbase_filter$Gensp) %>% 
+  dplyr::select(Species, LengthMax) %>% 
+  dplyr::group_by(Species) %>% 
+  dplyr::mutate(lmax = as.numeric(LengthMax)) %>% 
+  dplyr::filter(!is.na(lmax)) %>% 
+  dplyr::summarize(Lmax = max(lmax)) %>%
+  dplyr::rename(Gensp = Species) %>%
+  tidyr::separate(Gensp, c('Genus', 'Species'), sep = ' ', remove = FALSE)
+
+# Aggregate means of Lmax across genus
+genus_Lmax_means = fishbase_lmax %>% 
+  dplyr::filter(!is.infinite(Lmax)) %>% 
+  dplyr::group_by(Genus) %>% 
+  dplyr::summarize(genus_Lmax = mean(Lmax))
+
+ourfish <- left_join(ourfish, genus_Lmax_means, by = 'Genus')
+ourfish$lmax <- ifelse(is.na(ourfish$lmax), ourfish$genus_Lmax, ourfish$lmax)
+ourfish <- ourfish %>% 
+  dplyr::select(-c(Genus, Species, genus_Lmax))
+
+# TODO fill in NA lengths using weight_kg
+# TODO replace any lengths > Lmax by Lmax
+
 
 # ---- A function to get the unique geo combination
 
