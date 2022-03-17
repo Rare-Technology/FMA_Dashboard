@@ -2,7 +2,7 @@
 # good, but inconsistent results
 plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, Popt = -Inf) {
   .data <- .data %>%
-    dplyr::filter(species %in% sel_species, !is.na(count)) %>%
+    dplyr::filter(species %in% sel_species, !is.na(count), !is.na(lmax)) %>%
     dplyr::group_by(yearmonth) %>% 
     dplyr::filter(sum(count) > 50) %>% 
     dplyr::ungroup() %>% 
@@ -15,8 +15,7 @@ plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, P
     .data$count
   ))
   
-  # Use the highest available Lmax, (from the literature or from the data)
-  of_lmax <- pmax(unique(.data$lmax), max(length_data$length_cm), na.rm = TRUE)
+  of_lmax <- unique(.data$lmax)
   
   # calculate Length-based indicators base on Froese and Binohlan formulas
   froeseTemp <- froese_binohlan(of_lmax, length_data$length_cm)

@@ -4,16 +4,16 @@ plot_size_proportions <- function(.data, sel_species, use_species_facet = FALSE)
     if(length(sel_species) > 10) return(list(p = FACET_WARNING, trend = NO_TREND_ATTEMP))
     
     .data <- .data %>%
-      dplyr::filter(species %in% sel_species, !is.na(count)) %>%
+      dplyr::filter(species %in% sel_species, !is.na(count), !is.na(lmax)) %>%
       dplyr::group_by(yearmonth, species) %>% 
-      dplyr::filter(sum(count) > 50) %>% 
+      dplyr::filter(sum(count) > 100) %>% 
       dplyr::ungroup() %>% 
       droplevels()
   } else {
     .data <- .data %>%
-      dplyr::filter(species == sel_species[1], !is.na(count)) %>%
+      dplyr::filter(species == sel_species[1], !is.na(count), !is.na(lmax)) %>%
       dplyr::group_by(yearmonth) %>% 
-      dplyr::filter(sum(count) > 50) %>% 
+      dplyr::filter(sum(count) > 100) %>% 
       dplyr::ungroup() %>% 
       droplevels()
   }
@@ -57,11 +57,7 @@ plot_size_proportions <- function(.data, sel_species, use_species_facet = FALSE)
             ourfish_ctry_sub$count
           ))
           
-          # Use the highest available Lmax, (from the literature or from the data)
-          of_lmax <- ifelse(unique(ourfish_ctry_sub$lmax) > max(length_data$length_cm),
-                            unique(ourfish_ctry_sub$lmax),
-                            max(length_data$length_cm)
-          )
+          of_lmax <- unique(ourfish_ctry_sub$lmax)
           
           # calculate Length-based indicators base on Froese and Binohlan formulas
           froeseTemp <- froese_binohlan(of_lmax, length_data$length_cm)
@@ -117,11 +113,7 @@ plot_size_proportions <- function(.data, sel_species, use_species_facet = FALSE)
         ourfish_ctry_sub$count
       ))
   
-      # Use the highest available Lmax, (from the literature or from the data)
-      of_lmax <- ifelse(unique(ourfish_ctry_sub$lmax) > max(length_data$length_cm),
-        unique(ourfish_ctry_sub$lmax),
-        max(length_data$length_cm)
-      )
+      of_lmax <- unique(ourfish_ctry_sub$lmax)
   
       # calculate Length-based indicators base on Froese and Binohlan formulas
       froeseTemp <- froese_binohlan(of_lmax, length_data$length_cm)

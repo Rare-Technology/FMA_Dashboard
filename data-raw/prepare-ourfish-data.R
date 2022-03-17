@@ -138,14 +138,42 @@ genus_Lmax_means = fishbase_lmax %>%
   dplyr::group_by(Genus) %>% 
   dplyr::summarize(genus_Lmax = mean(Lmax))
 
+# Impute lmax data
 ourfish <- left_join(ourfish, genus_Lmax_means, by = 'Genus')
 ourfish$lmax <- ifelse(is.na(ourfish$lmax), ourfish$genus_Lmax, ourfish$lmax)
 ourfish <- ourfish %>% 
   dplyr::select(-c(Genus, Species, genus_Lmax))
 
-# TODO fill in NA lengths using weight_kg
-# TODO replace any lengths > Lmax by Lmax
+# collect a/b coefficients to use to calculate lengths
+poplw_filter <- rfishbase::poplw(unique(ourfish$species)) %>%
+  dplyr::rename(species = Species) %>%
+  dplyr::group_by(species) %>%
+  dplyr::summarize(
+    a = mean(a, na.rm = TRUE),
+    b = mean(b, na.rm = TRUE)
+  )
 
+ourfish <- left_join(ourfish, poplw_filter, by = 'species')
+
+# Impute length data
+ourfish <- ourfish %>% 
+  dplyr::mutate(length = ifelse(
+    is.na(length),
+      ifelse(!is.na(weight_kg) & !is.na(a) & !is.na(b),
+        (1000*weight_kg / a)**(1/b),
+        length
+      ),
+      length
+  ))
+
+# All lengths longer than Lmax are set equal to Lmax. if either length or lmax is NA return whatever the length is
+ourfish$length <- ifelse(is.na(ourfish$length) | is.na(ourfish$lmax),
+                    ourfish$length,
+                    ifelse(ourfish$length > ourfish$lmax,
+                      ourfish$lmax,
+                      ourfish$length
+                    )
+)
 
 # ---- A function to get the unique geo combination
 

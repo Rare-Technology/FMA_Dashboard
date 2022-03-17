@@ -115,7 +115,7 @@ sidebarIndicatorServer <- function(id, state) {
                 materialSwitch(
                   ns("species_facet"),
                   tr(state, "Group by species"),
-                  value = FALSE,
+                  value = state$species_facet,
                   width = "100%",
                   status = "primary"
                 )
