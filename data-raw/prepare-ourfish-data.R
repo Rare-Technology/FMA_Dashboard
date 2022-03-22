@@ -125,9 +125,9 @@ fishbase_filter <- rfishbase::fishbase %>%
 # Using the filtered fishbase info, get Lmax for all fish
 fishbase_lmax <- rfishbase::length_length(fishbase_filter$Gensp) %>% 
   dplyr::select(Species, LengthMax) %>% 
-  dplyr::group_by(Species) %>% 
   dplyr::mutate(lmax = as.numeric(LengthMax)) %>% 
   dplyr::filter(!is.na(lmax)) %>% 
+  dplyr::group_by(Species) %>% 
   dplyr::summarize(Lmax = max(lmax)) %>%
   dplyr::rename(Gensp = Species) %>%
   tidyr::separate(Gensp, c('Genus', 'Species'), sep = ' ', remove = FALSE)
