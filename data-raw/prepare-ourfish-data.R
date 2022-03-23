@@ -191,7 +191,7 @@ create_geo_table <- function(.data) {
     dplyr::arrange(country, subnational, local, maa)
 }
 
-historical <- source("prepare-historical-data.R")
+source("prepare-historical-data.R") #create tibble `historical`
 
 # ---- List of two raw datasets
 
