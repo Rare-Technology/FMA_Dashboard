@@ -198,7 +198,11 @@ source("prepare-historical-data.R") #create tibble `historical`
 fma_data_raw <- list(
   ourfish = list(
     label = "OurFish Data",
-    data = ourfish
+    data = ourfish,
+  ),
+  historical = list(
+    label = "Historical/Enumerator Data",
+    data = historical
   )
 )
 
