@@ -9,7 +9,9 @@
 #' @importFrom shiny NS tagList
 visualizeUI <- function(id) {
   ns <- NS(id)
-  uiOutput(ns("plot_holder")) %>% withSpinner(color = SPINNER_COLOR)
+  div(style = "height: calc(100vh - 130px); overflow-y: scroll;",
+    uiOutput(ns("plot_holder")) %>% withSpinner(color = SPINNER_COLOR)
+  )
 }
 
 #'  Server Function

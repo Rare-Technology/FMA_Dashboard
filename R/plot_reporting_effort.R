@@ -1,4 +1,5 @@
-plot_reporting_effort <- function(.data, loess_span = 0.5) {
+plot_reporting_effort <- function(.data, loess_span = 0.5, use_MA_facet = FALSE,
+                                  use_family_facet = FALSE) {
   .data <-.data %>%
     dplyr::group_by(country, week, transaction_date) %>%
     dplyr::summarise(

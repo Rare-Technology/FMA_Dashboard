@@ -84,26 +84,26 @@ sidebarGeoServer <- function(id, state) {
         ui
       })
       
-      observeEvent(input$sel_datasource,
-        {
-          state$data_source <- input$sel_datasource
-          state$data_full <- fma_data_raw[[input$sel_datasource]]$data
-          state$data_geo_family_species <- fma_data_geo_family_species[[input$sel_datasource]]
-          state$data_summary <- fma_data_summary[[input$sel_datasource]]
-          country_info <- get_country_selections(state$data_geo_family_species)
-          state$country <- list(
-            choices = country_info$choices,
-            selected = country_info$selected
-          )
-          updateSelectInput(
-            session,
-            "sel_country",
-            choices = country_info$choices,
-            selected = country_info$selected
-          )
-        },
-        ignoreInit = TRUE
-      )
+      # observeEvent(input$sel_datasource,
+      #   {
+      #     state$data_source <- input$sel_datasource
+      #     state$data_full <- fma_data_raw[[input$sel_datasource]]$data
+      #     state$data_geo_family_species <- fma_data_geo_family_species[[input$sel_datasource]]
+      #     state$data_summary <- fma_data_summary[[input$sel_datasource]]
+      #     country_info <- get_country_selections(state$data_geo_family_species)
+      #     state$country <- list(
+      #       choices = country_info$choices,
+      #       selected = country_info$selected
+      #     )
+      #     updateSelectInput(
+      #       session,
+      #       "sel_country",
+      #       choices = country_info$choices,
+      #       selected = country_info$selected
+      #     )
+      #   },
+      #   ignoreInit = TRUE
+      # )
 
 
       # observeEvent(state$data_source,

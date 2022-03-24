@@ -11,6 +11,7 @@
 #' @importFrom shinyjs useShinyjs extendShinyjs
 mainUI <- function(id) {
   ns <- NS(id)
+  div(id = 'fma-body',
   fillPage(
       tagList(
         useShinyjs(),
@@ -46,7 +47,7 @@ mainUI <- function(id) {
         ), # flow-div
         uiOutput(ns("tabPanels"))
       ) # tagList
-  ) # fillPage
+  )) # fillPage
 }
 
 #' main Server Function
