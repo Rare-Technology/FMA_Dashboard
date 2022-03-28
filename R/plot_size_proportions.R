@@ -4,7 +4,7 @@ plot_size_proportions <- function(.data, sel_species, use_species_facet = FALSE)
     if(length(sel_species) > 10) return(list(p = FACET_WARNING, trend = NO_TREND_ATTEMP))
     
     .data <- .data %>%
-      dplyr::filter(species %in% sel_species, !is.na(count), !is.na(lmax)) %>%
+      dplyr::filter(species %in% sel_species, !is.na(length), !is.na(count), !is.na(lmax)) %>%
       dplyr::group_by(yearmonth, species) %>% 
       dplyr::filter(sum(count) > 100) %>% 
       dplyr::ungroup() %>% 

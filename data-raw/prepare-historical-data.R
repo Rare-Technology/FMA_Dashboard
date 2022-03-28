@@ -92,7 +92,7 @@ historical <- historical %>%
   dplyr::mutate(
     length = ifelse(is.na(a) | is.na(b) | is.na(weight_kg),
                     NA,
-                    (1000*weight_kg / a)**(1/b)
+                    exp(log(1000*weight_kg/count/a) / b)
     )
   ) %>% 
   dplyr::mutate(

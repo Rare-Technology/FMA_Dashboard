@@ -28,6 +28,7 @@ visualizeServer <- function(id, state) {
       output$plot_holder <- renderUI({
         performance_indicators <- state$current_indicator
         data <- state$data_filtered
+        data_source <- state$data_source
         use_MA_facet <- state$ma_facet
         use_family_facet <- state$family_facet
         use_species_facet <- state$species_facet
@@ -35,9 +36,9 @@ visualizeServer <- function(id, state) {
         sel_species <- state$species$selected
 
         if (performance_indicators == tr(state, "Fishing Gear")) {
-          result <- plot_fishing_gear(data, state)
+          result <- plot_fishing_gear(data, data_source, state)
         } else if (performance_indicators == tr(state, "Reporting Effort")) {
-          result <- plot_reporting_effort(data, loess_span)
+          result <- plot_reporting_effort(data, data_source, state, loess_span)
         } else if (performance_indicators == tr(state, "Species Composition")) {
           result <- plot_trend_smooth(
             data,
@@ -99,14 +100,17 @@ visualizeServer <- function(id, state) {
           if(performance_indicators %in% c("Size Structure", "Size Proportions"))
             msg <- "At least 50 records per species per month are required to create this plot"
         } else if("try-error" %in% class(p)){
-            p <- NULL
-            msg <- "There was an error creating the plot"
+          p <- NULL
+          msg <- "There was an error creating the plot"
         } else if (p == "FACET_WARNING") {
           p <- NULL
           msg <- "You are attempting to plot too many groups. Try to select fewer than 10 species or disable group by species."
+        } else if (p == "HISTORICAL_WARNING") {
+          p <- NULL
+          msg <- "This plot is not available for this data source. Contact SciTech for more info."
         } else {
             state$current_plot_data <- result$data
-            if (performance_indicators != "Reporting Effort") {
+            if (performance_indicators != "Reporting Effort" | data_source == "historical") {
               state$current_plot <- p + ggplot2::labs(caption=WATERMARK_LABEL)
             } else {
               # have to treat Reporting Effort plot differently because result$p is a

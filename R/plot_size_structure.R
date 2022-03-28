@@ -2,7 +2,7 @@
 # good, but inconsistent results
 plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, Popt = -Inf) {
   .data <- .data %>%
-    dplyr::filter(species %in% sel_species, !is.na(count), !is.na(lmax)) %>%
+    dplyr::filter(species %in% sel_species, !is.na(length), !is.na(count), !is.na(lmax)) %>%
     dplyr::group_by(yearmonth) %>% 
     dplyr::filter(sum(count) > 50) %>% 
     dplyr::ungroup() %>% 
