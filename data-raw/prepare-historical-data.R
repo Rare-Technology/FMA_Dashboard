@@ -31,35 +31,34 @@ historical <- historical %>%
 
 ### Find/compute Lmax's for species. If anything is on fishbase for a given species, use the 
 # largest lmax on record, otherwise use the aggregated mean by genus.
-fishbase_genus_filter <- rfishbase::fishbase %>% 
+fishbase_genus_filter <- rfishbase::load_taxa() %>% 
   dplyr::filter(Genus %in% unique(historical$Genus)) %>% 
-  tidyr::unite(species_scientific, c('Genus', 'Species'), sep = ' ', remove = FALSE) %>% 
-  dplyr::select(species_scientific, Genus, Species)
+  dplyr::select(species_scientific = Species, Genus)
 
 lengthlength_species <- rfishbase::length_length(fishbase_genus_filter$species_scientific) %>% 
   dplyr::select(species_scientific = Species, LengthMax) %>% 
   dplyr::mutate(lmax = as.numeric(LengthMax)) %>% 
-  dplyr::filter(!is.na(lmax)) %>% 
   dplyr::group_by(species_scientific) %>% 
-  dplyr::summarize(lmax_species = max(lmax)) %>% 
+  dplyr::summarize(lmax_species = max(lmax, na.rm = TRUE)) %>% 
+  dplyr::mutate(lmax_species = ifelse(is.infinite(lmax_species), NA, lmax_species)) %>% 
   tidyr::separate(species_scientific, c('Genus', 'Species'), sep = ' ', remove = FALSE)
 
 lengthlength_genus <- lengthlength_species %>% 
-  dplyr::filter(!is.infinite(lmax_species)) %>% 
   dplyr::group_by(Genus) %>% 
-  dplyr::summarize(lmax_genus = mean(lmax_species))
+  dplyr::summarize(lmax_genus = mean(lmax_species, na.rm = TRUE))
 
 lengthlength_species <- lengthlength_species %>% 
   dplyr::select(species_scientific, lmax_species)
 
-historical <- dplyr::left_join(historical, lengthlength_species, by = 'species_scientific')
-historical <- dplyr::left_join(historical, lengthlength_genus, by = 'Genus')
+historical <- historical %>% 
+  dplyr::left_join(., lengthlength_species, by = 'species_scientific') %>% 
+  dplyr::left_join(., lengthlength_genus, by = 'Genus')
 
 historical <- historical %>% 
   dplyr::mutate(
     lmax = ifelse(is.na(lmax_species),
-                  lmax_genus,
-                  lmax_species
+      lmax_genus,
+      lmax_species
     )
   ) %>%
   dplyr::select(-c(lmax_species, lmax_genus))
@@ -91,17 +90,20 @@ historical$date <- as.Date.POSIXct(historical$date)
 historical <- historical %>% 
   dplyr::mutate(
     length = ifelse(is.na(a) | is.na(b) | is.na(weight_kg),
-                    NA,
-                    exp(log(1000*weight_kg/count/a) / b)
+      NA,
+      exp(log(1000*weight_kg/count/a) / b)
     )
   ) %>% 
   dplyr::mutate(
+    length = ifelse(is.infinite(length), NA, length) # some Inf's come from previous mutate
+  ) %>% 
+  dplyr::mutate(
     length = ifelse(!is.na(length) & !is.na(lmax), # to avoid e,g, NA > lmax
-                    ifelse(length > lmax,
-                      lmax,
-                      length
-                    ),
-                    length
+      ifelse(length > lmax,
+        lmax,
+        length
+      ),
+      length
     )
   ) %>% 
   dplyr::mutate(
@@ -120,10 +122,9 @@ historical <- historical %>%
 historical$yearmonth <- as.Date(paste0(historical$year, "-", historical$month,"-", "01"),
                              "%Y-%m-%d")
 
-fishbase_filter <- rfishbase::fishbase %>% 
-  tidyr::unite(species_scientific, c('Genus', 'Species'), sep = ' ', remove = FALSE) %>% 
-  dplyr::filter(species_scientific %in% unique(historical$species_scientific)) %>% 
-  dplyr::select(species_scientific, Family)
+fishbase_filter <- rfishbase::load_taxa() %>% 
+  dplyr::filter(Species %in% unique(historical$species_scientific)) %>% 
+  dplyr::select(species_scientific = Species, Family)
   
 ### Mar 23 2022
 # At some point, sort out Family values for catches with a species_scientific given by
@@ -133,10 +134,9 @@ historical <- dplyr::left_join(historical, fishbase_filter, by = 'species_scient
 # Get trophic level data. Similar to length, we will extract and use any available data on fishbase.
 # Missing trophic levels will be imputed first on an aggregated genus level, and then, if necessary,
 # an aggregated family level
-fishbase_family_filter <- rfishbase::fishbase %>% 
+fishbase_family_filter <- rfishbase::load_taxa() %>% 
   dplyr::filter(Family %in% unique(historical$Family)) %>% 
-  tidyr::unite(species_scientific, c('Genus', 'Species'), sep = ' ', remove = FALSE) %>% 
-  dplyr::select(species_scientific, Family)
+  dplyr::select(species_scientific = Species, Family)
 
 family_troph <- rfishbase::ecology(fishbase_family_filter$species_scientific) %>% 
   dplyr::select(species_scientific = Species, DietTroph)
@@ -162,13 +162,13 @@ historical <- dplyr::left_join(historical, family_troph, by = 'Family') %>%
   dplyr::left_join(., species_troph, by = 'species_scientific') %>% 
   dplyr::mutate(
     trophic_level = ifelse(is.na(DietTroph),
-                      ifelse(is.na(genus_trophic_level),
-                        family_trophic_level,
-                        genus_trophic_level
-                      ),
-                      DietTroph
-                    )
+      ifelse(is.na(genus_trophic_level),
+        family_trophic_level,
+        genus_trophic_level
+      ),
+      DietTroph
     )
+  )
 
 historical <- historical %>% 
   dplyr::rename(

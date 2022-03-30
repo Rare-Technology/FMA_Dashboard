@@ -117,36 +117,36 @@ ourfish <- ourfish %>%
   tidyr::separate(species, into = c('Genus', 'Species'), sep = ' ', remove = FALSE)
 
 # Get the fishbase Genus-Species info for all fish in the same Genus as fish from our data
-fishbase_filter <- rfishbase::fishbase %>% 
+fishbase_filter <- rfishbase::load_taxa() %>% 
   dplyr::filter(Genus %in% unique(ourfish$Genus)) %>% 
-  tidyr::unite(Gensp, c('Genus', 'Species'), sep = ' ', remove = FALSE) %>% 
-  dplyr::select(Gensp, Genus, Species)
+  dplyr::select(Gensp = Species, Genus)
 
 # Using the filtered fishbase info, get Lmax for all fish
 fishbase_lmax <- rfishbase::length_length(fishbase_filter$Gensp) %>% 
-  dplyr::select(Species, LengthMax) %>% 
+  dplyr::select(Gensp = Species, LengthMax) %>% 
   dplyr::mutate(lmax = as.numeric(LengthMax)) %>% 
-  dplyr::filter(!is.na(lmax)) %>% 
-  dplyr::group_by(Species) %>% 
-  dplyr::summarize(Lmax = max(lmax)) %>%
-  dplyr::rename(Gensp = Species) %>%
+  dplyr::group_by(Gensp) %>% 
+  dplyr::summarize(Lmax = max(lmax, na.rm = TRUE)) %>%
+  dplyr::mutate(Lmax = ifelse(is.infinite(Lmax), NA, Lmax)) %>% 
   tidyr::separate(Gensp, c('Genus', 'Species'), sep = ' ', remove = FALSE)
 
 # Aggregate means of Lmax across genus
 genus_Lmax_means = fishbase_lmax %>% 
-  dplyr::filter(!is.infinite(Lmax)) %>% 
   dplyr::group_by(Genus) %>% 
-  dplyr::summarize(genus_Lmax = mean(Lmax))
+  dplyr::summarize(genus_Lmax = mean(Lmax, na.rm = TRUE))
 
 # Impute lmax data
-ourfish <- left_join(ourfish, genus_Lmax_means, by = 'Genus')
-ourfish$lmax <- ifelse(is.na(ourfish$lmax), ourfish$genus_Lmax, ourfish$lmax)
 ourfish <- ourfish %>% 
+  dplyr::left_join(., genus_Lmax_means, by = 'Genus') %>% 
+  dplyr::mutate(
+    lmax = ifelse(is.na(lmax), genus_Lmax, lmax)
+  ) %>% 
   dplyr::select(-c(Genus, Species, genus_Lmax))
 
 # collect a/b coefficients to use to calculate lengths
-poplw_filter <- rfishbase::poplw(unique(ourfish$species)) %>%
-  dplyr::rename(species = Species) %>%
+poplw_filter <- rfishbase::poplw() %>%
+  dplyr::select(species = Species, a, b) %>%
+  dplyr::filter(species %in% unique(ourfish$species)) %>% 
   dplyr::group_by(species) %>%
   dplyr::summarize(
     a = mean(a, na.rm = TRUE),
@@ -157,23 +157,27 @@ ourfish <- left_join(ourfish, poplw_filter, by = 'species')
 
 # Impute length data
 ourfish <- ourfish %>% 
-  dplyr::mutate(length = ifelse(
-    is.na(length),
+  dplyr::mutate(
+    length = ifelse(is.na(length),
       ifelse(!is.na(weight_kg) & !is.na(a) & !is.na(b),
         exp(log(1000*weight_kg/count/a) / b),
         length
       ),
       length
-  ))
+    )
+  )
 
 # All lengths longer than Lmax are set equal to Lmax. if either length or lmax is NA return whatever the length is
-ourfish$length <- ifelse(is.na(ourfish$length) | is.na(ourfish$lmax),
-                    ourfish$length,
-                    ifelse(ourfish$length > ourfish$lmax,
-                      ourfish$lmax,
-                      ourfish$length
-                    )
-)
+ourfish <- ourfish %>% 
+  dplyr::mutate(
+    length = ifelse(is.na(length) | is.na(lmax),
+      length,
+      ifelse(length > lmax,
+        lmax,
+        length
+      )
+    )
+  )
 
 # ---- A function to get the unique geo combination
 

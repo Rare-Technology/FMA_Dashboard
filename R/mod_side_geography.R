@@ -86,6 +86,7 @@ sidebarGeoServer <- function(id, state) {
       
       observeEvent(input$sel_datasource,
         {
+          cat("data source updated???")
           state$data_source <- input$sel_datasource
           state$data_full <- fma_data_raw[[input$sel_datasource]]$data
           state$data_geo_family_species <- fma_data_geo_family_species[[input$sel_datasource]]
@@ -102,7 +103,7 @@ sidebarGeoServer <- function(id, state) {
             selected = country_info$selected
           )
         },
-        ignoreInit = TRUE
+        ignoreInit = TRUE, ignoreNULL = TRUE
       )
 
       observeEvent(input$sel_country,
