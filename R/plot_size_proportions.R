@@ -11,7 +11,7 @@ plot_size_proportions <- function(.data, sel_species, use_species_facet = FALSE)
       droplevels()
   } else {
     .data <- .data %>%
-      dplyr::filter(species == sel_species[1], !is.na(count), !is.na(lmax)) %>%
+      dplyr::filter(species %in% sel_species, !is.na(length), !is.na(count), !is.na(lmax)) %>%
       dplyr::group_by(yearmonth) %>% 
       dplyr::filter(sum(count) > 100) %>% 
       dplyr::ungroup() %>% 
@@ -103,34 +103,56 @@ plot_size_proportions <- function(.data, sel_species, use_species_facet = FALSE)
   } else {
     ## loop for calculations
     for (k in unique(.data$yearmonth)) {
-      ourfish_ctry_sub <- .data %>%
-        dplyr::filter(yearmonth == k) %>%
-        droplevels()
-  
-      # calculate lengths
-      length_data <- data.frame(length_cm = rep(
-        ourfish_ctry_sub$length,
-        ourfish_ctry_sub$count
-      ))
-  
-      of_lmax <- unique(ourfish_ctry_sub$lmax)
-  
-      # calculate Length-based indicators base on Froese and Binohlan formulas
-      froeseTemp <- froese_binohlan(of_lmax, length_data$length_cm)
-  
-      fma_metrics_df <- data.frame(
-        country = unique(ourfish_ctry_sub$country),
-        maa = unique(ourfish_ctry_sub$maa),
-        species = unique(ourfish_ctry_sub$species),
-        yearmonth = unique(ourfish_ctry_sub$yearmonth),
-        avg_length = mean(length_data$length_cm, na.rm = TRUE),
-        uni_length = length(unique(length_data)),
-        counts = sum(ourfish_ctry_sub$count, na.rm = TRUE),
-        froeseTemp
-      )
-  
-      fma_df <- rbind(fma_df, fma_metrics_df)
+      for (s in sel_species) {
+        ourfish_ctry_sub <- .data %>%
+          dplyr::filter(yearmonth == k, species == s) %>%
+          droplevels()
+      
+        # We've filtered out only to yearmonths where the species has more than 100 records,
+        # but since we're aggregating different species, not everyone will appear on every
+        # yearmonth, and ourfish_ctry_sub will be blank. In this case, cut to the chase
+        # and append a row with empty length data to fma_df
+        if (nrow(ourfish_ctry_sub) == 0) { next }
+        
+        # calculate lengths
+        length_data <- data.frame(length_cm = rep(
+          ourfish_ctry_sub$length,
+          ourfish_ctry_sub$count
+        ))
+    
+        of_lmax <- unique(ourfish_ctry_sub$lmax)
+    
+        # calculate Length-based indicators base on Froese and Binohlan formulas
+        froeseTemp <- froese_binohlan(of_lmax, length_data$length_cm)
+        
+        fma_metrics_df <- data.frame(
+          country = unique(ourfish_ctry_sub$country),
+          maa = unique(ourfish_ctry_sub$maa),
+          species = unique(ourfish_ctry_sub$species),
+          yearmonth = unique(ourfish_ctry_sub$yearmonth),
+          avg_length = mean(length_data$length_cm, na.rm = TRUE),
+          uni_length = length(unique(length_data)),
+          counts = sum(ourfish_ctry_sub$count, na.rm = TRUE),
+          froeseTemp
+        )
+    
+        fma_df <- rbind(fma_df, fma_metrics_df)
+      }
     }
+    
+    fma_df <- fma_df %>% 
+      dplyr::mutate(
+        weightedPercentMature = counts * percentMature,
+        weightedPercentOpt = counts * percentOpt,
+        weightedPercentMega = counts * percentMega
+      ) %>% 
+      dplyr::group_by(yearmonth) %>% 
+      dplyr::summarize(
+        counts = sum(counts),
+        percentMature = sum(weightedPercentMature) / counts,
+        percentOpt = sum(weightedPercentOpt) / counts,
+        percentMega = sum(weightedPercentMega) / counts
+      )
   
     # plot
     p <- try(
@@ -143,7 +165,7 @@ plot_size_proportions <- function(.data, sel_species, use_species_facet = FALSE)
       ) +
       labs(
         title = "Size proportions",
-        subtitle = paste("Species: ", sel_species),
+        # subtitle = paste("Species: ", sel_species),
         x = "",
         y = "Proportion (%)"
       ) +
@@ -156,7 +178,20 @@ plot_size_proportions <- function(.data, sel_species, use_species_facet = FALSE)
           "Megaspawner" = "lightblue")
       ) +
       scale_x_date(date_labels = "%b-%y"), silent = TRUE)
+    
+    if (length(sel_species) == 1) {
+      p <- p + labs(subtitle = paste("Species: ", sel_species))
+    }
   }
+  
+  if (length(unique(.data$maa)) == 1) {
+    fma_df$maa <- unique(.data$maa)
+  }
+  fma_df <- fma_df %>% 
+    dplyr::mutate(
+      year = lubridate::year(yearmonth),
+      month = lubridate::month(yearmonth)
+    )
   
   list(plot = p, trend = NO_TREND_ATTEMP, data = fma_df)
 }

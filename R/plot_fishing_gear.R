@@ -38,13 +38,13 @@ plot_fishing_gear <- function(.data, data_source, state) {
   # )
   # ggsci::pal_npg(palette = c("nrc"), alpha = 1)(9)
 
-  gear_colors <- c(
-    "#E64B35FF", "#4DBBD5FF", "#00A087FF", "#3C5488FF",
-    "#F39B7FFF", "#8491B4FF", "#91D1C2FF", "#DC0000FF",
-    "#7E6148FF"
-  )
+  # gear_colors <- c(
+  #   "#E64B35FF", "#4DBBD5FF", "#00A087FF", "#3C5488FF",
+  #   "#F39B7FFF", "#8491B4FF", "#91D1C2FF", "#DC0000FF",
+  #   "#7E6148FF"
+  # )
   
-  if (data_source == "historical") return(list(p = HISTORICAL_WARNING, trend = NO_TREND_ATTEMP))
+  # if (data_source == "historical") return(list(p = HISTORICAL_WARNING, trend = NO_TREND_ATTEMP))
   
   p <- try(.data %>%
     ggplot(aes(
@@ -54,7 +54,7 @@ plot_fishing_gear <- function(.data, data_source, state) {
       fill = gear_type
     )) +
     geom_col(aes(fill = gear_type)) +
-    scale_fill_manual(name = "", breaks = gear_types, values = gear_colors) +
+    # scale_fill_manual(name = "", breaks = gear_types, values = gear_colors) +
     # scale_color_npg(alpha=0.9)+
     scale_y_continuous(
       breaks = integer_breaks(),

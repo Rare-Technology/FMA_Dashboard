@@ -84,18 +84,21 @@ sidebarIndicatorServer <- function(id, state) {
         )
         
         ui[["plot_options_title"]] <- div(class = "sidetitle", tr(state, "Plot options"))
-        ui[["ma_facet"]] <- tagList(
-          br(),
-          div(id = "ma-facet",
-            materialSwitch(
-              ns("ma_facet"),
-              tr(state, "Group by MA"),
-              value = FALSE,
-              width = "100%",
-              status = "primary"
+        if (current_indicator %in% c('Species Composition', 'Average Length',
+                                     'CPUE', 'Total Landings', 'Average Trophic Level')) {
+          ui[["ma_facet"]] <- tagList(
+            br(),
+            div(id = "ma-facet",
+              materialSwitch(
+                ns("ma_facet"),
+                tr(state, "Group by MA"),
+                value = FALSE,
+                width = "100%",
+                status = "primary"
+              )
             )
           )
-        )
+        }
         # ui[["family_facet"]] <- tagList(
         #   br(),
         #   div(id = "family-facet",
