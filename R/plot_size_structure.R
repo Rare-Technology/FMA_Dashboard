@@ -1,6 +1,6 @@
 # TODO improve the display for percents. currently, plotting the box and labels separately gives mostly
 # good, but inconsistent results
-plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, Popt = -Inf) {
+plot_size_structure <- function(.data, plot_title, y_title, sel_species, Pmat = -Inf, Pmega = -Inf, Popt = -Inf) {
   .data <- .data %>%
     dplyr::filter(species %in% sel_species, !is.na(length), !is.na(count), !is.na(lmax)) %>%
     dplyr::group_by(yearmonth) %>% 
@@ -47,10 +47,10 @@ plot_size_structure <- function(.data, sel_species, Pmat = -Inf, Pmega = -Inf, P
       colour = "black"
     ) +
     labs(
-      title = "Size structure",
+      title = plot_title,
       subtitle = paste("Species: ", fma_metrics_df$species),
       x = "Length (cm)",
-      y = "Frequency"
+      y = y_title
     ) +
     geom_vline(
       xintercept = fma_metrics_df$avg_length,

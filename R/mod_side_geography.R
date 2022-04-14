@@ -31,7 +31,7 @@ sidebarGeoServer <- function(id, state) {
             selected = fma_init_data_source,
           ),
           div(class='sidetitle', tr(state, "Geography")),
-          pickerInput(
+          selectInput(
             ns("sel_country"),
             tr(state, "Country"),
             choices = fma_init_geo_selections$country$choices,

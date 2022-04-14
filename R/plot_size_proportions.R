@@ -1,4 +1,4 @@
-plot_size_proportions <- function(.data, sel_species, use_species_facet = FALSE) {
+plot_size_proportions <- function(.data, plot_title, y_title, sel_species, use_species_facet = FALSE) {
 
   if (use_species_facet) {
     if(length(sel_species) > 10) return(list(p = FACET_WARNING, trend = NO_TREND_ATTEMP))
@@ -86,10 +86,10 @@ plot_size_proportions <- function(.data, sel_species, use_species_facet = FALSE)
       geom_line(aes(y = percentMega, color = "Megaspawner"), size = 2) +
       facet_wrap(~ species) +
       labs(
-        title = "Size proportions",
+        title = plot_title,
         # subtitle = paste("Species: ", sel_species),
         x = "",
-        y = "Proportion (%)"
+        y = y_title
       ) +
       theme_rare() +
       scale_color_manual(
@@ -164,10 +164,10 @@ plot_size_proportions <- function(.data, sel_species, use_species_facet = FALSE)
       geom_line(aes(y = percentMega, color = "Megaspawner"), size = 2
       ) +
       labs(
-        title = "Size proportions",
+        title = plot_title,
         # subtitle = paste("Species: ", sel_species),
         x = "",
-        y = "Proportion (%)"
+        y = y_title
       ) +
       theme_rare() +
       scale_color_manual(

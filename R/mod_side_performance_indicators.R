@@ -79,13 +79,18 @@ sidebarIndicatorServer <- function(id, state) {
             end = current_date_range$valmax,
             min = current_date_range$min,
             max = current_date_range$max,
-            startview='year',
+            startview = 'year',
             )
         )
         
         ui[["plot_options_title"]] <- div(class = "sidetitle", tr(state, "Plot options"))
-        if (current_indicator %in% c('Species Composition', 'Average Length',
-                                     'CPUE', 'Total Landings', 'Average Trophic Level')) {
+        if (current_indicator %in% c(
+          tr(state, 'Species Composition'),
+          tr(state, 'Average Length'),
+          tr(state, 'CPUE'),
+          tr(state, 'Total Landings'),
+          tr(state, 'Average Trophic Level')
+        )) {
           ui[["ma_facet"]] <- tagList(
             br(),
             div(id = "ma-facet",
@@ -111,7 +116,7 @@ sidebarIndicatorServer <- function(id, state) {
         #       )
         #   )
         # )
-        if (current_indicator %in% c("Size Structure", "Size Proportions")) {
+        if (current_indicator %in% c(tr(state, "Size Structure"), tr(state, "Size Proportions"))) {
           ui[["species_facet"]] <- tagList(
             br(),
             div(id = "species-facet",
@@ -128,7 +133,7 @@ sidebarIndicatorServer <- function(id, state) {
 
 
         # show loess slider only when plotting curves
-        if (current_tab %in% c(tr(state, "2. Visualize data")) && !(current_indicator %in% c(tr(state, "Fishing gear"), tr(state, "Size structure"), tr(state, "Size proportions")))) {
+        if (current_tab %in% c(tr(state, "2. Visualize data")) && !(current_indicator %in% c(tr(state, "Fishing Gear"), tr(state, "Size Structure"), tr(state, "Size Proportions")))) {
           # ui[['other_title']] <- div(class='sidetitle', tr(state, 'Other'))
           ui[["loess_span"]] <- div(
             class = "smooth_slider pi_widget",

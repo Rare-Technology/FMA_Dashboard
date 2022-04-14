@@ -57,7 +57,7 @@ visualizeServer <- function(id, state) {
             length,
             mean,
             tr(state, "Average Length"),
-            paste(tr(state, "Average length"), "(cm)", sep=" "),
+            paste(tr(state, "Average Length"), "(cm)", sep=" "),
             loess_span,
             ymin = 0,
             use_MA_facet = use_MA_facet
@@ -67,15 +67,26 @@ visualizeServer <- function(id, state) {
             data,
             trophic_level,
             mean,
-            tr(state, "Average trophic level"),
-            tr(state, "Average trophic level"),
+            tr(state, "Average Trophic Level"),
+            tr(state, "Average Trophic Level"),
             loess_span,
             use_MA_facet = use_MA_facet
           )
         } else if (performance_indicators == tr(state, "Size Structure")) {
-          result <- plot_size_structure(data, sel_species)
+          result <- plot_size_structure(
+            data,
+            tr(state, 'Size Structure'),
+            tr(state, 'Frequency'),
+            sel_species
+          )
         } else if (performance_indicators == tr(state, "Size Proportions")) {
-          result <- plot_size_proportions(data, sel_species, use_species_facet = use_species_facet)
+          result <- plot_size_proportions(
+            data,
+            tr(state, 'Size Proportions'),
+            tr(state, 'Proportion (%)'),
+            sel_species,
+            use_species_facet = use_species_facet
+          )
         } else if (performance_indicators == tr(state, "CPUE")) {
           result <- plot_cpue(data, loess_span, ymin = 0, use_MA_facet = use_MA_facet)
         } else if (performance_indicators == tr(state, "Total Landings")) {

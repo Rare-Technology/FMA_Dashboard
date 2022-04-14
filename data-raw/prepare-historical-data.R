@@ -35,24 +35,24 @@ fishbase_genus_filter <- rfishbase::load_taxa() %>%
   dplyr::filter(Genus %in% unique(historical$Genus)) %>% 
   dplyr::select(species_scientific = Species, Genus)
 
-lengthlength_species <- rfishbase::length_length(fishbase_genus_filter$species_scientific) %>% 
-  dplyr::select(species_scientific = Species, LengthMax) %>% 
-  dplyr::mutate(lmax = as.numeric(LengthMax)) %>% 
+popchar_species <- rfishbase::popchar(fishbase_genus_filter$species_scientific) %>% 
+  dplyr::select(species_scientific = Species, Lmax) %>% 
+  dplyr::mutate(lmax = as.numeric(Lmax)) %>% 
   dplyr::group_by(species_scientific) %>% 
   dplyr::summarize(lmax_species = max(lmax, na.rm = TRUE)) %>% 
   dplyr::mutate(lmax_species = ifelse(is.infinite(lmax_species), NA, lmax_species)) %>% 
   tidyr::separate(species_scientific, c('Genus', 'Species'), sep = ' ', remove = FALSE)
 
-lengthlength_genus <- lengthlength_species %>% 
+popchar_genus <- popchar_species %>% 
   dplyr::group_by(Genus) %>% 
   dplyr::summarize(lmax_genus = mean(lmax_species, na.rm = TRUE))
 
-lengthlength_species <- lengthlength_species %>% 
+popchar_species <- popchar_species %>% 
   dplyr::select(species_scientific, lmax_species)
 
 historical <- historical %>% 
-  dplyr::left_join(., lengthlength_species, by = 'species_scientific') %>% 
-  dplyr::left_join(., lengthlength_genus, by = 'Genus')
+  dplyr::left_join(., popchar_species, by = 'species_scientific') %>% 
+  dplyr::left_join(., popchar_genus, by = 'Genus')
 
 historical <- historical %>% 
   dplyr::mutate(
