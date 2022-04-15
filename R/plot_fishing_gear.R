@@ -10,7 +10,11 @@ plot_fishing_gear <- function(.data, data_source, state) {
 
   if(nrow(.data) <= MIN_DATA_ROWS) return(list(p = NO_PLOT_ATTEMP, trend = NO_TREND_ATTEMP))
   
-  maxcount <- .data$gear_count
+  maxcount <- .data %>% 
+    dplyr::group_by(yearmonth) %>% 
+    dplyr::summarize(gear_count = sum(gear_count)) %>% 
+    dplyr::pull(gear_count) %>%
+    max
 
   gear_types <- c(
     "Beach seine",
@@ -58,7 +62,7 @@ plot_fishing_gear <- function(.data, data_source, state) {
     # scale_color_npg(alpha=0.9)+
     scale_y_continuous(
       breaks = integer_breaks(),
-      limits = c(0, max(maxcount)),
+      limits = c(0, maxcount),
       oob = scales::squish
     ) +
     labs(
