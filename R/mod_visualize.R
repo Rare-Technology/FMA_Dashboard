@@ -119,7 +119,7 @@ visualizeServer <- function(id, state) {
           msg <- "You are attempting to plot too many groups. Try to select fewer than 10 species or disable group by species."
         } else if (p == "HISTORICAL_WARNING") {
           p <- NULL
-          msg <- "This plot is not available for this data source. Contact SciTech for more info."
+          msg <- "This plot is not currently available for this data source. Contact SciTech for more info."
         } else {
             state$current_plot_data <- result$data
             if (performance_indicators != "Reporting Effort" | data_source == "historical") {

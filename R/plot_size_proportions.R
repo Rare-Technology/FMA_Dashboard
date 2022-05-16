@@ -6,14 +6,14 @@ plot_size_proportions <- function(.data, plot_title, y_title, sel_species, use_s
     .data <- .data %>%
       dplyr::filter(species %in% sel_species, !is.na(length), !is.na(count), !is.na(lmax)) %>%
       dplyr::group_by(yearmonth, species) %>% 
-      dplyr::filter(sum(count) > 100) %>% 
+      dplyr::filter(sum(count) >= 100) %>% 
       dplyr::ungroup() %>% 
       droplevels()
   } else {
     .data <- .data %>%
       dplyr::filter(species %in% sel_species, !is.na(length), !is.na(count), !is.na(lmax)) %>%
       dplyr::group_by(yearmonth) %>% 
-      dplyr::filter(sum(count) > 100) %>% 
+      dplyr::filter(sum(count) >= 100) %>% 
       dplyr::ungroup() %>% 
       droplevels()
   }

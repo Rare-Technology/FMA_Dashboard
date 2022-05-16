@@ -6,7 +6,7 @@ library(rfishbase)
 # ---- Read in raw data
 # join_ourfish_footprint_fishbase from Fisheries Dashboard
 # https://data.world/rare/fisheries-dashboard/workspace/
-ourfish <- read.csv("https://query.data.world/s/lxjnrn7fhkv6cbivbt2uqrqwmskyv2",
+ourfish <- read.csv("https://query.data.world/s/ted7ge2eirwtuww5mnwnbxe2lb2t6f",
                header=TRUE, stringsAsFactors=FALSE);
 
 
@@ -122,13 +122,11 @@ fishbase_filter <- rfishbase::load_taxa() %>%
   dplyr::select(Gensp = Species, Genus)
 
 # Using the filtered fishbase info, get Lmax for all fish
-fishbase_lmax <- rfishbase::length_length(fishbase_filter$Gensp) %>% 
-  dplyr::select(Gensp = Species, LengthMax) %>% 
-  dplyr::mutate(lmax = as.numeric(LengthMax)) %>% 
+fishbase_lmax <- rfishbase::length_weight(fishbase_filter$Gensp) %>% 
+  dplyr::select(Gensp = Species, LengthMax, Type) %>% 
+  dplyr::filter(Type == "TL") %>% 
   dplyr::group_by(Gensp) %>% 
-  dplyr::summarize(Lmax = max(lmax, na.rm = TRUE)) %>%
-  dplyr::mutate(Lmax = ifelse(is.infinite(Lmax), NA, Lmax)) %>% 
-  tidyr::separate(Gensp, c('Genus', 'Species'), sep = ' ', remove = FALSE)
+  dplyr::summarize(Lmax = median(LengthMax, na.rm = TRUE))
 
 # Aggregate means of Lmax across genus
 genus_Lmax_means = fishbase_lmax %>% 

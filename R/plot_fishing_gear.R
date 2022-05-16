@@ -1,4 +1,7 @@
 plot_fishing_gear <- function(.data, data_source, state) {
+  
+  if (data_source == "historical") return(list(p = HISTORICAL_WARNING, trend = NO_TREND_ATTEMP))
+  
   .data <- .data %>%
     dplyr::filter(gear_type != "") %>%
     dplyr::group_by(country, yearmonth, gear_type) %>%
@@ -48,7 +51,6 @@ plot_fishing_gear <- function(.data, data_source, state) {
   #   "#7E6148FF"
   # )
   
-  # if (data_source == "historical") return(list(p = HISTORICAL_WARNING, trend = NO_TREND_ATTEMP))
   
   p <- try(.data %>%
     ggplot(aes(

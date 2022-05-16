@@ -122,7 +122,7 @@ plot_reporting_effort <- function(.data, data_source, state, loess_span = 0.5,
     .data <-.data %>%
       dplyr::group_by(country, week, transaction_date) %>%
       dplyr::summarise(
-        fisher_count = count_unique(fisher_id),
+        fisher_count = sum(n_fishers),
       )
     
     if(nrow(.data) <= MIN_DATA_ROWS) return(list(p = NO_PLOT_ATTEMP, trend = NO_TREND_ATTEMP))
