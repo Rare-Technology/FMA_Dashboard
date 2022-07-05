@@ -84,9 +84,9 @@ plot_cpue <- function(.data, loess_span, ymin = NA, ymax = NA, use_MA_facet = FA
           show.legend = FALSE
         ) +
         labs(
-          title = "CPUE (catch in kg/trip)",
+          title = "CPUE (catch in kg/month)",
           x = "",
-          y = "CPUE (kg/trip)"
+          y = "CPUE (kg/month)"
         ) +
         scale_y_continuous(limits = c(ymin, ymax), oob = scales::squish) +
         facet_wrap(~ maa_trend) +
@@ -141,10 +141,10 @@ plot_cpue <- function(.data, loess_span, ymin = NA, ymax = NA, use_MA_facet = FA
         alpha = 0.1
       ) +
       labs(
-        title = "CPUE (catch in kg/trip)",
+        title = "CPUE (catch in kg/month)",
         subtitle = paste(indicator_trend, pval),
         x = "",
-        y = "CPUE (kg/trip)"
+        y = "CPUE (kg/month)"
       ) +
       scale_y_continuous(limits = c(ymin, ymax), oob = scales::squish) +
       theme_rare(subtitle_color = indicator_color), silent = TRUE)

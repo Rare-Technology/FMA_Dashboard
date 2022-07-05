@@ -31,7 +31,7 @@ sidebarIndicatorServer <- function(id, state) {
 
       output$performance_indicators <- renderUI({
         current_tab <- state$current_tab
-        current_date_range <- state$current_date_range
+        date_range <- state$date_range
         current_indicator <- state$current_indicator
         current_min_records <- state$current_min_records
         
@@ -75,10 +75,10 @@ sidebarIndicatorServer <- function(id, state) {
         ui[["date_range"]] <- div(
           dateRangeInput(ns("date_range"),
             label = tr(state, "Select date range"),
-            start = current_date_range$valmin,
-            end = current_date_range$valmax,
-            min = current_date_range$min,
-            max = current_date_range$max,
+            start = date_range$valmin,
+            end = date_range$valmax,
+            min = date_range$min,
+            max = date_range$max,
             startview = 'year',
             )
         )
@@ -147,21 +147,6 @@ sidebarIndicatorServer <- function(id, state) {
             )
           )
         }
-        
-        # Commented out per git 21
-        # if (current_tab %in% c("Visualize") && current_indicator %in% c("Size Structure", "Size Proportions")) {
-        #   ui[["min_records"]] <- div(
-        #     class = "min_records pi_widget",
-        #     sliderInput(
-        #       inputId = ns("min_records"),
-        #       label = tooltip_label("tip-min-species", "Select min records per species"),
-        #       min = current_min_records$min,  
-        #       max = current_min_records$max,
-        #       value = current_min_records$value, 
-        #       step = 10,
-        #       ticks = FALSE)
-        #   )
-        # }
 
         ui[['tippy']] <- list(
           tippy_class_alt("tip-smooth", "Controls the amount of smoothing of the loess curve. Smaller numbers produce wigglier lines, larger numbers produce smoother lines"),
@@ -173,6 +158,17 @@ sidebarIndicatorServer <- function(id, state) {
 
       observeEvent(input$performance_indicators, {
         state$current_indicator <- input$performance_indicators
+      })
+      
+      observeEvent(state$species$selected, {
+        dates <- get_dates(state)
+        
+        state$date_range <- list(
+          min = min(dates, na.rm = TRUE),
+          max = max(dates, na.rm = TRUE),
+          valmin = min(dates, na.rm = TRUE),
+          valmax = max(dates, na.rm = TRUE)
+        ) 
       })
       
       observeEvent(input$date_range, {
@@ -193,8 +189,8 @@ sidebarIndicatorServer <- function(id, state) {
         state$data_summary_filtered <- data_filtered %>%
           create_data_summary()
 
-        state$current_date_range$valmin <- input$date_range[1]
-        state$current_date_range$valmax <- input$date_range[2]
+        state$date_range$valmin <- input$date_range[1]
+        state$date_range$valmax <- input$date_range[2]
         
       }, ignoreInit = TRUE)
       

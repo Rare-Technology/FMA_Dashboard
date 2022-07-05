@@ -25,6 +25,7 @@ mainUI <- function(id) {
                      status = 'success',
                      style='material-circle'
             ),
+            uiOutput(ns("applyFiltersUI")),
             uiOutput(ns("resetFiltersUI")),
             div(style='flex-grow: 1;'),
             div(id='help-button', icon('question-circle-o'), onclick='tour()'),
@@ -58,6 +59,10 @@ mainServer <- function(id, state) {
   moduleServer(
     id,
     function(input, output, session) {
+      output$applyFiltersUI <- renderUI({
+        div(id = "apply-filters", actionButton(ns("applyFilters"), tr(state, "Apply filters")))
+      })
+      
       output$resetFiltersUI <- renderUI({
         div(id="reset-filters", actionButton(ns('resetFilters'), tr(state, "Reset filters")))
       })
@@ -83,6 +88,22 @@ mainServer <- function(id, state) {
       observeEvent(input$language, {
         state$language <- input$language
       })
+      
+      observeEvent(input$applyFilters, {
+        data_filtered <- state$data_full %>%
+          dplyr::filter(
+            country %in% stete$country$selected,
+            subnational %in% state$subnational$selected,
+            local %in% state$local$selected,
+            maa %in% state$maa$selected,
+            family %in% state$family$selected,
+            species %in% state$species$selected,
+            
+          )
+        
+        state$data_filtered <- data_filtered
+        state$data_summary_filtered <- data_filtered %>%
+          create_data_summary()      })
       
       observeEvent(input$resetFilters, {
         state$resetFilters <- input$resetFilters + 1

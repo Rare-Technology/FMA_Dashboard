@@ -1,5 +1,9 @@
-get_dates <- function(.data) {
-  .data %>%
+get_dates <- function(state) {
+  state$data_full %>%
+    dplyr::filter(
+      maa %in% state$maa$selected,
+      species %in% state$species$selected,
+    ) %>% 
     dplyr::select(transaction_date) %>%
     dplyr::distinct() %>%
     dplyr::arrange() %>%

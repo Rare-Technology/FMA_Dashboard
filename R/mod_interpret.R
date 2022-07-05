@@ -31,7 +31,11 @@ interpretServer <- function(id, state) {
 
         if(is.null(trend)) msg <- "A trend could not be estimated"
         
-        if(!is.null(trend)){
+        if(!is.null(trend)) {
+          if (indicator %in% c(tr(state, 'Size Structure'), tr(state, 'Size Proportions'))) {
+            indicator <- 'Length-based Indicators'
+          }
+          
           tbl <-  fma_harvest_controls %>%
             dplyr::select(-`Assessment Result TRP/LRP`, -`Management Response`) %>%
             dplyr::filter(
@@ -41,7 +45,7 @@ interpretServer <- function(id, state) {
             create_gt_table(
               "Performance Indicator"
             )
-        }
+          }
 
    
         output$harvest_controls <- gt::render_gt(

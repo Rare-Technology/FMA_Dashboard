@@ -3,7 +3,7 @@
 plot_size_structure <- function(.data, plot_title, y_title, sel_species, Pmat = -Inf, Pmega = -Inf, Popt = -Inf) {
   .data <- .data %>%
     dplyr::filter(species == sel_species[1], !is.na(length), !is.na(count), !is.na(lmax)) %>%
-    dplyr::group_by(yearmonth) %>% 
+    dplyr::group_by(species) %>% 
     dplyr::filter(sum(count) > 100) %>% 
     dplyr::ungroup() %>% 
     droplevels()
@@ -141,6 +141,21 @@ plot_size_structure <- function(.data, plot_title, y_title, sel_species, Pmat = 
       parse = TRUE
     ) +
     theme_rare()
+  
+  Pmat <-  froeseTemp$percentMature
+  Popt <- froeseTemp$percentOpt
+  Pmega <- froeseTemp$percentMega
+  
+  # if (Popt == 1 & Pmat >= 0.9 & Pmega < 0.1) {
+  #   TODO: What target numbers are we going to use?
+  #   trend <- "All Indicators at or better than Target (Lopt=100%, Lmat>90%, Lmega<10%)"
+  # }
+  # Other cases:
+  # [2] "Target > Lopt > Limit and/or Target > Lmat > Limit"                      
+  # [3] "Lopt < Limit (Lopt<80%)"                                                 
+  # [4] "Lmat < Limit (Lmat<50%)"                                                 
+  # [5] "Lmega > Limit (Lmega >20%)"                                              
+  # [6] "Limit > Lmega > Target"
   
   list(plot = p, trend = NO_TREND_ATTEMP)
 }

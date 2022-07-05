@@ -126,7 +126,8 @@ fishbase_lmax <- rfishbase::length_weight(fishbase_filter$Gensp) %>%
   dplyr::select(Gensp = Species, LengthMax, Type) %>% 
   dplyr::filter(Type == "TL") %>% 
   dplyr::group_by(Gensp) %>% 
-  dplyr::summarize(Lmax = median(LengthMax, na.rm = TRUE))
+  dplyr::summarize(Lmax = median(LengthMax, na.rm = TRUE)) %>% 
+  tidyr::separate(Gensp, into = c('Genus', 'Species'), sep = ' ', remove = FALSE)
 
 # Aggregate means of Lmax across genus
 genus_Lmax_means = fishbase_lmax %>% 

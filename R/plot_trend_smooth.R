@@ -1,5 +1,3 @@
-# plot_trend_smooth(rarefma::init_data_filtered, species, f = count_unique)
-
 plot_trend_smooth <- function(.data, var, f,
                               title = "", y_title = "",
                               loess_span = 0.5, ymin = NA, ymax = NA,

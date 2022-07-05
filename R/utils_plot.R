@@ -69,78 +69,131 @@ theme_rare <- function(rotate_x = FALSE, subtitle_color = "black") {
   theme
 }
 
-display_filters <- function(state, html=TRUE) {
-  if (html == TRUE) {
-  out <- c('<div class="column">
-           <strong>', tr(state, "Country"), '</strong><br>&emsp;&emsp;',
-      paste(state$country$selected, collapse=', '),
-    '<br>',
-    '<strong>', tr(state, "Subnational unit"), '</strong><br>&emsp;&emsp;',
-      paste(state$subnational$selected, collapse=', '),
-    '<br>',
-    '<strong>', tr(state, "Local government unit"), '</strong><br>&emsp;&emsp;',
-      paste(state$local$selected, collapse=', '),
-    '<br>',
-    '<strong>', tr(state, "Managed access area"), '</strong><br>&emsp;&emsp;',
-      paste(state$maa$selected, collapse=', '),
-    '</div>
-    <div class="column">
-    <strong>', tr(state, "Date"), '</strong><br>&emsp;&emsp;',
-      paste(state$current_date_range$valmin, state$current_date_range$valmax, sep=' to '),
-    '<br>')
-  if (length(state$family$selected) == length(state$family$choices)) {
-    out <- c(out,
-             '<strong>', tr(state, "Family"), '</strong>
-             <details>
+display_filters <- function(state=NULL, html=TRUE, init = FALSE) {
+  if (init == FALSE) {
+    if (html == TRUE) {
+    out <- c('<div class="column">
+             <strong>', tr(state, "Country"), '</strong><br>&emsp;&emsp;',
+        paste(state$country$selected, collapse=', '),
+      '<br>',
+      '<strong>', tr(state, "Subnational unit"), '</strong><br>&emsp;&emsp;',
+        paste(state$subnational$selected, collapse=', '),
+      '<br>',
+      '<strong>', tr(state, "Local government unit"), '</strong><br>&emsp;&emsp;',
+        paste(state$local$selected, collapse=', '),
+      '<br>',
+      '<strong>', tr(state, "Managed access area"), '</strong><br>&emsp;&emsp;',
+        paste(state$maa$selected, collapse=', '),
+      '</div>
+      <div class="column">
+      <strong>', tr(state, "Date"), '</strong><br>&emsp;&emsp;',
+        paste(state$date_range$valmin, state$date_range$valmax, sep=' to '),
+      '<br>')
+    if (length(state$family$selected) == length(state$family$choices)) {
+      out <- c(out,
+               '<strong>', tr(state, "Family"), '</strong>
+               <details>
+                    <summary>&emsp;&emsp;', tr(state, "All selected."),
+                    ' <u>', tr(state, "Click to show."), '</u></summary>',
+                    paste(state$family$selected, collapse=', '),
+               '</details>')
+    } else {
+      out <- c(out,
+               '<strong>', tr(state, "Family"), '</strong>
+               <details>
+                  <summary&emsp;&emsp;><u>', tr(state, "Click to show."), '</u></summary>',
+                  paste(state$family$selected, collapse = ', '),
+               '</details>')
+    }
+    if (length(state$species$selected) == length(state$species$choices)) {
+      out <- c(out,
+               '<strong>', tr(state, "Species"), '</strong><details>
                   <summary>&emsp;&emsp;', tr(state, "All selected."),
                   ' <u>', tr(state, "Click to show."), '</u></summary>',
-                  paste(state$family$selected, collapse=', '),
-             '</details>')
-  } else {
+                  paste(state$species$selected, collapse=', '),
+               '</details>')
+    } else {
+      out <- c(out,
+               '<strong>', tr(state, "Species"), '</strong>
+               <details>
+                  <summary>&emsp;&emsp;<u>', tr(state, "Click to show."), '</u></summary>',
+                  paste(state$species$selected, collapse=', '),
+               '</details>')
+    }
+    if (!state$current_indicator %in% c(tr(state, "Fishing Gear"),
+                                        tr(state, "Size Structure"),
+                                        tr(state, "Size Proportions"))) {
+      out <- c(out,
+               '<strong>', tr(state, "Curve smoothing"), '</strong><br>&emsp;&emsp;',
+                  paste(state$loess_span),
+               '<br>')
+    }
+    reference_idx <- which(fma_reference_points$`Performance Indicator` == state$current_indicator)
     out <- c(out,
-             '<strong>', tr(state, "Family"), '</strong>
+             '<strong>', tr(state, "Indicator description"), '</strong><br>&emsp;&emsp;',
+                paste(fma_reference_points$Description[reference_idx]),
+              '</div>')
+    } else {
+      out <- c(tr(state, "Country"), paste(state$country$selected), '\n',
+               tr(state, "Subnational unit"), paste(state$subnational$selected, collapse=', '), '\n',
+               tr(state, "Local government unit"), paste(state$local$selected, collapse=', '), '\n',
+               tr(state, "Managed access area"), paste(state$maa$selected, collapse=', '), '\n',
+               tr(state, "Date"), paste(state$date_range$valmin, state$date_range$valmax, sep=' to '), '\n',
+               tr(state, "Family"), paste(state$family$selected), '\n',
+               tr(state, "Species"), paste(state$species$selected), '\n')
+      out <- paste(out, collapse='\n')
+    }
+  } else {
+    if (html == TRUE) {
+      out <- c('<div class="column">
+             <strong>Country</strong><br>&emsp;&emsp;',
+               fma_init_geo_selections$country$selected,
+               '<br>',
+               '<strong>Subnational unit</strong><br>&emsp;&emsp;',
+               fma_init_geo_selections$subnational$selected,
+               '<br>',
+               '<strong>Local government unit</strong><br>&emsp;&emsp;',
+               fma_init_geo_selections$local$selected,
+               '<br>',
+               '<strong>Managed access area</strong><br>&emsp;&emsp;',
+               fma_init_geo_selections$maa$selected,
+               '</div>
+      <div class="column">
+      <strong>Date</strong><br>&emsp;&emsp;',
+               paste(fma_init_date_range$valmin, fma_init_date_range$valmax, sep=' to '),
+               '<br>')
+      out <- c(out,
+               '<strong>Family</strong>
              <details>
-                <summary&emsp;&emsp;><u>', tr(state, "Click to show."), '</u></summary>',
-                paste(state$family$selected, collapse = ', '),
-             '</details>')
-  }
-  if (length(state$species$selected) == length(state$species$choices)) {
-    out <- c(out,
-             '<strong>', tr(state, "Species"), '</strong><details>
-                <summary>&emsp;&emsp;', tr(state, "All selected."),
-                ' <u>', tr(state, "Click to show."), '</u></summary>',
-                paste(state$species$selected, collapse=', '),
-             '</details>')
-  } else {
-    out <- c(out,
-             '<strong>', tr(state, "Species"), '</strong>
-             <details>
-                <summary>&emsp;&emsp;<u>', tr(state, "Click to show."), '</u></summary>',
-                paste(state$species$selected, collapse=', '),
-             '</details>')
-  }
-  if (!state$current_indicator %in% c(tr(state, "Fishing Gear"),
-                                      tr(state, "Size Structure"),
-                                      tr(state, "Size Proportions"))) {
-    out <- c(out,
-             '<strong>', tr(state, "Curve smoothing"), '</strong><br>&emsp;&emsp;',
-                paste(state$loess_span),
-             '<br>')
-  }
-  reference_idx <- which(fma_reference_points$`Performance Indicator` == state$current_indicator)
-  out <- c(out,
-           '<strong>', tr(state, "Indicator description"), '</strong><br>&emsp;&emsp;',
-              paste(fma_reference_points$Description[reference_idx]),
-            '</div>')
-  } else {
-    out <- c(tr(state, "Country"), paste(state$country$selected), '\n',
-             tr(state, "Subnational unit"), paste(state$subnational$selected, collapse=', '), '\n',
-             tr(state, "Local government unit"), paste(state$local$selected, collapse=', '), '\n',
-             tr(state, "Managed access area"), paste(state$maa$selected, collapse=', '), '\n',
-             tr(state, "Date"), paste(state$current_date_range$valmin, state$current_date_range$valmax, sep=' to '), '\n',
-             tr(state, "Family"), paste(state$family$selected), '\n',
-             tr(state, "Species"), paste(state$species$selected), '\n')
-    out <- paste(out, collapse='\n')
+                  <summary>&emsp;&emsp;All selected',
+               ' <u>Click to show.</u></summary>',
+               paste(fma_init_family_species_selections$family, collapse=', '),
+               '</details>')
+      out <- c(out,
+               '<strong>Species</strong><details>
+                <summary>&emsp;&emsp;All selected.',
+               ' <u>Click to show.</u></summary>',
+               paste(fma_init_family_species_selections$species, collapse=', '),
+               '</details>')
+      out <- c(out,
+               '<strong>Curve smoothing</strong><br>&emsp;&emsp;',
+               '0.5',
+               '<br>')
+      reference_idx <- which(fma_reference_points$`Performance Indicator` == fma_init_performance_indicators)
+      out <- c(out,
+               '<strong>Indicator description</strong><br>&emsp;&emsp;',
+               paste(fma_reference_points$Description[reference_idx]),
+               '</div>')
+    } else {
+      out <- c("Country", paste(fma_init_geo_selections$country$selected), '\n',
+               "Subnational unit", paste(fma_init_geo_selections$subnational$selected, collapse=', '), '\n',
+               "Local government unit", paste(fma_init_geo_selections$local$selected, collapse=', '), '\n',
+               "Managed access area", paste(fma_init_geo_selections$maa$selected, collapse=', '), '\n',
+               "Date", paste(fma_init_date_range$valmin, fma_init_date_range$valmax, sep=' to '), '\n',
+               "Family", paste(fma_init_family_species_selections$family), '\n',
+               "Species", paste(fma_init_family_species_selections$species), '\n')
+      out <- paste(out, collapse='\n')
+    }
   }
   out
 }
