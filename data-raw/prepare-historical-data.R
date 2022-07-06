@@ -13,6 +13,13 @@ googlesheets4::gs4_deauth()
 # will otherwise give you a match on the website (for example, Pseudosciaena anea)
 # Need to figure out how to match these...
 historical <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/1EsnbgSm3nEfDiqG4POdpNa8c5KAu3vqZiZ-AOpWcuk4/")
+historical_gear_types <- googlesheets4::read_sheet("https://docs.google.com/spreadsheets/d/12vauVdTESJEr1E-1yo0YtdrmZnwupb7DL4Z8lMgLYOY/")
+
+historical <- dplyr::left_join(historical, historical_gear_types, by = 'gear_type') %>% 
+  dplyr::select(-`gear_type 2`, -gear_type) %>% 
+  dplyr::rename(gear_type = gear_type_new)
+  # dplyr::mutate(gear_type = ifelse(is.na(gear_type), 'Other', gear_type))
+
 historical <- historical %>% 
   # Some values for species_scientific look like this: Platax pinnatus(Linnaeus,1758)
   # To make sure fishbase will get correct results, we fix this in the following mutate
