@@ -3,7 +3,6 @@
 plot_size_structure <- function(.data, plot_title, y_title, sel_species, Pmat = -Inf, Pmega = -Inf, Popt = -Inf) {
   .data <- .data %>%
     dplyr::filter(species == sel_species[1], !is.na(length), !is.na(count), !is.na(lmax)) %>%
-    dplyr::group_by(yearmonth) %>% 
     dplyr::filter(sum(count) > 100) %>% 
     dplyr::ungroup() %>% 
     droplevels()

@@ -108,16 +108,20 @@ visualizeServer <- function(id, state) {
         
         if(is.null(p)){
           p <- NULL
-          msg <- "There was not enough data to create a plot"
-          if(performance_indicators %in% c("Size Structure", "Size Proportions"))
+          if (performance_indicators == "Size Proportions") {
             msg <- "At least 100 records per species per month are required to create this plot"
+          } else if (performance_indicators == "Size Structure") {
+            msg <- "At least 100 records in total are required to create this plot"
+          } else {
+            msg <- "There was not enough data to create a plot"
+          }
         } else if("try-error" %in% class(p)){
           p <- NULL
           msg <- "There was an error creating the plot"
-        } else if (p == "FACET_WARNING") {
+        } else if (suppressWarnings(p == "FACET_WARNING")) {
           p <- NULL
           msg <- "You are attempting to plot too many groups. Try to select fewer than 10 species or disable group by species."
-        } else if (p == "HISTORICAL_WARNING") {
+        } else if (suppressWarnings(p == "HISTORICAL_WARNING")) {
           p <- NULL
           msg <- "This plot is not currently available for this data source. Contact SciTech for more info."
         } else {

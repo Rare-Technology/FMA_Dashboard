@@ -36,3 +36,25 @@ get_family_species_selections <- function(.data,
     species = sort(.data$species)
   ))
 }
+
+get_species_counts <- function(state) {
+  out <- state$data_full %>% 
+    dplyr::filter(
+      maa %in% state$maa$selected,
+      family %in% state$family$selected
+    ) %>% 
+    dplyr::group_by(species) %>% 
+    dplyr::summarize(count = sum(count, na.rm = TRUE)) %>%
+    dplyr::arrange(species)
+  
+  return(out)
+}
+
+
+# fma_data_raw$ourfish$data %>%
+#   dplyr::filter(
+#     country == "Indonesia"
+#   ) %>%
+#   dplyr::group_by(species) %>%
+#   dplyr::summarize(count = sum(count)) %>%
+#   dplyr::arrange(species) %>% View

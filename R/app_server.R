@@ -13,7 +13,6 @@ app_server <- function(input, output, session) {
   # Sidebar
   sidebarServer("sidebarUI")
   sidebarGeoServer("sidebarGeoUI", state)
-  sidebarStockServer("sidebarStockUI", state)
   sidebarIndicatorServer("sidebarIndicatorUI", state)
   sidebarHelpServer("sidebarHelpUI")
 
