@@ -37,137 +37,118 @@ sidebarIndicatorServer <- function(id, state) {
         
         ui <- list()
   
-        # ---- Select, Visualize, Interpret tabs
-        # show indicators only on plot and interpret tabs
-        if (current_tab %in% c(tr(state, "2. Visualize data"), tr(state, "3. Interpret results"))) {
-          ui[[1]] <- div(class='sidetitle', tr(state, "Indicator"))
-          
-          ui[["performance_indicators"]] <- 
-          div(class = " pi_widget", 
-          selectInput(
-            inputId = ns("performance_indicators"),
-            label = div(
-              tr(state, "Select indicator"), 
-              actionLink(inputId = ns("show_defs"), label = "(definitions)")
-              ),
-            choices = c(
-              tr(state, "Fishing Gear"),
-              tr(state, "Reporting Effort"),
-              tr(state, "Species Composition"),
-              # "Fished:Unfished Ratio",
-              tr(state, "Average Length"),
-              tr(state, "Average Trophic Level"),
-              # "Spawning Potential Ratio",
-              tr(state, "Size Structure"),
-              tr(state,  "Size Proportions"),
-              tr(state,  "CPUE"),
-              tr(state, "Total Landings")
-            ),
-            selected = current_indicator
-          )
-          )
-         
-          
-        }
-
-        # ---- Data tab
         ui[['date_range_title']] <- div(class='sidetitle', tr(state, 'Time Period'))
         ui[["date_range"]] <- div(
           dateRangeInput(ns("date_range"),
-            label = tr(state, "Select date range"),
-            start = current_date_range$valmin,
-            end = current_date_range$valmax,
-            min = current_date_range$min,
-            max = current_date_range$max,
-            startview = 'year',
-            )
-        )
-        
-        ui[["plot_options_title"]] <- div(class = "sidetitle", tr(state, "Plot options"))
-        if (current_indicator %in% c(
-          tr(state, 'Species Composition'),
-          tr(state, 'Average Length'),
-          tr(state, 'CPUE'),
-          tr(state, 'Total Landings'),
-          tr(state, 'Average Trophic Level')
-        )) {
-          ui[["ma_facet"]] <- tagList(
-            br(),
-            div(id = "ma-facet",
-              materialSwitch(
-                ns("ma_facet"),
-                tr(state, "Group by MA"),
-                value = FALSE,
-                width = "100%",
-                status = "primary"
-              )
-            )
+                         label = tr(state, "Select date range"),
+                         start = current_date_range$valmin,
+                         end = current_date_range$valmax,
+                         min = current_date_range$min,
+                         max = current_date_range$max,
+                         startview = 'year',
           )
+        )
+        # ---- Select, Visualize, Interpret tabs
+        # show indicators only on plot and interpret tabs
+        if (current_tab %in% c(tr(state, "2. Visualize data"), tr(state, "3. Interpret results"))) {
+          ui[["performance_indicators_title"]] <- div(class='sidetitle', tr(state, "Indicator"))
+          ui[["performance_indicators"]] <- 
+            div(class = " pi_widget", 
+            selectInput(
+              inputId = ns("performance_indicators"),
+              label = div(
+                tr(state, "Select indicator"), 
+                actionLink(inputId = ns("show_defs"), label = "(definitions)")
+                ),
+              choices = c(
+                tr(state, "Fishing Gear"),
+                tr(state, "Reporting Effort"),
+                tr(state, "Species Composition"),
+                # "Fished:Unfished Ratio",
+                tr(state, "Average Length"),
+                tr(state, "Average Trophic Level"),
+                # "Spawning Potential Ratio",
+                tr(state, "Size Structure"),
+                tr(state,  "Size Proportions"),
+                tr(state,  "CPUE"),
+                tr(state, "Total Landings")
+              ),
+              selected = current_indicator
+            )
+            )
+         
+          
         }
-        # ui[["family_facet"]] <- tagList(
-        #   br(),
-        #   div(id = "family-facet",
-        #       materialSwitch(
-        #         ns("family_facet"),
-        #         tr(state, "Group by family"),
-        #         value = FALSE,
-        #         width = "100%",
-        #         status = "primary"
-        #       )
-        #   )
-        # )
-        if (current_indicator %in% c(tr(state, "Size Structure"), tr(state, "Size Proportions"))) {
-          ui[["species_facet"]] <- tagList(
-            br(),
-            div(id = "species-facet",
+        
+        ### Plotting options
+        if (current_tab %in% c(tr(state, "2. Visualize data"))) {
+          ui[["plot_options_title"]] <- div(class = "sidetitle", tr(state, "Plot options"))
+          if (current_indicator %in% c(
+            tr(state, 'Species Composition'),
+            tr(state, 'Average Length'),
+            tr(state, 'CPUE'),
+            tr(state, 'Total Landings'),
+            tr(state, 'Average Trophic Level')
+          )) {
+            ui[["ma_facet"]] <- tagList(
+              br(),
+              div(id = "ma-facet",
                 materialSwitch(
-                  ns("species_facet"),
-                  tr(state, "Group by species"),
-                  value = state$species_facet,
+                  ns("ma_facet"),
+                  tr(state, "Group by MA"),
+                  value = FALSE,
                   width = "100%",
                   status = "primary"
                 )
+              )
             )
+          }
+          # ui[["family_facet"]] <- tagList(
+          #   br(),
+          #   div(id = "family-facet",
+          #       materialSwitch(
+          #         ns("family_facet"),
+          #         tr(state, "Group by family"),
+          #         value = FALSE,
+          #         width = "100%",
+          #         status = "primary"
+          #       )
+          #   )
+          # )
+          if (current_indicator %in% c(tr(state, "Size Structure"), tr(state, "Size Proportions"))) {
+            ui[["species_facet"]] <- tagList(
+              br(),
+              div(id = "species-facet",
+                  materialSwitch(
+                    ns("species_facet"),
+                    tr(state, "Group by species"),
+                    value = state$species_facet,
+                    width = "100%",
+                    status = "primary"
+                  )
+              )
+            )
+          }
+          # show loess slider only when plotting curves
+          if (!(current_indicator %in% c(tr(state, "Fishing Gear"), tr(state, "Size Structure"), tr(state, "Size Proportions")))) {
+            # ui[['other_title']] <- div(class='sidetitle', tr(state, 'Other'))
+            ui[["loess_span"]] <- div(
+              class = "smooth_slider pi_widget",
+              sliderInput(
+                inputId = ns("loess_span"),
+                label = tooltip_label("tip-smooth", tr(state, "Change curve smoothing")),
+                min = 0.1, max = 1,
+                value = 0.5,
+                step = 0.1,
+                ticks = FALSE
+              )
+            )
+          }
+          ui[['tippy']] <- list(
+            tippy_class_alt("tip-smooth", "Controls the amount of smoothing of the loess curve. Smaller numbers produce wigglier lines, larger numbers produce smoother lines"),
+            tippy_class_alt("tip-min-species", "We recommend selecting at least 100 records per species per month for robust analysis")
           )
         }
-
-
-        # show loess slider only when plotting curves
-        if (current_tab %in% c(tr(state, "2. Visualize data")) && !(current_indicator %in% c(tr(state, "Fishing Gear"), tr(state, "Size Structure"), tr(state, "Size Proportions")))) {
-          # ui[['other_title']] <- div(class='sidetitle', tr(state, 'Other'))
-          ui[["loess_span"]] <- div(
-            class = "smooth_slider pi_widget",
-            sliderInput(
-              inputId = ns("loess_span"),
-              label = tooltip_label("tip-smooth", tr(state, "Change curve smoothing")),
-              min = 0.1, max = 1,
-              value = 0.5,
-              step = 0.1,
-              ticks = FALSE
-            )
-          )
-        }
-        
-        # Commented out per git 21
-        # if (current_tab %in% c("Visualize") && current_indicator %in% c("Size Structure", "Size Proportions")) {
-        #   ui[["min_records"]] <- div(
-        #     class = "min_records pi_widget",
-        #     sliderInput(
-        #       inputId = ns("min_records"),
-        #       label = tooltip_label("tip-min-species", "Select min records per species"),
-        #       min = current_min_records$min,  
-        #       max = current_min_records$max,
-        #       value = current_min_records$value, 
-        #       step = 10,
-        #       ticks = FALSE)
-        #   )
-        # }
-
-        ui[['tippy']] <- list(
-          tippy_class_alt("tip-smooth", "Controls the amount of smoothing of the loess curve. Smaller numbers produce wigglier lines, larger numbers produce smoother lines"),
-          tippy_class_alt("tip-min-species", "We recommend selecting at least 100 records per species per month for robust analysis")
-        )
-        
         ui
       })
 

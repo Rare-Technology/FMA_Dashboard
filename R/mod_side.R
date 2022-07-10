@@ -10,9 +10,10 @@
 sidebarUI <- function(id) {
   ns <- NS(id)
   tagList(
-      sidebarGeoUI("sidebarGeoUI"),
-      sidebarIndicatorUI("sidebarIndicatorUI"),
-      sidebarHelpUI("sidebarHelpUi")
+    sidebarGeoUI("sidebarGeoUI"),
+    sidebarStockUI("sidebarStockUI"),
+    sidebarIndicatorUI("sidebarIndicatorUI"),
+    sidebarHelpUI("sidebarHelpUi")
   )
 }
 

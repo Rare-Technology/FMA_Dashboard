@@ -30,6 +30,7 @@ golem::add_module( name = "home" ) # Name of the module
 golem::add_module( name = "fisheries_assessment" ) # Name of the module
 golem::add_module( name = "side" )
 golem::add_module( name = "side_geography" )
+golem::add_module( name = "side_stock" )
 golem::add_module( name = "side_assessment" )
 golem::add_module( name = "main_data" )
 ## Add helper functions ----

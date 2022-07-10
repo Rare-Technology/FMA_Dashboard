@@ -10,7 +10,7 @@
 #' @importFrom shinyjs alert
 visualizeUI <- function(id) {
   ns <- NS(id)
-  div(style = "height: calc(100vh - 130px); overflow-y: scroll;",
+  div(style = "height: calc(100vh - 130px); overflow-y: auto;",
     uiOutput(ns("plot_holder")) %>% withSpinner(color = SPINNER_COLOR)
   )
 }
@@ -118,10 +118,10 @@ visualizeServer <- function(id, state) {
         } else if("try-error" %in% class(p)){
           p <- NULL
           msg <- "There was an error creating the plot"
-        } else if (suppressWarnings(p == "FACET_WARNING")) {
+        } else if ("FACET_WARNING" %in% p) {
           p <- NULL
           msg <- "You are attempting to plot too many groups. Try to select fewer than 10 species or disable group by species."
-        } else if (suppressWarnings(p == "HISTORICAL_WARNING")) {
+        } else if ("HISTORICAL_WARNING" %in% p) {
           p <- NULL
           msg <- "This plot is not currently available for this data source. Contact SciTech for more info."
         } else {
@@ -137,7 +137,7 @@ visualizeServer <- function(id, state) {
               )
             }
         }
-
+        cat("Rendering plot...")
         output$plot <- renderPlot(
           suppressWarnings(print(p)), # suppress stat_smooth/geom_smooth warnings
           height = PLOT_HEIGHT, 
