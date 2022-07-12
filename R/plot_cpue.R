@@ -89,7 +89,7 @@ plot_cpue <- function(.data, loess_span, ymin = NA, ymax = NA, use_MA_facet = FA
           y = "CPUE (kg/trip)"
         ) +
         scale_y_continuous(limits = c(ymin, ymax), oob = scales::squish) +
-        facet_wrap(~ maa_trend) +
+        facet_wrap(~ maa_trend, ncol = 2) +
         scale_fill_manual(values = c(
           "No change" = "grey20",
           "Increasing" = "darkgreen",

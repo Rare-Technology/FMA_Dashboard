@@ -10,9 +10,7 @@
 #' @importFrom shinyjs alert
 visualizeUI <- function(id) {
   ns <- NS(id)
-  div(style = "height: calc(100vh - 130px); overflow-y: auto;",
-    uiOutput(ns("plot_holder")) %>% withSpinner(color = SPINNER_COLOR)
-  )
+  uiOutput(ns("plot_holder")) %>% withSpinner(color = SPINNER_COLOR)
 }
 
 #'  Server Function
@@ -137,11 +135,19 @@ visualizeServer <- function(id, state) {
               )
             }
         }
-        cat("Rendering plot...")
+        
+        if (use_MA_facet) {
+          plot_height <- get_plot_height(length(state$maa$selected))
+        } else if (use_family_facet) {
+          plot_height <- get_plot_height(length(state$family$selected))
+        } else if (use_species_facet) {
+          plot_height <- get_plot_height(length(state$species$selected))
+        } else {
+          plot_height <- 'auto'
+        }
         output$plot <- renderPlot(
           suppressWarnings(print(p)), # suppress stat_smooth/geom_smooth warnings
-          height = PLOT_HEIGHT, 
-          width = PLOT_WIDTH
+          height = plot_height
         )
         
       ui_result <- list()
@@ -155,17 +161,11 @@ visualizeServer <- function(id, state) {
       # })
       
       if(!is.null(p)) {
-        plot_info <- display_filters(state)
-        
         ui_result <- c(ui_result,
           list(
             div(class='download-button',
                 downloadButton(ns("downloadPlot"), tr(state, 'Download plot'))),
-            plotOutput(ns('plot'), width = '1000px', height = "625") %>% 
-              # couldn't figure out how to do this in custom.css
-              tagAppendAttributes(style="margin: 0 auto;"),
-            div(class='display-filters',
-                HTML(paste(plot_info, collapse=' ')))
+            plotOutput(ns('plot'))
           )
         )
       } else {

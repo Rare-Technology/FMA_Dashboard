@@ -84,7 +84,7 @@ plot_size_proportions <- function(.data, plot_title, y_title, sel_species, use_s
       geom_line(aes(y = percentMature, color = "Mature"), size = 2) +
       geom_line(aes(y = percentOpt, color = "Optimal"), size = 2) +
       geom_line(aes(y = percentMega, color = "Megaspawner"), size = 2) +
-      facet_wrap(~ species) +
+      facet_wrap(~ species, ncol = 2) +
       labs(
         title = plot_title,
         # subtitle = paste("Species: ", sel_species),

@@ -87,7 +87,7 @@ plot_trend_smooth <- function(.data, var, f,
           limits = c(ymin, ymax),
           oob = scales::squish
         ) +
-        facet_wrap(~ maa_trend) +
+        facet_wrap(~ maa_trend, ncol = 2) +
         scale_fill_manual(values = c(
           "No change" = "grey20",
           "Increasing" = "darkgreen",

@@ -11,20 +11,11 @@
 #' @importFrom shinyjs useShinyjs extendShinyjs
 mainUI <- function(id) {
   ns <- NS(id)
-  div(id = 'fma-body',
   fillPage(
       tagList(
         useShinyjs(),
         extendShinyjs(script="www/toggleFullScreen.js", functions=c("toggleFullScreen")),
         div(class='flow-div',
-          # dropdown(id='step1',
-          #          sidebarUI("sidebarUI"),
-          #          width='400px',
-          #          size='sm',
-          #          icon = icon('filter'),
-          #          status = 'success',
-          #          style='material-circle'
-          # ),
           uiOutput(ns("resetFiltersUI")),
           div(style='flex-grow: 1;'),
           div(id='help-button', icon('question-circle-o'), onclick='tour()'),
@@ -46,11 +37,12 @@ mainUI <- function(id) {
           )
         ), # flow-div
         sidebarLayout(
-          sidebarPanel(sidebarUI("sidebarUI"), width = 3),
-          mainPanel(uiOutput(ns("tabPanels")), width = 9)
-        )
-      ) # tagList
-  )) # fillPage
+          sidebarPanel(sidebarUI("sidebarUI"), width = 4) %>% tagAppendAttributes(id = "filters-sidebar"),
+          mainPanel(uiOutput(ns("tabPanels")), width = 8) %>% tagAppendAttributes(id = "main-panel")
+        ) %>% tagAppendAttributes(id = "sidebar-layout")
+      ), # tagList
+  padding = c(0, 15, 0, 15)
+  ) # fillPage
 }
 
 #' main Server Function
@@ -69,8 +61,8 @@ mainServer <- function(id, state) {
         ui <- list(
           # mainPanel(
           tabsetPanel(id = ns("tabs"),
-            tabPanel(tr(state, "Start"), startUI("startUI")) %>% tagAppendAttributes(id='startPanel'),
-            tabPanel(tr(state, "1. Assess data"), dataUI("dataUI")),
+            tabPanel(tr(state, "Start"), startUI("startUI")) %>% tagAppendAttributes(id = "startPanel"),
+            tabPanel(tr(state, "1. Assess data"), dataUI("dataUI")) %>% tagAppendAttributes(id = "table-panel"),
             tabPanel(tr(state, "2. Visualize data"), visualizeUI("visualizeUI")),
             tabPanel(tr(state, "3. Interpret results"), interpretUI("interpretUI"))#,
             #tabPanel("5. Management plan", managementUI("managementUI"))

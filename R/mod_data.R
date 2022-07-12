@@ -9,12 +9,7 @@
 #' @importFrom shiny NS tagList
 dataUI <- function(id) {
   ns <- NS(id)
-  tagList(
-    div(
-      class = "table-holder",
-      DT::DTOutput(ns("main_data"))
-    )
-  )
+  DT::DTOutput(ns("main_data"))
 }
 
 #' main_data Server Function
@@ -52,10 +47,10 @@ dataServer <- function(id, state) {
           # ),
           options = list(
             columnDefs = table_column_alignment(table_data),
-            pageLength = 100,
+            pageLength = 20,
             dom = "frtp",
             scrollX = TRUE,
-            scrollY = "600px",
+            # scrollY = "600px",
             processing = FALSE,
             scrollCollapse = TRUE,
             initComplete = DT::JS(

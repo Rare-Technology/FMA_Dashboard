@@ -144,3 +144,9 @@ display_filters <- function(state, html=TRUE) {
   }
   out
 }
+
+get_plot_height <- function(num_groups) {
+  nrows <- ceiling(num_groups / 2)
+  height <- 400 + (nrows - 1)*200
+  return(height)
+}

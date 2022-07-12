@@ -46,6 +46,8 @@
 
 .well{
   background-color: white;
+  overflow-y: auto;
+  height: 100%;
 }
 
 
@@ -76,11 +78,13 @@ a {
     height: 200px;
 }
 
-
-
-
 .tab-content{
   margin-top: 20px;
+  height: calc(100% - 60px);
+}
+
+.tab-pane {
+  height: 100%;
 }
 
 .img-holder{
@@ -189,7 +193,9 @@ a {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 5px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  height: 5%;
 }
 
 #help-button {
@@ -202,6 +208,7 @@ a {
 .download-button {
   display: flex;
   justify-content: center;
+  margin-bottom: 3rem;
 }
 
 .fs-button {
@@ -261,13 +268,7 @@ a {
   max-width: 440px !important;
 }
 
-.well {
-  max-height: 715px;
-  overflow-y: auto;
-}
-
 #lang-select {
-  margin-top: -20px;
   margin-right: 15px;
 }
 
@@ -284,4 +285,81 @@ a {
   margin-right: 15px;
   margin-top: 10px;
   margin-bottom: 10px;
+  position: fixed;
+  height: 100%;
+  width: 97.5%;
 }
+
+.row {
+  height: 90%;
+}
+
+#mainUI-language-label {
+  display: none;
+}
+
+#mainUI-tabPanels {
+  height: 100%;
+}
+
+.tabbable {
+  height: 100%;
+}
+
+#data-panel {
+  height: 100%;
+}
+
+.table-holder {
+  height: 100%;
+}
+
+#dataUI-main_data {
+  height: 100% !important;
+}
+
+.dataTables_wrapper {
+  height: 100%;
+}
+
+.dataTables_scroll {
+  height: 85%;
+}
+
+.dataTables_scrollBody {
+  max-height: 90%;
+  overflow: auto;
+}
+
+.dataTables_paginate {
+  height: 10%;
+}
+
+.shiny-spinner-output-container {
+  height: 100%;
+}
+
+#visualizeUI-plot_holder {
+  height: 100%;
+}
+
+#visualizeUI-plot {
+  margin: 0;
+  overflow-y: auto;
+  height: calc(100% - 34px - 3rem) !important; /* 34px is the downlaod button and 3rem is the margin below it */
+}
+
+#filters-sidebar {
+  height: 100%;
+}
+
+#sidebar-layout {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-bottom: 1.5rem;
+}
+
+#main-panel {
+  height: 100%;
+}
+
