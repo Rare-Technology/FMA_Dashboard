@@ -122,13 +122,26 @@ sidebarIndicatorServer <- function(id, state) {
                   materialSwitch(
                     ns("species_facet"),
                     tr(state, "Group by species"),
-                    value = state$species_facet,
+                    value = FALSE,
                     width = "100%",
                     status = "primary"
                   )
               )
             )
           }
+
+          # Currently these two inputs are NULL despite having (or should have...) a default value
+          ui[["y-scale"]] <- tagList(
+            br(),
+            materialSwitch(
+              ns("fixed_yscale"),
+              tr(state, "Fixed Y-axis"),
+              value = TRUE,
+              width = "100%",
+              status = "primary"
+            )
+          )
+
           # show loess slider only when plotting curves
           if (!(current_indicator %in% c(tr(state, "Fishing Gear"), tr(state, "Size Structure"), tr(state, "Size Proportions")))) {
             # ui[['other_title']] <- div(class='sidetitle', tr(state, 'Other'))
@@ -154,7 +167,7 @@ sidebarIndicatorServer <- function(id, state) {
 
       observeEvent(input$performance_indicators, {
         state$current_indicator <- input$performance_indicators
-      })
+      }, ignoreInit = TRUE)
       
       observeEvent(input$date_range, {
         
@@ -181,14 +194,18 @@ sidebarIndicatorServer <- function(id, state) {
       
       observeEvent(input$ma_facet, {
         state$ma_facet <- input$ma_facet
-      })
+      }, ignoreInit = TRUE, ignoreNULL = TRUE)
       
       observeEvent(input$family_facet, {
         state$family_facet <- input$family_facet
-      })
+      }, ignoreInit = TRUE, ignoreNULL = TRUE)
       
       observeEvent(input$species_facet, {
         state$species_facet <- input$species_facet
+      }, ignoreInit = TRUE, ignoreNULL = TRUE)
+      
+      observeEvent(input$fixed_yscale, {
+        state$fixed_yscale <- input$fixed_yscale
       })
 
       observeEvent(input$loess_span, {

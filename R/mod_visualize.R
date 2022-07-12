@@ -31,6 +31,7 @@ visualizeServer <- function(id, state) {
         use_MA_facet <- state$ma_facet
         use_family_facet <- state$family_facet
         use_species_facet <- state$species_facet
+        fixed_yscale <- state$fixed_yscale
         loess_span <- state$loess_span
         sel_species <- state$species$selected
 
@@ -125,6 +126,7 @@ visualizeServer <- function(id, state) {
         } else {
             state$current_plot_data <- result$data
             if (performance_indicators != "Reporting Effort" | data_source == "historical") {
+              p$facet$params$free$y <- !fixed_yscale
               state$current_plot <- p + ggplot2::labs(caption=WATERMARK_LABEL)
             } else {
               # have to treat Reporting Effort plot differently because result$p is a

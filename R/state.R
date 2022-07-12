@@ -39,6 +39,7 @@ initialize_state <- function() {
     ma_facet = FALSE,
     family_facet = FALSE,
     species_facet = FALSE,
+    fixed_yscale = TRUE,
     loess_span = 0.5,
     current_plot = NULL,
     language = "English",
