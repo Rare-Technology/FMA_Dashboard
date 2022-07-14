@@ -96,6 +96,7 @@ visualizeServer <- function(id, state) {
             tr(state, "Total landings (kg/month)"),
             tr(state, "Total catch (kg/month)"),
             loess_span,
+            ymin = 0,
             use_MA_facet = use_MA_facet
           )
         }
