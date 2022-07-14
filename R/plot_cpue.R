@@ -60,7 +60,7 @@ plot_cpue <- function(.data, loess_span, ymin = NA, ymax = NA, use_MA_facet = FA
           aes(
             x = yearmonth,
             y = cpue_kg,
-            linestype = "Combined MA's"
+            linetype = "Combined MA's"
           ),
           color = 'blue',
           fill = 'blue',
@@ -84,9 +84,9 @@ plot_cpue <- function(.data, loess_span, ymin = NA, ymax = NA, use_MA_facet = FA
           show.legend = FALSE
         ) +
         labs(
-          title = "CPUE (catch in kg/trip)",
+          title = "CPUE (catch in kg/boat/month)",
           x = "",
-          y = "CPUE (kg/trip)"
+          y = "CPUE (kg/boat/month)"
         ) +
         scale_y_continuous(limits = c(ymin, ymax), oob = scales::squish) +
         facet_wrap(~ maa_trend, ncol = 2) +
@@ -141,10 +141,10 @@ plot_cpue <- function(.data, loess_span, ymin = NA, ymax = NA, use_MA_facet = FA
         alpha = 0.1
       ) +
       labs(
-        title = "CPUE (catch in kg/trip)",
+        title = "CPUE (catch in kg/boat/month)",
         subtitle = paste(indicator_trend, pval),
         x = "",
-        y = "CPUE (kg/trip)"
+        y = "CPUE (kg/boat/month)"
       ) +
       scale_y_continuous(limits = c(ymin, ymax), oob = scales::squish) +
       theme_rare(subtitle_color = indicator_color), silent = TRUE)

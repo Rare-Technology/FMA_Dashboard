@@ -61,17 +61,17 @@ sidebarIndicatorServer <- function(id, state) {
                 actionLink(inputId = ns("show_defs"), label = "(definitions)")
                 ),
               choices = c(
-                tr(state, "Fishing Gear"),
-                tr(state, "Reporting Effort"),
-                tr(state, "Species Composition"),
-                # "Fished:Unfished Ratio",
+                tr(state, "Total Landings"),
+                tr(state,  "CPUE"),
+                tr(state,  "Size Proportions"),
+                tr(state, "Size Structure"),
                 tr(state, "Average Length"),
                 tr(state, "Average Trophic Level"),
+                tr(state, "Species Composition"),
+                tr(state, "Reporting Effort"),
+                tr(state, "Fishing Gear")
+                # "Fished:Unfished Ratio",
                 # "Spawning Potential Ratio",
-                tr(state, "Size Structure"),
-                tr(state,  "Size Proportions"),
-                tr(state,  "CPUE"),
-                tr(state, "Total Landings")
               ),
               selected = current_indicator
             )
