@@ -18,12 +18,11 @@ historical_gear_types <- googlesheets4::read_sheet("https://docs.google.com/spre
 historical <- dplyr::left_join(historical, historical_gear_types, by = 'gear_type') %>% 
   dplyr::select(-`gear_type 2`, -gear_type) %>% 
   dplyr::rename(gear_type = gear_type_new)
-  # dplyr::mutate(gear_type = ifelse(is.na(gear_type), 'Other', gear_type))
 
 historical <- historical %>% 
   # Some values for species_scientific look like this: Platax pinnatus(Linnaeus,1758)
-  # To make sure fishbase will get correct results, we fix this in the following mutate
-  # Then extract the genus and species from the scientific name
+  # To make sure we can properly join with fishbase data from bio_table, we will
+  # clean these to look more like "Platax pinnatus"
   dplyr::mutate(
     species_scientific = sapply(
       species_scientific,
@@ -33,56 +32,12 @@ historical <- historical %>%
         stringr::str_to_sentence()
       }
     )
-  ) %>% 
-  tidyr::separate(species_scientific, c('Genus', 'Species'), sep = ' ', remove = FALSE)
-
-### Find/compute Lmax's for species. If anything is on fishbase for a given species, use the 
-# largest lmax on record, otherwise use the aggregated mean by genus.
-fishbase_genus_filter <- rfishbase::load_taxa() %>% 
-  dplyr::filter(Genus %in% unique(historical$Genus)) %>% 
-  dplyr::select(species_scientific = Species, Genus)
-
-popchar_species <- rfishbase::popchar(fishbase_genus_filter$species_scientific) %>% 
-  dplyr::select(species_scientific = Species, Lmax) %>% 
-  dplyr::mutate(lmax = as.numeric(Lmax)) %>% 
-  dplyr::group_by(species_scientific) %>% 
-  dplyr::summarize(lmax_species = max(lmax, na.rm = TRUE)) %>% 
-  dplyr::mutate(lmax_species = ifelse(is.infinite(lmax_species), NA, lmax_species)) %>% 
-  tidyr::separate(species_scientific, c('Genus', 'Species'), sep = ' ', remove = FALSE)
-
-popchar_genus <- popchar_species %>% 
-  dplyr::group_by(Genus) %>% 
-  dplyr::summarize(lmax_genus = mean(lmax_species, na.rm = TRUE))
-
-popchar_species <- popchar_species %>% 
-  dplyr::select(species_scientific, lmax_species)
-
-historical <- historical %>% 
-  dplyr::left_join(., popchar_species, by = 'species_scientific') %>% 
-  dplyr::left_join(., popchar_genus, by = 'Genus')
-
-historical <- historical %>% 
-  dplyr::mutate(
-    lmax = ifelse(is.na(lmax_species),
-      lmax_genus,
-      lmax_species
-    )
-  ) %>%
-  dplyr::select(-c(lmax_species, lmax_genus))
-
-
-### Calculate lengths using a/b coefficients plus weight_kg. Then limit values by lmax
-# As of Mar 22, 2022, only ONE species from Phils historical catch data has a/b coefficients recorded on fishbase!
-poplw_filter <- rfishbase::poplw() %>% 
-  dplyr::select(species_scientific = Species, a, b) %>% 
-  dplyr::filter(species_scientific %in% unique(historical$species_scientific)) %>% 
-  dplyr::group_by(species_scientific) %>% 
-  dplyr::summarize(
-    a = mean(a, na.rm = TRUE),
-    b = mean(b, na.rm = TRUE)
   )
 
-historical <- dplyr::left_join(historical, poplw_filter, by = 'species_scientific')
+# Add fishbase data
+bio_table <- readr::read_csv("https://query.data.world/s/33b6xpfgoufkomz5d6diclqzhwh5mv") %>% 
+  dplyr::select(species_scientific = Species, family = Family, lmax, a, b, trophic_level)
+historical <- dplyr::left_join(historical, bio_table, by = "species_scientific")
 
 # Mar 23 2022
 # The date column is a little weird. About 99% of it is in POSIXct form, where
@@ -129,81 +84,14 @@ historical <- historical %>%
 historical$yearmonth <- as.Date(paste0(historical$year, "-", historical$month,"-", "01"),
                              "%Y-%m-%d")
 
-fishbase_filter <- rfishbase::load_taxa() %>% 
-  dplyr::filter(Species %in% unique(historical$species_scientific)) %>% 
-  dplyr::select(species_scientific = Species, Family)
-  
-### Mar 23 2022
-# At some point, sort out Family values for catches with a species_scientific given by
-# the genus (Genus sp. or Genus spp.)
-historical <- dplyr::left_join(historical, fishbase_filter, by = 'species_scientific')
-
-# Get trophic level data. Similar to length, we will extract and use any available data on fishbase.
-# Missing trophic levels will be imputed first on an aggregated genus level, and then, if necessary,
-# an aggregated family level
-fishbase_family_filter <- rfishbase::load_taxa() %>% 
-  dplyr::filter(Family %in% unique(historical$Family)) %>% 
-  dplyr::select(species_scientific = Species, Family)
-
-family_troph <- rfishbase::ecology(fishbase_family_filter$species_scientific) %>% 
-  dplyr::select(species_scientific = Species, DietTroph)
-
-family_troph <- dplyr::left_join(family_troph, fishbase_family_filter, by = 'species_scientific')
-
-family_troph <- family_troph %>% 
-  dplyr::group_by(Family) %>% 
-  dplyr::summarize(family_trophic_level = mean(DietTroph, na.rm = TRUE))
-
-genus_troph <- rfishbase::ecology(fishbase_genus_filter$species_scientific) %>% 
-  dplyr::select(species_scientific = Species, DietTroph) %>% 
-  dplyr::left_join(., fishbase_genus_filter, by = 'species_scientific') %>% 
-  dplyr::group_by(Genus) %>% 
-  dplyr::summarize(genus_trophic_level = mean(DietTroph, na.rm = TRUE))
-
-species_troph <- rfishbase::ecology(unique(historical$species_scientific)) %>% 
-  dplyr::select(species_scientific = Species, DietTroph)
-  # need to aggregate within same species?
-
-historical <- dplyr::left_join(historical, family_troph, by = 'Family') %>% 
-  dplyr::left_join(., genus_troph, by = 'Genus') %>% 
-  dplyr::left_join(., species_troph, by = 'species_scientific') %>% 
-  dplyr::mutate(
-    trophic_level = ifelse(is.na(DietTroph),
-      ifelse(is.na(genus_trophic_level),
-        family_trophic_level,
-        genus_trophic_level
-      ),
-      DietTroph
-    )
+historical <- historical %>% 
+  dplyr::select(
+    country, subnational, subnational_id, local, local_id, maa, maa_id, community = community_name,
+    year, yearmonth, week, transaction_date = date,
+    gear_type, n_fishers, fisher_id = fisher_name,
+    species = species_scientific, label = species_local, family,
+    length, weight_kg, count, lmax, a, b, trophic_level
   )
 
-historical <- historical %>% 
-  dplyr::rename(
-    family = Family,
-    species = species_scientific,
-    community = community_name,
-    transaction_date = date,
-    label = species_local
-  ) %>% 
-  dplyr::select(
-    -c(
-      Genus,
-      genus_trophic_level,
-      family_trophic_level,
-      DietTroph,
-      country_id,
-      community_id,
-      fishbase_id, # only 16 non-NA as of Mar 23 2022
-      fisher_id,
-      price_per_kg,
-      total_price,
-      month
-    )
-  ) %>% 
-  dplyr::rename(fisher_id = fisher_name) # the fisher_id col dropped in the prev select has no data
-  
 detach(package:rfishbase)
 detach(package:googlesheets4)
-
-
-

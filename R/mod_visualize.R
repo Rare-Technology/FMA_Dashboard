@@ -155,18 +155,10 @@ visualizeServer <- function(id, state) {
         
       ui_result <- list()
       
-      # output$reference_desc <- gt::render_gt({
-      #   create_gt_table(
-      #     fma_reference_points %>%
-      #       dplyr::filter(`Performance Indicator` == performance_indicators),
-      #     "Performance Indicator"
-      #   )
-      # })
-      
       if(!is.null(p)) {
         ui_result <- c(ui_result,
           list(
-            div(class='download-button',
+            div(id = "download-button-container",
                 downloadButton(ns("downloadPlot"), tr(state, 'Download plot'))),
             plotOutput(ns('plot'))
           )

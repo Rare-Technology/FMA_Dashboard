@@ -205,7 +205,7 @@ a {
   cursor: pointer;
 }
 
-.download-button {
+#download-button-container {
   display: flex;
   justify-content: center;
   margin-bottom: 3rem;
