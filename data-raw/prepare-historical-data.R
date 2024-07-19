@@ -35,8 +35,12 @@ historical <- historical %>%
   )
 
 # Add fishbase data
-bio_table <- readr::read_csv("https://query.data.world/s/33b6xpfgoufkomz5d6diclqzhwh5mv") %>% 
-  dplyr::select(species_scientific = Species, family = Family, lmax, a, b, trophic_level)
+# bio_table <- readr::read_csv("https://query.data.world/s/33b6xpfgoufkomz5d6diclqzhwh5mv") %>% 
+#   dplyr::select(species_scientific = Species, family = Family, lmax, a, b, trophic_level)
+
+# adding file locally 10 July 2024
+bio_table <- readr::read_csv("data-raw/join_fishbase_focal_species.csv") %>% 
+  dplyr::select(species_scientific = species, family = family, lmax, a, b, trophic_level)
 historical <- dplyr::left_join(historical, bio_table, by = "species_scientific")
 
 # Mar 23 2022

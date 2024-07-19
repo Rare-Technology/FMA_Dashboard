@@ -7,3 +7,7 @@ config.yml
 .Rproj.user
 .RHistory
 data_old/
+.Rhistory
+.Rdata
+.httr-oauth
+.quarto
