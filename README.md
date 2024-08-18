@@ -30,9 +30,7 @@ There are scripts in the `data-raw` folder to create the underlying data.
 
     * Info: The `prepare-ourfish-data.R` script utilizes the `prepare-historical-data.R` script.
 
-Key Steps to be 
-
-##### Data requirements
+##### Data requirements & Update
 
 The current process of updating the data in the Fisheries Management (FMA) Dashboard uses *static datasets* downloaded from the respective data source.
 
@@ -44,9 +42,7 @@ The current process of updating the data in the Fisheries Management (FMA) Dashb
 
     1. Download the `join_ourfish_footprint.csv` file (referred to as "data file" from here on") from data.world using the above link and save the data file in `data-raw` folder.
     2. Run the complete `prepare-ourfish-data.R` script
-        This prepares the data and uploads the updated data to the `data` folder. The application reads the updated data from this folder.
-    3. 
-
+        This prepares the data and uploads the updated data to the `data` folder automatically.
 
 ### Deploying the Shiny app to shinyapps.io
 
@@ -57,10 +53,16 @@ Since this is a private repository, the user will need an auth_token from https:
 #### Recommended Steps for deploying the app
 
 1. Restart the R session (recommended before deploying the application)
+
 2. Use the command `remotes::install_github("Rare-Technology/FMA_Dashboard", auth_token = 'GITHUB_AUTH_TOKEN')`
+
 3. if the devtools has been installed then use command `devtools::load_all()` -> This loads the rarefma library in the environment.
+
 4. Prior to deployment Check the package before sending to production using: `devtools::check()`, followed by `golem::add_shinyappsio_file()`
-    The golem::add_shinyappsio_file() command creates the `FMA_Dash_test.dcf` file in the rsconnect folder (Always check if it is present before deploying the app)
+
+    * The golem::add_shinyappsio_file() command creates the `FMA_Dash_test.dcf` file in the rsconnect folder (Always check if it is present before deploying the app)
+    * Ensure there are no errors in in this step, running the devtools::check() command (warnings are fine, errors are not)
+
 5. Make sure the library or package `rfishbase` is uninstalled from the environment 
     
     This doesn't let the app deploy to shinyapps.io
@@ -74,6 +76,8 @@ Since this is a private repository, the user will need an auth_token from https:
     Use command `rsconnect::deployApp()` in the RStudio console -> Use this only if the rsconnect folder is present in the repository (This throws an error at times)
 
         In case the `rsconnect` folder is not present in the repository use command golem::add_shinyappsio_file()
+    
+7. Post deployment the app either launches automatically or can be visited using the relevant link in shinyapps.io
 
 #### Potential Errors during deployment
 
