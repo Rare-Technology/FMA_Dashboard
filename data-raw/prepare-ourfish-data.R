@@ -10,18 +10,18 @@ library(data.world)
 # ourfish <- readr::read_csv("https://query.data.world/s/ted7ge2eirwtuww5mnwnbxe2lb2t6f")
 
 # new addition - loading data from local file
-ourfish <- readr::read_csv("data-raw/join_ourfish_footprint_fishbase.csv") # loading data from local file rather than data.world 10-Jul-24
-# ourfish <- readr::read_csv("data-raw/join_ourfish_footprint.csv") # loading data from local file rather than data.world 10-Jul-24
+# ourfish <- readr::read_csv("./data-raw/join_ourfish_footprint_fishbase.csv") # loading data from local file rather than data.world 10-Jul-24
+ourfish <- readr::read_csv("data-raw/join_ourfish_footprint.csv") # loading data from local file rather than data.world 17-Aug-24
 
 ourfish <- ourfish %>% 
   dplyr::mutate(
-    species_scientific = dplyr::case_when(
-      species_scientific == "" ~ "Not available",
-      TRUE ~ species_scientific
+    species = dplyr::case_when(
+      species == "" ~ "Not available",
+      TRUE ~ species
     ),
-    family_scientific = dplyr::case_when(
-      family_scientific == "" ~ "Not available",
-      TRUE ~ family_scientific
+    family = dplyr::case_when(
+      family == "" ~ "Not available",
+      TRUE ~ family
     )
   )
 
@@ -68,14 +68,14 @@ ourfish <- ourfish %>%
     local_id = lgu_id,
     maa = ma_name,
     maa_id = ma_id,
-    family = family_scientific,
-    species = species_scientific,
+    family = family,
+    species = species,
     community = community_name,
     year,
     yearmonth,
     week,
     transaction_date = date,
-    label = species_local,
+    label = label,
     length = Length,
     count,
     weight_kg,
@@ -93,14 +93,15 @@ ourfish <- ourfish %>%
     species
   )
 
-
+# gear_type not used in the analysis (if used add in the above code for selecting relevant fields)
 # ---- Fixes
-# ourfish$gear_type[ourfish$gear_type == "Spear Gun"] <- "Spear gun" # gear_type not used ahead
+# ourfish$gear_type[ourfish$gear_type == "Spear Gun"] <- "Spear gun" 
 # ourfish$gear_type[ourfish$gear_type == "Beach Seine"] <- "Beach seine"
 # ourfish$gear_type[ourfish$gear_type == "Línea y anzuelo"] <- "Handline"
+
 ourfish$length[is.infinite(ourfish$length)] <- NA
 ourfish$count[ourfish$count == 0] <- NA
-ourfish <- ourfish %>% dplyr::filter(country != "Brazil")
+ourfish <- ourfish %>% dplyr::filter(country != "Brazil") # does not take Brazil data
 
 # ---- A function to get the unique geo combination
 create_geo_table <- function(.data) {
