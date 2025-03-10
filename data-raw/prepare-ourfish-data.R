@@ -76,6 +76,7 @@ ourfish <- ourfish %>%
     week,
     transaction_date = date,
     label = label,
+    gear_type,
     length = Length,
     count,
     weight_kg,
